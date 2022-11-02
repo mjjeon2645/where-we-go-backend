@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 @Entity
 public class Place {
+
   @Id
   @GeneratedValue
   private Long id;
@@ -16,12 +17,15 @@ public class Place {
 
   private Double longitude;
 
+  @Embedded
   private Address address;
 
   private String category;
 
+  @Embedded
   private BusinessHours businessHours;
 
+  @Embedded
   private ImageSource imageSource;
 
   public Long id() {
@@ -54,6 +58,9 @@ public class Place {
 
   public ImageSource imageSource() {
     return imageSource;
+  }
+
+  public Place() {
   }
 
   public Place(Long id, String name, Double latitude, Double longitude, Address address, String category, BusinessHours businessHours, ImageSource imageSource) {

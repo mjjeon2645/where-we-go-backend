@@ -2,46 +2,44 @@ package kr.megaptera.wherewego.models;
 
 import javax.persistence.*;
 
-@Entity
+@Embeddable
 public class ImageSource {
 
-  @Id
-  @GeneratedValue
-  private Long id;
+  @Column(name = "first_image")
+  private String firstImage;
 
-  private String first;
+  @Column(name = "second_image")
+  private String secondImage;
 
-  private String second;
+  @Column(name = "third_image")
+  private String thirdImage;
 
-  private String third;
-
+  @Column(name = "place_id", insertable = false, updatable = false)
   private Long placeId;
 
-  public ImageSource(Long id, String first, String second, String third, Long placeId) {
-    this.id = id;
-    this.first = first;
-    this.second = second;
-    this.third = third;
+  public ImageSource() {
+  }
+
+  public ImageSource(String firstImage, String secondImage, String thirdImage, Long placeId) {
+    this.firstImage = firstImage;
+    this.secondImage = secondImage;
+    this.thirdImage = thirdImage;
     this.placeId = placeId;
   }
 
-  public Long id() {
-    return id;
+  public String getFirstImage() {
+    return firstImage;
   }
 
-  public String first() {
-    return first;
+  public String getSecondImage() {
+    return secondImage;
   }
 
-  public String second() {
-    return second;
+  public String getThirdImage() {
+    return thirdImage;
   }
 
-  public String third() {
-    return third;
-  }
-
-  public Long placeId() {
+  public Long getPlaceId() {
     return placeId;
   }
 }

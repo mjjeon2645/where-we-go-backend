@@ -2,33 +2,39 @@ package kr.megaptera.wherewego.models;
 
 import javax.persistence.*;
 
-@Entity
+@Embeddable
 public class BusinessHours {
 
-  @Id
-  @GeneratedValue
-  private Long id;
-
+  @Column(name = "monday")
   private String monday;
 
+  @Column(name = "tuesday")
   private String tuesday;
 
+  @Column(name = "wednesday")
   private String wednesday;
 
+  @Column(name = "thursday")
   private String thursday;
 
+  @Column(name = "friday")
   private String friday;
 
+  @Column(name = "saturday")
   private String saturday;
 
+  @Column(name = "sunday")
   private String sunday;
 
+  @Column(name = "place_id", insertable = false, updatable = false)
   private Long placeId;
 
-  public BusinessHours(Long id, String monday, String tuesday,
-                       String wednesday, String thursday, String friday,
-                       String saturday, String sunday, Long placeId) {
-    this.id = id;
+  public BusinessHours() {
+  }
+
+  public BusinessHours(String monday, String tuesday, String wednesday,
+                       String thursday, String friday, String saturday,
+                       String sunday, Long placeId) {
     this.monday = monday;
     this.tuesday = tuesday;
     this.wednesday = wednesday;
@@ -37,10 +43,6 @@ public class BusinessHours {
     this.saturday = saturday;
     this.sunday = sunday;
     this.placeId = placeId;
-  }
-
-  public Long id() {
-    return id;
   }
 
   public String monday() {
