@@ -28,19 +28,29 @@ public class Address {
   }
 
 
-  public String getFullAddress() {
+  public String fullAddress() {
     return fullAddress;
   }
 
-  public String getSido() {
+  public String sido() {
     return sido;
   }
 
-  public String getSigungu() {
+  public String sigungu() {
     return sigungu;
   }
 
-  public Long getPlaceId() {
+  public Long placeId() {
     return placeId;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    Address otherAddress = (Address) other;
+
+    return fullAddress.equals(otherAddress.fullAddress())
+        && sido.equals(otherAddress.sido())
+        && sigungu.equals(otherAddress.sigungu())
+        && placeId.equals(otherAddress.placeId());
   }
 }

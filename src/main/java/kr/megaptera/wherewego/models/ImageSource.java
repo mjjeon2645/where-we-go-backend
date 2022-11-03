@@ -27,19 +27,29 @@ public class ImageSource {
     this.placeId = placeId;
   }
 
-  public String getFirstImage() {
+  public String firstImage() {
     return firstImage;
   }
 
-  public String getSecondImage() {
+  public String secondImage() {
     return secondImage;
   }
 
-  public String getThirdImage() {
+  public String thirdImage() {
     return thirdImage;
   }
 
-  public Long getPlaceId() {
+  public Long placeId() {
     return placeId;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    ImageSource otherImageSource = (ImageSource) other;
+
+    return firstImage.equals(otherImageSource.firstImage())
+        && secondImage.equals(otherImageSource.secondImage())
+        && thirdImage.equals(otherImageSource.thirdImage())
+        && placeId.equals(otherImageSource.placeId());
   }
 }

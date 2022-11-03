@@ -1,8 +1,10 @@
 package kr.megaptera.wherewego.controllers;
 
 import kr.megaptera.wherewego.dtos.*;
+import kr.megaptera.wherewego.exceptions.*;
 import kr.megaptera.wherewego.models.*;
 import kr.megaptera.wherewego.services.*;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -16,12 +18,31 @@ public class MapController {
     this.mapService = mapService;
   }
 
+//  @GetMapping
+//  public PlacesDto places() {
+//    List<PlaceDto> places = mapService.places()
+//        .stream().map(Place::toPlaceDto)
+//        .toList();
+//
+//    return new PlacesDto(places);
+//  }
+
   @GetMapping
-  public PositionsDto places() {
-    List<PositionDto> positionDtos = mapService.places()
-        .stream().map(Place::toPositionDto)
+  public PlacesDto filteredPlaces(
+      @RequestParam(required = false, defaultValue = "전체") String sido,
+      @RequestParam(required = false, defaultValue = "전체") String sigungu,
+      @RequestParam(required = false, defaultValue = "전체") String category
+  ) {
+    List<PlaceDto> places = mapService.filteredPlaces(sido, sigungu, category)
+        .stream().map(Place::toPlaceDto)
         .toList();
 
-    return new PositionsDto(positionDtos);
+    return new PlacesDto(places);
+  }
+
+  @ExceptionHandler(FilteredResultsNotFound.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public String filteredResultsNotFound() {
+    return "검색 결과가 없습니다";
   }
 }

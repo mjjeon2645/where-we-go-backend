@@ -76,4 +76,18 @@ public class BusinessHours {
   public Long placeId() {
     return placeId;
   }
+
+  @Override
+  public boolean equals(Object other) {
+    BusinessHours otherBusinessHours = (BusinessHours) other;
+
+    return monday.equals(otherBusinessHours.monday())
+        && tuesday.equals(otherBusinessHours.tuesday())
+        && wednesday.equals(otherBusinessHours.wednesday())
+        && thursday.equals(otherBusinessHours.thursday())
+        && friday.equals(otherBusinessHours.friday())
+        && saturday.equals(otherBusinessHours.saturday())
+        && sunday.equals(otherBusinessHours.sunday())
+        && placeId.equals(otherBusinessHours.placeId());
+  }
 }

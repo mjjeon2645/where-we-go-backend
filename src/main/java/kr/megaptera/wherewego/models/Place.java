@@ -63,7 +63,9 @@ public class Place {
   public Place() {
   }
 
-  public Place(Long id, String name, Double latitude, Double longitude, Address address, String category, BusinessHours businessHours, ImageSource imageSource) {
+  public Place(Long id, String name, Double latitude, Double longitude,
+               Address address, String category, BusinessHours businessHours,
+               ImageSource imageSource) {
     this.id = id;
     this.name = name;
     this.latitude = latitude;
@@ -74,7 +76,33 @@ public class Place {
     this.imageSource = imageSource;
   }
 
-  public PositionDto toPositionDto() {
-    return new PositionDto(id, name, latitude, longitude);
+  public PlaceDto toPlaceDto() {
+    return new PlaceDto(id, name, latitude, longitude,
+        address.fullAddress(), address.sido(), address.sigungu(),
+        category, businessHours.monday(), businessHours.tuesday(), businessHours.wednesday(),
+        businessHours.thursday(), businessHours.friday(), businessHours.saturday(),
+        businessHours.sunday(), imageSource.firstImage(), imageSource.secondImage(),
+        imageSource.thirdImage());
+  }
+
+  @Override
+  public String toString() {
+    return "id: " + id + " name: " + name + " latitude: " + latitude + " longitude: "
+        + longitude + " Address" + address.fullAddress() + " " + address.sido() + " " +
+        address.sigungu() + " " + "category: " + category;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    Place otherPlace = (Place) other;
+
+    return id.equals(otherPlace.id())
+        && name.equals(otherPlace.name())
+        && latitude.equals(otherPlace.latitude())
+        && longitude.equals(otherPlace.longitude())
+        && address.equals(otherPlace.address())
+        && category.equals(otherPlace.category())
+        && businessHours.equals(otherPlace.businessHours())
+        && imageSource.equals(otherPlace.imageSource());
   }
 }
