@@ -1,5 +1,6 @@
 package kr.megaptera.wherewego.controllers;
 
+import kr.megaptera.wherewego.repositories.*;
 import kr.megaptera.wherewego.services.*;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.*;
@@ -18,6 +19,9 @@ class MapControllerTest {
 
   @MockBean
   private MapService mapService;
+
+  @MockBean
+  private PlaceRepository placeRepository;
 
   @Test
   void places() throws Exception {

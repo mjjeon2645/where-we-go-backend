@@ -1,31 +1,27 @@
 package kr.megaptera.wherewego.services;
 
-import kr.megaptera.wherewego.exceptions.*;
 import kr.megaptera.wherewego.models.*;
 import kr.megaptera.wherewego.repositories.*;
 import org.junit.jupiter.api.*;
 
 import java.util.*;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.BDDMockito.*;
 
 class MapServiceTest {
   private PlaceRepository placeRepository;
   private MapService mapService;
   private BusinessHours businessHours1;
   private ImageSource imageSource1;
+  private List<Place> places;
+
 
   @BeforeEach
   void setUp() {
     placeRepository = mock(PlaceRepository.class);
     mapService = new MapService(placeRepository);
 
-    Address address1 = new Address("경기도 과천시 광명로 181", "경기도", "과천시", 1L);
-    Address address2 = new Address("경기도 가평군 설악면 미사리 320-1", "경기도", "가평군", 2L);
-    Address address3 = new Address("충청남도 아산시 용화동 483-6", "충청도", "아산시", 3L);
 
     businessHours1 = new BusinessHours(
         "월요일: 10:01~18:00",
@@ -45,45 +41,114 @@ class MapServiceTest {
         1L
     );
 
-    List<Place> places = List.of(
-        new Place(1L, "과천 서울랜드", 37.434156D, 127.020126D, address1, "자연", businessHours1, imageSource1),
-        new Place(2L, "설악", 37.434156D, 127.020126D, address2, "키즈존 맛집", businessHours1, imageSource1),
-        new Place(3L, "좋은곳", 37.434156D, 127.020126D, address3, "유적지", businessHours1, imageSource1)
+    places = List.of(
+        new Place(1L, "과천 서울랜드", 37.434156D, 127.020126D, "경기도 과천시 광명로 181", "경기", "과천시", "자연", businessHours1, imageSource1),
+        new Place(2L, "설악", 37.434156D, 127.020126D, "경기도 가평군 설악면 미사리 320-1", "경기", "가평군", "키즈존 맛집", businessHours1, imageSource1),
+        new Place(3L, "좋은곳", 37.434156D, 127.020126D, "충청남도 아산시 용화동 483-6", "충청", "아산시", "유적지", businessHours1, imageSource1)
     );
 
     given(placeRepository.findAll()).willReturn(places);
+
+    given(placeRepository.findAllBySido("경기"))
+        .willReturn(
+            List.of(new Place(1L, "과천 서울랜드", 37.434156D, 127.020126D, "경기도 과천시 광명로 181", "경기", "과천시", "자연", businessHours1, imageSource1),
+                new Place(2L, "설악", 37.434156D, 127.020126D, "경기도 가평군 설악면 미사리 320-1", "경기", "가평군", "키즈존 맛집", businessHours1, imageSource1)));
+
     given(placeRepository.findAllByCategory("키즈존 맛집"))
         .willReturn(
-            List.of(new Place(2L, "설악", 37.434156D, 127.020126D, address2,
+            List.of(new Place(2L, "설악", 37.434156D, 127.020126D, "경기도 가평군 설악면 미사리 320-1", "경기", "가평군",
                 "키즈존 맛집", businessHours1, imageSource1)));
   }
 
   @Test
-  void places() {
-    assertThat(mapService.places().size()).isEqualTo(1);
-    assertThat(mapService.places().get(0).category()).isEqualTo("자연");
+  void filteredPlacesAndFindAllPlaces() {
+    String sido = "전체";
+    String sigungu = "전체";
+    String category = "전체";
+
+    assertThat(mapService.filteredPlaces(sido, sigungu, category))
+        .isEqualTo(places);
   }
 
   @Test
-  void filteredPlacesWithResults() {
-    String sido = "경기도";
+  void filterWithAllConditionsAndFindPlaces() {
+    String sido = "경기";
     String sigungu = "가평군";
     String category = "키즈존 맛집";
 
-    Address address2 = new Address("경기도 가평군 설악면 미사리 320-1", "경기도", "가평군", 2L);
     assertThat(mapService.filteredPlaces(sido, sigungu, category))
-        .isEqualTo(List.of(new Place(2L, "설악", 37.434156D, 127.020126D, address2,
+        .isEqualTo(List.of(new Place(2L, "설악", 37.434156D, 127.020126D, "경기도 가평군 설악면 미사리 320-1", "경기", "가평군",
         "키즈존 맛집", businessHours1, imageSource1)));
   }
 
   @Test
-  void filteredPlacesWithoutResults() {
-    String sido = "강원도";
-    String sigungu = "가평군";
+  void filterWithAllConditionsAndFindNoPlaces() {
+    String sido = "강원";
+    String sigungu = "홍천군";
     String category = "키즈존 맛집";
 
-    assertThrows(FilteredResultsNotFound.class, () -> {
-      mapService.filteredPlaces(sido, sigungu, category);
-    });
+    assertThat(mapService.filteredPlaces(sido, sigungu, category)).isEqualTo(List.of());
+  }
+
+  @Test
+  void filterWithSidoAndFindPlaces() {
+    String sido = "경기";
+    String sigungu = "전체";
+    String category = "전체";
+
+    assertThat(mapService.filteredPlaces(sido, sigungu, category))
+        .isEqualTo(List.of(
+            new Place(1L, "과천 서울랜드", 37.434156D, 127.020126D, "경기도 과천시 광명로 181", "경기", "과천시", "자연", businessHours1, imageSource1),
+            new Place(2L, "설악", 37.434156D, 127.020126D, "경기도 가평군 설악면 미사리 320-1", "경기", "가평군", "키즈존 맛집", businessHours1, imageSource1)
+        ));
+  }
+
+  @Test
+  void filterWithSidoAndFindNoPlaces() {
+    String sido = "제주";
+    String sigungu = "전체";
+    String category = "전체";
+
+    assertThat(mapService.filteredPlaces(sido, sigungu, category)).isEqualTo(List.of());
+  }
+
+  @Test
+  void filterWithSidoAndSigunguConditionsAndFindPlaces() {
+    String sido = "경기";
+    String sigungu = "가평군";
+    String category = "전체";
+
+    assertThat(mapService.filteredPlaces(sido, sigungu, category))
+        .isEqualTo(List.of(new Place(2L, "설악", 37.434156D, 127.020126D, "경기도 가평군 설악면 미사리 320-1", "경기", "가평군",
+            "키즈존 맛집", businessHours1, imageSource1)));
+  }
+
+  @Test
+  void filterWithSidoAndSigunguConditionsAndFindNoPlaces() {
+    String sido = "충남";
+    String sigungu = "당진시";
+    String category = "전체";
+
+    assertThat(mapService.filteredPlaces(sido, sigungu, category)).isEqualTo(List.of());
+  }
+
+  @Test
+  void filterWithSidoAndCategoryConditionsAndFindPlaces() {
+    String sido = "경기";
+    String sigungu = "전체";
+    String category = "키즈존 맛집";
+
+    assertThat(mapService.filteredPlaces(sido, sigungu, category))
+        .isEqualTo(List.of(new Place(2L, "설악", 37.434156D, 127.020126D, "경기도 가평군 설악면 미사리 320-1", "경기", "가평군",
+            "키즈존 맛집", businessHours1, imageSource1)));
+  }
+
+  @Test
+  void filterWithSidoAndCategoryConditionsAndFindNoPlaces() {
+    String sido = "경기";
+    String sigungu = "전체";
+    String category = "유적지";
+
+    assertThat(mapService.filteredPlaces(sido, sigungu, category)).isEqualTo(List.of());
   }
 }

@@ -17,8 +17,11 @@ public class Place {
 
   private Double longitude;
 
-  @Embedded
-  private Address address;
+  private String fullAddress;
+
+  private String sido;
+
+  private String sigungu;
 
   private String category;
 
@@ -44,8 +47,16 @@ public class Place {
     return longitude;
   }
 
-  public Address address() {
-    return address;
+  public String fullAddress() {
+    return fullAddress;
+  }
+
+  public String sido() {
+    return sido;
+  }
+
+  public String sigungu() {
+    return sigungu;
   }
 
   public String category() {
@@ -63,14 +74,17 @@ public class Place {
   public Place() {
   }
 
+
   public Place(Long id, String name, Double latitude, Double longitude,
-               Address address, String category, BusinessHours businessHours,
-               ImageSource imageSource) {
+               String fullAddress, String sido, String sigungu, String category,
+               BusinessHours businessHours, ImageSource imageSource) {
     this.id = id;
     this.name = name;
     this.latitude = latitude;
     this.longitude = longitude;
-    this.address = address;
+    this.fullAddress = fullAddress;
+    this.sido = sido;
+    this.sigungu = sigungu;
     this.category = category;
     this.businessHours = businessHours;
     this.imageSource = imageSource;
@@ -78,18 +92,17 @@ public class Place {
 
   public PlaceDto toPlaceDto() {
     return new PlaceDto(id, name, latitude, longitude,
-        address.fullAddress(), address.sido(), address.sigungu(),
-        category, businessHours.monday(), businessHours.tuesday(), businessHours.wednesday(),
-        businessHours.thursday(), businessHours.friday(), businessHours.saturday(),
-        businessHours.sunday(), imageSource.firstImage(), imageSource.secondImage(),
-        imageSource.thirdImage());
+        fullAddress(), sido(), sigungu(), category, businessHours.monday(),
+        businessHours.tuesday(), businessHours.wednesday(), businessHours.thursday(),
+        businessHours.friday(), businessHours.saturday(), businessHours.sunday(),
+        imageSource.firstImage(), imageSource.secondImage(), imageSource.thirdImage());
   }
 
   @Override
   public String toString() {
     return "id: " + id + " name: " + name + " latitude: " + latitude + " longitude: "
-        + longitude + " Address" + address.fullAddress() + " " + address.sido() + " " +
-        address.sigungu() + " " + "category: " + category;
+        + longitude + " Address" + fullAddress() + " " + sido() + " " +
+        sigungu() + " " + "category: " + category;
   }
 
   @Override
@@ -100,7 +113,9 @@ public class Place {
         && name.equals(otherPlace.name())
         && latitude.equals(otherPlace.latitude())
         && longitude.equals(otherPlace.longitude())
-        && address.equals(otherPlace.address())
+        && fullAddress.equals(otherPlace.fullAddress)
+        && sido.equals(otherPlace.sido())
+        && sigungu.equals(otherPlace.sigungu())
         && category.equals(otherPlace.category())
         && businessHours.equals(otherPlace.businessHours())
         && imageSource.equals(otherPlace.imageSource());

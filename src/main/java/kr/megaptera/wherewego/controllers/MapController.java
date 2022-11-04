@@ -12,20 +12,11 @@ import java.util.*;
 @RestController
 @RequestMapping("map")
 public class MapController {
-  private MapService mapService;
+  private final MapService mapService;
 
   public MapController(MapService mapService) {
     this.mapService = mapService;
   }
-
-//  @GetMapping
-//  public PlacesDto places() {
-//    List<PlaceDto> places = mapService.places()
-//        .stream().map(Place::toPlaceDto)
-//        .toList();
-//
-//    return new PlacesDto(places);
-//  }
 
   @GetMapping
   public PlacesDto filteredPlaces(
@@ -43,6 +34,6 @@ public class MapController {
   @ExceptionHandler(FilteredResultsNotFound.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   public String filteredResultsNotFound() {
-    return "검색 결과가 없습니다";
+    return "검색 결과가 없습니다(알 수 없는 에러)";
   }
 }
