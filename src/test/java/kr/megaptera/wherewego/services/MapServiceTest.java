@@ -42,21 +42,29 @@ class MapServiceTest {
     );
 
     places = List.of(
-        new Place(1L, "과천 서울랜드", 37.434156D, 127.020126D, "경기도 과천시 광명로 181", "경기", "과천시", "자연", businessHours1, imageSource1),
-        new Place(2L, "설악", 37.434156D, 127.020126D, "경기도 가평군 설악면 미사리 320-1", "경기", "가평군", "키즈존 맛집", businessHours1, imageSource1),
-        new Place(3L, "좋은곳", 37.434156D, 127.020126D, "충청남도 아산시 용화동 483-6", "충청", "아산시", "유적지", businessHours1, imageSource1)
+        new Place(1L, "과천 서울랜드", 37.434156D, 127.020126D, "경기도 과천시 광명로 181",
+            "경기", "과천시", "자연", businessHours1, imageSource1),
+        new Place(2L, "설악", 37.434156D, 127.020126D, "경기도 가평군 설악면 미사리 320-1",
+            "경기", "가평군", "키즈존 맛집", businessHours1, imageSource1),
+        new Place(3L, "좋은곳", 37.434156D, 127.020126D, "충청남도 아산시 용화동 483-6",
+            "충청", "아산시", "유적지", businessHours1, imageSource1)
     );
 
     given(placeRepository.findAll()).willReturn(places);
 
     given(placeRepository.findAllBySido("경기"))
         .willReturn(
-            List.of(new Place(1L, "과천 서울랜드", 37.434156D, 127.020126D, "경기도 과천시 광명로 181", "경기", "과천시", "자연", businessHours1, imageSource1),
-                new Place(2L, "설악", 37.434156D, 127.020126D, "경기도 가평군 설악면 미사리 320-1", "경기", "가평군", "키즈존 맛집", businessHours1, imageSource1)));
+            List.of(new Place(1L, "과천 서울랜드", 37.434156D, 127.020126D,
+                    "경기도 과천시 광명로 181", "경기", "과천시", "자연",
+                    businessHours1, imageSource1),
+                new Place(2L, "설악", 37.434156D, 127.020126D,
+                    "경기도 가평군 설악면 미사리 320-1", "경기", "가평군", "키즈존 맛집",
+                    businessHours1, imageSource1)));
 
     given(placeRepository.findAllByCategory("키즈존 맛집"))
         .willReturn(
-            List.of(new Place(2L, "설악", 37.434156D, 127.020126D, "경기도 가평군 설악면 미사리 320-1", "경기", "가평군",
+            List.of(new Place(2L, "설악", 37.434156D, 127.020126D,
+                "경기도 가평군 설악면 미사리 320-1", "경기", "가평군",
                 "키즈존 맛집", businessHours1, imageSource1)));
   }
 
@@ -77,7 +85,8 @@ class MapServiceTest {
     String category = "키즈존 맛집";
 
     assertThat(mapService.filteredPlaces(sido, sigungu, category))
-        .isEqualTo(List.of(new Place(2L, "설악", 37.434156D, 127.020126D, "경기도 가평군 설악면 미사리 320-1", "경기", "가평군",
+        .isEqualTo(List.of(new Place(2L, "설악", 37.434156D, 127.020126D,
+            "경기도 가평군 설악면 미사리 320-1", "경기", "가평군",
         "키즈존 맛집", businessHours1, imageSource1)));
   }
 
@@ -87,7 +96,8 @@ class MapServiceTest {
     String sigungu = "홍천군";
     String category = "키즈존 맛집";
 
-    assertThat(mapService.filteredPlaces(sido, sigungu, category)).isEqualTo(List.of());
+    assertThat(mapService.filteredPlaces(sido, sigungu, category))
+        .isEqualTo(List.of());
   }
 
   @Test
@@ -98,8 +108,12 @@ class MapServiceTest {
 
     assertThat(mapService.filteredPlaces(sido, sigungu, category))
         .isEqualTo(List.of(
-            new Place(1L, "과천 서울랜드", 37.434156D, 127.020126D, "경기도 과천시 광명로 181", "경기", "과천시", "자연", businessHours1, imageSource1),
-            new Place(2L, "설악", 37.434156D, 127.020126D, "경기도 가평군 설악면 미사리 320-1", "경기", "가평군", "키즈존 맛집", businessHours1, imageSource1)
+            new Place(1L, "과천 서울랜드", 37.434156D, 127.020126D,
+                "경기도 과천시 광명로 181", "경기", "과천시", "자연",
+                businessHours1, imageSource1),
+            new Place(2L, "설악", 37.434156D, 127.020126D,
+                "경기도 가평군 설악면 미사리 320-1", "경기", "가평군", "키즈존 맛집",
+                businessHours1, imageSource1)
         ));
   }
 
@@ -109,7 +123,8 @@ class MapServiceTest {
     String sigungu = "전체";
     String category = "전체";
 
-    assertThat(mapService.filteredPlaces(sido, sigungu, category)).isEqualTo(List.of());
+    assertThat(mapService.filteredPlaces(sido, sigungu, category))
+        .isEqualTo(List.of());
   }
 
   @Test
@@ -119,7 +134,8 @@ class MapServiceTest {
     String category = "전체";
 
     assertThat(mapService.filteredPlaces(sido, sigungu, category))
-        .isEqualTo(List.of(new Place(2L, "설악", 37.434156D, 127.020126D, "경기도 가평군 설악면 미사리 320-1", "경기", "가평군",
+        .isEqualTo(List.of(new Place(2L, "설악", 37.434156D, 127.020126D,
+            "경기도 가평군 설악면 미사리 320-1", "경기", "가평군",
             "키즈존 맛집", businessHours1, imageSource1)));
   }
 
@@ -129,7 +145,8 @@ class MapServiceTest {
     String sigungu = "당진시";
     String category = "전체";
 
-    assertThat(mapService.filteredPlaces(sido, sigungu, category)).isEqualTo(List.of());
+    assertThat(mapService.filteredPlaces(sido, sigungu, category))
+        .isEqualTo(List.of());
   }
 
   @Test
@@ -139,7 +156,8 @@ class MapServiceTest {
     String category = "키즈존 맛집";
 
     assertThat(mapService.filteredPlaces(sido, sigungu, category))
-        .isEqualTo(List.of(new Place(2L, "설악", 37.434156D, 127.020126D, "경기도 가평군 설악면 미사리 320-1", "경기", "가평군",
+        .isEqualTo(List.of(new Place(2L, "설악", 37.434156D, 127.020126D,
+            "경기도 가평군 설악면 미사리 320-1", "경기", "가평군",
             "키즈존 맛집", businessHours1, imageSource1)));
   }
 
@@ -149,6 +167,19 @@ class MapServiceTest {
     String sigungu = "전체";
     String category = "유적지";
 
-    assertThat(mapService.filteredPlaces(sido, sigungu, category)).isEqualTo(List.of());
+    assertThat(mapService.filteredPlaces(sido, sigungu, category))
+        .isEqualTo(List.of());
+  }
+
+  @ Test
+  void filterWithOnlyCategoryConditionsAndFindPlaces() {
+    String sido = "전체";
+    String sigungu = "전체";
+    String category = "키즈존 맛집";
+
+    assertThat(mapService.filteredPlaces(sido, sigungu, category))
+        .isEqualTo(List.of(new Place(2L, "설악", 37.434156D, 127.020126D,
+            "경기도 가평군 설악면 미사리 320-1", "경기", "가평군",
+            "키즈존 맛집", businessHours1, imageSource1)));
   }
 }
