@@ -31,6 +31,18 @@ public class MapController {
     return new PlacesDto(places);
   }
 
+  @ExceptionHandler(RegionFilterNotSelected.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public String regionFilterNotSelected() {
+    return "가고싶은 지역을 선택해주세요!";
+  }
+
+  @ExceptionHandler(CategoryFilterNotSelected.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public String categoryFilterNotSelected() {
+    return "가고싶은 장소의 유형을 선택해주세요!";
+  }
+
   @ExceptionHandler(FilteredResultsNotFound.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   public String filteredResultsNotFound() {
