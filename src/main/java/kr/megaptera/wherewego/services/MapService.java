@@ -66,6 +66,13 @@ public class MapService {
               && value.category().equals(category))
           .collect(Collectors.toList());
     }
+
+    // 6. 시도 전체, 시군구 전체, 카테고리는 선택
+    if(sido.equals("전체") && sigungu.equals("전체") && !category.equals("전체")) {
+        return result.stream()
+            .filter(value -> value.category().equals(category))
+            .collect(Collectors.toList());
+    }
     return result;
   }
 }
