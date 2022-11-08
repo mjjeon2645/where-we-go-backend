@@ -1,6 +1,5 @@
 package kr.megaptera.wherewego.dtos;
 
-
 public class ImageSourceDto {
   private Long placeId;
 
