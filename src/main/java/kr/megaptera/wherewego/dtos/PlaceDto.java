@@ -1,5 +1,7 @@
 package kr.megaptera.wherewego.dtos;
 
+import kr.megaptera.wherewego.models.*;
+
 public class PlaceDto {
   private Long placeId;
 
@@ -9,60 +11,28 @@ public class PlaceDto {
 
   private Double longitude;
 
-  private String fullAddress;
-
-  private String sido;
-
-  private String sigungu;
+  private AddressDto address;
 
   private String category;
 
-  private String monday;
+  private BusinessHoursDto businessHours;
 
-  private String tuesday;
+  private ImageSourceDto imageSource;
 
-  private String wednesday;
-
-  private String thursday;
-
-  private String friday;
-
-  private String saturday;
-
-  private String sunday;
-
-  private String firstImage;
-
-  private String secondImage;
-
-  private String thirdImage;
-
-  public PlaceDto() {
-  }
-
-  public PlaceDto(Long placeId, String name, Double latitude, Double longitude,
-                  String fullAddress, String sido, String sigungu, String category,
-                  String monday, String tuesday, String wednesday, String thursday,
-                  String friday, String saturday, String sunday, String firstImage,
-                  String secondImage, String thirdImage) {
-    this.placeId = placeId;
+  public PlaceDto(Long id, String name, Double latitude, Double longitude,
+                  AddressDto addressDto, String category, BusinessHoursDto businessHoursDto,
+                  ImageSourceDto imageSourceDto) {
+    this.placeId = id;
     this.name = name;
     this.latitude = latitude;
     this.longitude = longitude;
-    this.fullAddress = fullAddress;
-    this.sido = sido;
-    this.sigungu = sigungu;
+    this.address = addressDto;
     this.category = category;
-    this.monday = monday;
-    this.tuesday = tuesday;
-    this.wednesday = wednesday;
-    this.thursday = thursday;
-    this.friday = friday;
-    this.saturday = saturday;
-    this.sunday = sunday;
-    this.firstImage = firstImage;
-    this.secondImage = secondImage;
-    this.thirdImage = thirdImage;
+    this.businessHours = businessHoursDto;
+    this.imageSource = imageSourceDto;
+  }
+
+  public PlaceDto() {
   }
 
   public Long getPlaceId() {
@@ -81,59 +51,25 @@ public class PlaceDto {
     return longitude;
   }
 
-  public String getFullAddress() {
-    return fullAddress;
-  }
-
-  public String getSido() {
-    return sido;
-  }
-
-  public String getSigungu() {
-    return sigungu;
+  public AddressDto getAddress() {
+    return address;
   }
 
   public String getCategory() {
     return category;
   }
 
-  public String getMonday() {
-    return monday;
+  public BusinessHoursDto getBusinessHours() {
+    return businessHours;
   }
 
-  public String getTuesday() {
-    return tuesday;
+  public ImageSourceDto getImageSource() {
+    return imageSource;
   }
 
-  public String getWednesday() {
-    return wednesday;
-  }
-
-  public String getThursday() {
-    return thursday;
-  }
-
-  public String getFriday() {
-    return friday;
-  }
-
-  public String getSaturday() {
-    return saturday;
-  }
-
-  public String getSunday() {
-    return sunday;
-  }
-
-  public String getFirstImage() {
-    return firstImage;
-  }
-
-  public String getSecondImage() {
-    return secondImage;
-  }
-
-  public String getThirdImage() {
-    return thirdImage;
+  @Override
+  public String toString() {
+    return "placeId: " + placeId + " name: " + name + " latitude: " + latitude + " longitude: "
+        + longitude + " Address" + address.toString() + " " + "category: " + category;
   }
 }

@@ -12,6 +12,8 @@ import static org.mockito.BDDMockito.*;
 class MapServiceTest {
   private PlaceRepository placeRepository;
   private MapService mapService;
+  private Address address1;
+  private Address address2;
   private BusinessHours businessHours1;
   private ImageSource imageSource1;
   private List<Place> places;
@@ -22,49 +24,45 @@ class MapServiceTest {
     placeRepository = mock(PlaceRepository.class);
     mapService = new MapService(placeRepository);
 
+    address1 = new Address(1L, "경기도 과천시 광명로 181", "경기", "과천시");
+    address2 = new Address(2L, "경기도 가평군 설악면 미사리 320-1", "경기", "가평군");
 
     businessHours1 = new BusinessHours(
+        1L,
         "월요일: 10:01~18:00",
         "화요일: 10:02~18:00",
         "수요일: 10:03~18:00",
         "목요일: 10:04~18:00",
         "금요일: 10:05~18:00",
         "토요일: 10:06~18:00",
-        "일요일: 10:07~18:00",
-        1L
+        "일요일: 10:07~18:00"
     );
 
     imageSource1 = new ImageSource(
+        1L,
         "https://user-images.githubusercontent.com/104840243/198858240-ef8949d2-c294-4ab8-8a4c-fc42717bee8e.png",
         "https://user-images.githubusercontent.com/104840243/198858244-29a83802-3ebe-42c8-894a-151c0962b8da.png",
-        "https://user-images.githubusercontent.com/104840243/198858249-0e5eb65b-1a68-4549-bace-b906aa550413.png",
-        1L
+        "https://user-images.githubusercontent.com/104840243/198858249-0e5eb65b-1a68-4549-bace-b906aa550413.png"
     );
 
     places = List.of(
-        new Place(1L, "과천 서울랜드", 37.434156D, 127.020126D, "경기도 과천시 광명로 181",
-            "경기", "과천시", "자연", businessHours1, imageSource1),
-        new Place(2L, "설악", 37.434156D, 127.020126D, "경기도 가평군 설악면 미사리 320-1",
-            "경기", "가평군", "키즈존 맛집", businessHours1, imageSource1),
-        new Place(3L, "좋은곳", 37.434156D, 127.020126D, "충청남도 아산시 용화동 483-6",
-            "충청", "아산시", "유적지", businessHours1, imageSource1)
+        new Place(1L, "과천 서울랜드", 37.434156D, 127.020126D, address1, "자연", businessHours1, imageSource1),
+        new Place(2L, "설악", 37.434156D, 127.020126D, address1, "키즈존 맛집", businessHours1, imageSource1),
+        new Place(3L, "좋은곳", 37.434156D, 127.020126D, address1, "유적지", businessHours1, imageSource1)
     );
 
     given(placeRepository.findAll()).willReturn(places);
 
-    given(placeRepository.findAllBySido("경기"))
+    given(placeRepository.findByAddressSido("경기"))
         .willReturn(
-            List.of(new Place(1L, "과천 서울랜드", 37.434156D, 127.020126D,
-                    "경기도 과천시 광명로 181", "경기", "과천시", "자연",
-                    businessHours1, imageSource1),
-                new Place(2L, "설악", 37.434156D, 127.020126D,
-                    "경기도 가평군 설악면 미사리 320-1", "경기", "가평군", "키즈존 맛집",
+            List.of(new Place(1L, "과천 서울랜드", 37.434156D, 127.020126D, address1,
+                    "자연", businessHours1, imageSource1),
+                new Place(2L, "설악", 37.434156D, 127.020126D, address2, "키즈존 맛집",
                     businessHours1, imageSource1)));
 
-    given(placeRepository.findAllByCategory("키즈존 맛집"))
+    given(placeRepository.findByCategory("키즈존 맛집"))
         .willReturn(
-            List.of(new Place(2L, "설악", 37.434156D, 127.020126D,
-                "경기도 가평군 설악면 미사리 320-1", "경기", "가평군",
+            List.of(new Place(2L, "설악", 37.434156D, 127.020126D, address2,
                 "키즈존 맛집", businessHours1, imageSource1)));
   }
 
@@ -86,8 +84,7 @@ class MapServiceTest {
 
     assertThat(mapService.filteredPlaces(sido, sigungu, category))
         .isEqualTo(List.of(new Place(2L, "설악", 37.434156D, 127.020126D,
-            "경기도 가평군 설악면 미사리 320-1", "경기", "가평군",
-        "키즈존 맛집", businessHours1, imageSource1)));
+            address2, "키즈존 맛집", businessHours1, imageSource1)));
   }
 
   @Test
@@ -109,11 +106,9 @@ class MapServiceTest {
     assertThat(mapService.filteredPlaces(sido, sigungu, category))
         .isEqualTo(List.of(
             new Place(1L, "과천 서울랜드", 37.434156D, 127.020126D,
-                "경기도 과천시 광명로 181", "경기", "과천시", "자연",
-                businessHours1, imageSource1),
+               address1, "자연", businessHours1, imageSource1),
             new Place(2L, "설악", 37.434156D, 127.020126D,
-                "경기도 가평군 설악면 미사리 320-1", "경기", "가평군", "키즈존 맛집",
-                businessHours1, imageSource1)
+                address2, "키즈존 맛집", businessHours1, imageSource1)
         ));
   }
 
@@ -135,8 +130,7 @@ class MapServiceTest {
 
     assertThat(mapService.filteredPlaces(sido, sigungu, category))
         .isEqualTo(List.of(new Place(2L, "설악", 37.434156D, 127.020126D,
-            "경기도 가평군 설악면 미사리 320-1", "경기", "가평군",
-            "키즈존 맛집", businessHours1, imageSource1)));
+            address2, "키즈존 맛집", businessHours1, imageSource1)));
   }
 
   @Test
@@ -157,8 +151,7 @@ class MapServiceTest {
 
     assertThat(mapService.filteredPlaces(sido, sigungu, category))
         .isEqualTo(List.of(new Place(2L, "설악", 37.434156D, 127.020126D,
-            "경기도 가평군 설악면 미사리 320-1", "경기", "가평군",
-            "키즈존 맛집", businessHours1, imageSource1)));
+            address2, "키즈존 맛집", businessHours1, imageSource1)));
   }
 
   @Test
@@ -179,7 +172,6 @@ class MapServiceTest {
 
     assertThat(mapService.filteredPlaces(sido, sigungu, category))
         .isEqualTo(List.of(new Place(2L, "설악", 37.434156D, 127.020126D,
-            "경기도 가평군 설악면 미사리 320-1", "경기", "가평군",
-            "키즈존 맛집", businessHours1, imageSource1)));
+            address2, "키즈존 맛집", businessHours1, imageSource1)));
   }
 }

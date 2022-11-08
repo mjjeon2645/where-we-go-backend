@@ -8,6 +8,7 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.stream.*;
 
 @RestController
 @RequestMapping("map")
@@ -25,8 +26,11 @@ public class MapController {
       @RequestParam(required = false, defaultValue = "전체") String category
   ) {
     List<PlaceDto> places = mapService.filteredPlaces(sido, sigungu, category)
-        .stream().map(Place::toPlaceDto)
-        .toList();
+        .stream().map(Place::toPlaceDto).collect(Collectors.toList());
+
+    for (PlaceDto place : places) {
+      System.out.println(place);
+    }
 
     return new PlacesDto(places);
   }
