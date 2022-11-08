@@ -1,7 +1,5 @@
 package kr.megaptera.wherewego.dtos;
 
-import kr.megaptera.wherewego.models.*;
-
 public class PlaceDto {
   private Long placeId;
 

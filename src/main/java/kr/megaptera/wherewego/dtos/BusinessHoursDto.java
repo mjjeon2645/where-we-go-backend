@@ -1,7 +1,5 @@
 package kr.megaptera.wherewego.dtos;
 
-import javax.persistence.*;
-
 public class BusinessHoursDto {
   private Long placeId;
 

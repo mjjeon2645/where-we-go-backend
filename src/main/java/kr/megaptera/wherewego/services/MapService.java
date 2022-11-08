@@ -6,7 +6,6 @@ import kr.megaptera.wherewego.repositories.*;
 import org.springframework.stereotype.*;
 import org.springframework.transaction.annotation.*;
 
-import java.sql.*;
 import java.util.*;
 import java.util.stream.*;
 
