@@ -17,11 +17,8 @@ public class Place {
 
   private Double longitude;
 
-  private String fullAddress;
-
-  private String sido;
-
-  private String sigungu;
+  @Embedded
+  private Address address;
 
   private String category;
 
@@ -30,6 +27,47 @@ public class Place {
 
   @Embedded
   private ImageSource imageSource;
+
+  public Place() {
+  }
+
+  public Place(Long id, String name, Double latitude, Double longitude,
+               Address address, String category, BusinessHours businessHours,
+               ImageSource imageSource) {
+    this.id = id;
+    this.name = name;
+    this.latitude = latitude;
+    this.longitude = longitude;
+    this.address = address;
+    this.category = category;
+    this.businessHours = businessHours;
+    this.imageSource = imageSource;
+  }
+
+  public PlaceDto toPlaceDto() {
+    return new PlaceDto(id, name, latitude, longitude,
+        address.toDto(), category, businessHours.toDto(), imageSource.toDto());
+  }
+
+  @Override
+  public String toString() {
+    return "id: " + id + " name: " + name + " latitude: " + latitude + " longitude: "
+        + longitude + " Address" + address() + " " + "category: " + category;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    Place otherPlace = (Place) other;
+
+    return id.equals(otherPlace.id())
+        && name.equals(otherPlace.name())
+        && latitude.equals(otherPlace.latitude())
+        && longitude.equals(otherPlace.longitude())
+        && address.equals(otherPlace.address)
+        && category.equals(otherPlace.category())
+        && businessHours.equals(otherPlace.businessHours())
+        && imageSource.equals(otherPlace.imageSource());
+  }
 
   public Long id() {
     return id;
@@ -47,16 +85,8 @@ public class Place {
     return longitude;
   }
 
-  public String fullAddress() {
-    return fullAddress;
-  }
-
-  public String sido() {
-    return sido;
-  }
-
-  public String sigungu() {
-    return sigungu;
+  public Address address() {
+    return address;
   }
 
   public String category() {
@@ -69,55 +99,5 @@ public class Place {
 
   public ImageSource imageSource() {
     return imageSource;
-  }
-
-  public Place() {
-  }
-
-
-  public Place(Long id, String name, Double latitude, Double longitude,
-               String fullAddress, String sido, String sigungu, String category,
-               BusinessHours businessHours, ImageSource imageSource) {
-    this.id = id;
-    this.name = name;
-    this.latitude = latitude;
-    this.longitude = longitude;
-    this.fullAddress = fullAddress;
-    this.sido = sido;
-    this.sigungu = sigungu;
-    this.category = category;
-    this.businessHours = businessHours;
-    this.imageSource = imageSource;
-  }
-
-  public PlaceDto toPlaceDto() {
-    return new PlaceDto(id, name, latitude, longitude,
-        fullAddress(), sido(), sigungu(), category, businessHours.monday(),
-        businessHours.tuesday(), businessHours.wednesday(), businessHours.thursday(),
-        businessHours.friday(), businessHours.saturday(), businessHours.sunday(),
-        imageSource.firstImage(), imageSource.secondImage(), imageSource.thirdImage());
-  }
-
-  @Override
-  public String toString() {
-    return "id: " + id + " name: " + name + " latitude: " + latitude + " longitude: "
-        + longitude + " Address" + fullAddress() + " " + sido() + " " +
-        sigungu() + " " + "category: " + category;
-  }
-
-  @Override
-  public boolean equals(Object other) {
-    Place otherPlace = (Place) other;
-
-    return id.equals(otherPlace.id())
-        && name.equals(otherPlace.name())
-        && latitude.equals(otherPlace.latitude())
-        && longitude.equals(otherPlace.longitude())
-        && fullAddress.equals(otherPlace.fullAddress)
-        && sido.equals(otherPlace.sido())
-        && sigungu.equals(otherPlace.sigungu())
-        && category.equals(otherPlace.category())
-        && businessHours.equals(otherPlace.businessHours())
-        && imageSource.equals(otherPlace.imageSource());
   }
 }

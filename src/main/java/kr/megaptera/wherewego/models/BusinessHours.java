@@ -1,9 +1,13 @@
 package kr.megaptera.wherewego.models;
 
+import kr.megaptera.wherewego.dtos.*;
+
 import javax.persistence.*;
 
 @Embeddable
 public class BusinessHours {
+  @Column(name = "place_id", insertable = false, updatable = false)
+  private Long placeId;
 
   @Column(name = "monday")
   private String monday;
@@ -26,15 +30,13 @@ public class BusinessHours {
   @Column(name = "sunday")
   private String sunday;
 
-  @Column(name = "place_id", insertable = false, updatable = false)
-  private Long placeId;
-
   public BusinessHours() {
   }
 
-  public BusinessHours(String monday, String tuesday, String wednesday,
+  public BusinessHours(Long placeId, String monday, String tuesday, String wednesday,
                        String thursday, String friday, String saturday,
-                       String sunday, Long placeId) {
+                       String sunday) {
+    this.placeId = placeId;
     this.monday = monday;
     this.tuesday = tuesday;
     this.wednesday = wednesday;
@@ -42,7 +44,10 @@ public class BusinessHours {
     this.friday = friday;
     this.saturday = saturday;
     this.sunday = sunday;
-    this.placeId = placeId;
+  }
+
+  public Long placeId() {
+    return placeId;
   }
 
   public String monday() {
@@ -73,10 +78,6 @@ public class BusinessHours {
     return sunday;
   }
 
-  public Long placeId() {
-    return placeId;
-  }
-
   @Override
   public boolean equals(Object other) {
     BusinessHours otherBusinessHours = (BusinessHours) other;
@@ -89,5 +90,10 @@ public class BusinessHours {
         && saturday.equals(otherBusinessHours.saturday())
         && sunday.equals(otherBusinessHours.sunday())
         && placeId.equals(otherBusinessHours.placeId());
+  }
+
+  public BusinessHoursDto toDto() {
+    return new BusinessHoursDto(placeId, monday, tuesday, wednesday, thursday,
+        friday, saturday, sunday);
   }
 }
