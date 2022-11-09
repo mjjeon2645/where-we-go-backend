@@ -49,6 +49,16 @@ public class Place {
         address.toDto(), category, businessHours.toDto(), imageSource.toDto());
   }
 
+  public Place fake() {
+    Address address = new Address();
+    BusinessHours businessHours = new BusinessHours();
+
+    ImageSource imageSource = new ImageSource();
+
+    return new Place(1L, "과천 서울랜드", 37.434156D, 127.020126D, address.fake(),
+        "자연", businessHours.fake(), imageSource.fake());
+  }
+
   @Override
   public String toString() {
     return "id: " + id + " name: " + name + " latitude: " + latitude + " longitude: "

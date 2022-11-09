@@ -28,10 +28,6 @@ public class MapController {
         List<PlaceDto> places = mapService.filteredPlaces(sido, sigungu, category)
             .stream().map(Place::toPlaceDto).collect(Collectors.toList());
 
-        for (PlaceDto place : places) {
-            System.out.println(place);
-        }
-
         return new PlacesDto(places);
     }
 

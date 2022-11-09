@@ -64,6 +64,9 @@ class MapServiceTest {
         .willReturn(
             List.of(new Place(2L, "설악", 37.434156D, 127.020126D, address2,
                 "키즈존 맛집", businessHours1, imageSource1)));
+
+    Place place = new Place();
+    given(placeRepository.findById(1L)).willReturn(Optional.ofNullable(place.fake()));
   }
 
   @Test
@@ -173,5 +176,14 @@ class MapServiceTest {
     assertThat(mapService.filteredPlaces(sido, sigungu, category))
         .isEqualTo(List.of(new Place(2L, "설악", 37.434156D, 127.020126D,
             address2, "키즈존 맛집", businessHours1, imageSource1)));
+  }
+
+  @Test
+  void selectedPlace() {
+    Long placeId = 1L;
+
+    Place place = new Place();
+
+    assertThat(mapService.selectedPlace(placeId)).isEqualTo(place.fake());
   }
 }
