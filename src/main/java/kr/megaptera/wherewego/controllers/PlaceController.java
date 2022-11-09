@@ -7,6 +7,9 @@ import kr.megaptera.wherewego.services.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.*;
+import java.util.stream.*;
+
 @RestController
 @RequestMapping("places")
 public class PlaceController {
@@ -15,6 +18,19 @@ public class PlaceController {
     public PlaceController(MapService mapService) {
         this.mapService = mapService;
     }
+
+    // API 고민중
+//    @GetMapping
+//    public PlacesDto filteredPlaces(
+//        @RequestParam(required = false, defaultValue = "전체") String sido,
+//        @RequestParam(required = false, defaultValue = "전체") String sigungu,
+//        @RequestParam(required = false, defaultValue = "전체") String category
+//    ) {
+//        List<PlaceDto> places = mapService.filteredPlaces(sido, sigungu, category)
+//            .stream().map(Place::toPlaceDto).collect(Collectors.toList());
+//
+//        return new PlacesDto(places);
+//    }
 
     @GetMapping("{id}")
     public PlaceDto selectedPlace(

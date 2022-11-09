@@ -5,9 +5,7 @@ public class PlaceDto {
 
   private String name;
 
-  private Double latitude;
-
-  private Double longitude;
+  private PositionDto position;
 
   private AddressDto address;
 
@@ -17,20 +15,25 @@ public class PlaceDto {
 
   private ImageSourceDto imageSource;
 
-  public PlaceDto(Long id, String name, Double latitude, Double longitude,
-                  AddressDto addressDto, String category, BusinessHoursDto businessHoursDto,
-                  ImageSourceDto imageSourceDto) {
-    this.placeId = id;
-    this.name = name;
-    this.latitude = latitude;
-    this.longitude = longitude;
-    this.address = addressDto;
-    this.category = category;
-    this.businessHours = businessHoursDto;
-    this.imageSource = imageSourceDto;
-  }
+  private PlaceServicesDto placeServices;
+
+  private ContactDto contact;
 
   public PlaceDto() {
+  }
+
+  public PlaceDto(Long placeId, String name, PositionDto position, AddressDto address,
+                  String category, BusinessHoursDto businessHours, ImageSourceDto imageSource,
+                  PlaceServicesDto placeServices, ContactDto contact) {
+    this.placeId = placeId;
+    this.name = name;
+    this.position = position;
+    this.address = address;
+    this.category = category;
+    this.businessHours = businessHours;
+    this.imageSource = imageSource;
+    this.placeServices = placeServices;
+    this.contact = contact;
   }
 
   public Long getPlaceId() {
@@ -41,12 +44,8 @@ public class PlaceDto {
     return name;
   }
 
-  public Double getLatitude() {
-    return latitude;
-  }
-
-  public Double getLongitude() {
-    return longitude;
+  public PositionDto getPosition() {
+    return position;
   }
 
   public AddressDto getAddress() {
@@ -65,9 +64,19 @@ public class PlaceDto {
     return imageSource;
   }
 
+  public PlaceServicesDto getPlaceServices() {
+    return placeServices;
+  }
+
+  public ContactDto getContact() {
+    return contact;
+  }
+
   @Override
   public String toString() {
-    return "placeId: " + placeId + " name: " + name + " latitude: " + latitude + " longitude: "
-        + longitude + " Address" + address.toString() + " " + "category: " + category;
+    return "placeId: " + placeId + " name: " + name + " position: " + position +
+        " Address" + address.toString() + " " + "category: " + category +
+        " BusinessHours: " + businessHours.toString() + " imageSource: " + imageSource.toString()
+        + " PlaceServices: " + placeServices.toString() + "contact: " + contact.toString();
   }
 }
