@@ -25,8 +25,12 @@ public class Address {
     this.sigungu = sigungu;
   }
 
-  public Address fake() {
-    return new Address(2L, "경기도 가평군 설악면 미사리 320-1", "경기", "가평군");
+  public static Address fake1() {
+    return new Address(1L, "경기도 과천시 블라블라", "경기", "과천시");
+  }
+
+  public static Address fake2() {
+    return new Address(2L, "서울시 성동구", "서울", "성동구");
   }
 
   public Long placeId() {
@@ -57,5 +61,10 @@ public class Address {
         && fullAddress.equals(otherAddress.fullAddress())
         && sido.equals(otherAddress.sido())
         && sigungu.equals(otherAddress.sigungu());
+  }
+
+  @Override
+  public String toString() {
+    return "placeid: " + placeId + " sido: " + sido + " sigungu: " + sigungu;
   }
 }

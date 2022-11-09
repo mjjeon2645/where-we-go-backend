@@ -22,14 +22,14 @@ class PlaceControllerTest {
     @MockBean
     private MapService mapService;
 
-//    @MockBean
-//    private PlaceRepository placeRepository;
+    @MockBean
+    private PlaceRepository placeRepository;
 
     @BeforeEach
     void setUp() {
         Place place = new Place();
 
-        given(mapService.selectedPlace(1L)).willReturn(place.fake());
+        given(mapService.selectedPlace(1L)).willReturn(place.fake1(1L, "자연"));
     }
 
     @Test

@@ -9,25 +9,18 @@ public class BusinessHours {
   @Column(name = "place_id", insertable = false, updatable = false)
   private Long placeId;
 
-  @Column(name = "monday")
   private String monday;
 
-  @Column(name = "tuesday")
   private String tuesday;
 
-  @Column(name = "wednesday")
   private String wednesday;
 
-  @Column(name = "thursday")
   private String thursday;
 
-  @Column(name = "friday")
   private String friday;
 
-  @Column(name = "saturday")
   private String saturday;
 
-  @Column(name = "sunday")
   private String sunday;
 
   public BusinessHours() {
@@ -46,7 +39,12 @@ public class BusinessHours {
     this.sunday = sunday;
   }
 
-  public BusinessHours fake() {
+  public BusinessHoursDto toDto() {
+    return new BusinessHoursDto(placeId, monday, tuesday, wednesday, thursday,
+        friday, saturday, sunday);
+  }
+
+  public static BusinessHours fake() {
     return new BusinessHours(
         1L,
         "월요일: 10:01~18:00",
@@ -92,6 +90,13 @@ public class BusinessHours {
   }
 
   @Override
+  public String toString() {
+    return "placeId: " + placeId + " monday: " + monday + " tuesday: " + tuesday +
+        " wednesday: " + wednesday + " thursday: " + thursday + " friday: " + friday +
+        " saturday: " + saturday + " sunday: " + sunday;
+  }
+
+  @Override
   public boolean equals(Object other) {
     BusinessHours otherBusinessHours = (BusinessHours) other;
 
@@ -103,10 +108,5 @@ public class BusinessHours {
         && saturday.equals(otherBusinessHours.saturday())
         && sunday.equals(otherBusinessHours.sunday())
         && placeId.equals(otherBusinessHours.placeId());
-  }
-
-  public BusinessHoursDto toDto() {
-    return new BusinessHoursDto(placeId, monday, tuesday, wednesday, thursday,
-        friday, saturday, sunday);
   }
 }
