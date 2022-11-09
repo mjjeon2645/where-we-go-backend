@@ -28,6 +28,19 @@ public class ImageSource {
     this.thirdImage = thirdImage;
   }
 
+  public ImageSource fake() {
+    return new ImageSource(
+        1L,
+        "https://user-images.githubusercontent.com/104840243/198858240-ef8949d2-c294-4ab8-8a4c-fc42717bee8e.png",
+        "https://user-images.githubusercontent.com/104840243/198858244-29a83802-3ebe-42c8-894a-151c0962b8da.png",
+        "https://user-images.githubusercontent.com/104840243/198858249-0e5eb65b-1a68-4549-bace-b906aa550413.png"
+    );
+  }
+
+  public ImageSourceDto toDto() {
+    return new ImageSourceDto(placeId, firstImage, secondImage, thirdImage);
+  }
+
   public Long placeId() {
     return placeId;
   }
@@ -52,9 +65,5 @@ public class ImageSource {
         && secondImage.equals(otherImageSource.secondImage())
         && thirdImage.equals(otherImageSource.thirdImage())
         && placeId.equals(otherImageSource.placeId());
-  }
-
-  public ImageSourceDto toDto() {
-    return new ImageSourceDto(placeId, firstImage, secondImage, thirdImage);
   }
 }

@@ -25,6 +25,10 @@ public class Address {
     this.sigungu = sigungu;
   }
 
+  public Address fake() {
+    return new Address(2L, "경기도 가평군 설악면 미사리 320-1", "경기", "가평군");
+  }
+
   public Long placeId() {
     return placeId;
   }

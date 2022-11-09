@@ -46,6 +46,19 @@ public class BusinessHours {
     this.sunday = sunday;
   }
 
+  public BusinessHours fake() {
+    return new BusinessHours(
+        1L,
+        "월요일: 10:01~18:00",
+        "화요일: 10:02~18:00",
+        "수요일: 10:03~18:00",
+        "목요일: 10:04~18:00",
+        "금요일: 10:05~18:00",
+        "토요일: 10:06~18:00",
+        "일요일: 10:07~18:00"
+    );
+  }
+
   public Long placeId() {
     return placeId;
   }

@@ -76,4 +76,8 @@ public class MapService {
     }
     return result;
   }
+
+  public Place selectedPlace(Long id) {
+    return placeRepository.findById(id).orElseThrow(() -> new SelectedPlaceNotFound());
+  }
 }
