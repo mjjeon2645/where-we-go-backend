@@ -48,4 +48,14 @@ public class Address {
   public AddressDto toDto() {
     return new AddressDto(placeId, fullAddress, sido, sigungu);
   }
+
+  @Override
+  public boolean equals(Object other) {
+    Address otherAddress = (Address) other;
+
+    return placeId.equals(otherAddress.placeId())
+        && fullAddress.equals(otherAddress.fullAddress())
+        && sido.equals(otherAddress.sido())
+        && sigungu.equals(otherAddress.sigungu());
+  }
 }
