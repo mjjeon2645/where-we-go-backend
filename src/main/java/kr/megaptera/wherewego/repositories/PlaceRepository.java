@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.*;
 import java.util.*;
 
 public interface PlaceRepository extends JpaRepository<Place, Long> {
-  List<Place> findByCategory(String category);
+    List<Place> findByCategory(String category);
 
-  List<Place> findByAddressSido(String sido);
+    List<Place> findByAddressSido(String sido);
 }
