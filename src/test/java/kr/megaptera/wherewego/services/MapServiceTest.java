@@ -31,14 +31,14 @@ class MapServiceTest {
 
     given(placeRepository.findAll()).willReturn(places);
 
-    given(placeRepository.findByAddressSido("경기")).willReturn(List.of(place.fake1(1L, "자연")));
+    given(placeRepository.findAllByAddressSido("경기")).willReturn(List.of(place.fake1(1L, "자연")));
 
-    given(placeRepository.findByAddressSido("서울")).willReturn(List.of(place.fake2(2L, "키즈존 맛집")));
+    given(placeRepository.findAllByAddressSido("서울")).willReturn(List.of(place.fake2(2L, "키즈존 맛집")));
 
-    given(placeRepository.findByCategory("자연"))
+    given(placeRepository.findAllByCategory("자연"))
         .willReturn(List.of(place.fake1(1L, "자연")));
 
-    given(placeRepository.findByCategory("키즈존 맛집"))
+    given(placeRepository.findAllByCategory("키즈존 맛집"))
         .willReturn(List.of(place.fake2(2L, "키즈존 맛집")));
 
     given(placeRepository.findById(1L)).willReturn(Optional.ofNullable(place.fake1(1L, "자연")));

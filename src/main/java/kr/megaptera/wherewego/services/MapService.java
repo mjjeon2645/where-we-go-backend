@@ -39,7 +39,7 @@ public class MapService {
 
     // 2. 모든 옵션을 다 선택했을 경우
     if (!sido.equals("전체") && !sigungu.equals("전체") && !category.equals("전체")) {
-      List<Place> filteredByCategory = new ArrayList<>(placeRepository.findByCategory(category));
+      List<Place> filteredByCategory = new ArrayList<>(placeRepository.findAllByCategory(category));
 
       return filteredByCategory.stream()
           .filter(value -> value.address().sido().equals(sido)
@@ -49,12 +49,12 @@ public class MapService {
 
     // 3. 시도만 선택(시도 선택, 시군구는 "전체", 카테고리도 전체)
     if (!sido.equals("전체") && sigungu.equals("전체") && category.equals("전체")) {
-      return new ArrayList<>(placeRepository.findByAddressSido(sido));
+      return new ArrayList<>(placeRepository.findAllByAddressSido(sido));
     }
 
     // 4. 시도 선택, 시군구도 선택, 카테고리는 전체
     if (!sido.equals("전체") && !sigungu.equals("전체") && category.equals("전체")) {
-      List<Place> filteredBySido = new ArrayList<>(placeRepository.findByAddressSido(sido));
+      List<Place> filteredBySido = new ArrayList<>(placeRepository.findAllByAddressSido(sido));
 
       return filteredBySido.stream()
           .filter(value -> value.address().sigungu().equals(sigungu))
@@ -63,7 +63,7 @@ public class MapService {
 
 //     5. 시도 선택, 시군구는 전체, 카테고리는 선택
     if (!sido.equals("전체") && sigungu.equals("전체") && !category.equals("전체")) {
-      List<Place> filteredByCategory = placeRepository.findByCategory(category);
+      List<Place> filteredByCategory = placeRepository.findAllByCategory(category);
 
       return filteredByCategory.stream()
           .filter(value -> value.address().sido().equals(sido))
@@ -72,7 +72,7 @@ public class MapService {
 
     // 6. 시도 전체, 시군구 전체, 카테고리는 선택
     if(sido.equals("전체") && sigungu.equals("전체") && !category.equals("전체")) {
-        return new ArrayList<>(placeRepository.findByCategory(category));
+        return new ArrayList<>(placeRepository.findAllByCategory(category));
     }
     return result;
   }

@@ -4,6 +4,8 @@ import org.springframework.jdbc.core.*;
 import org.springframework.transaction.annotation.*;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.*;
+
 @RestController
 @RequestMapping("backdoor")
 @Transactional
@@ -292,6 +294,85 @@ public class BackdoorController {
         "18개월 아기의 18춘기 일상(feat. 엄마 속 부글부글)", "작성자12", "2021. 12. 6.",
         "https://user-images.githubusercontent.com/104840243/198858240-ef8949d2-c294-4ab8-8a4c-fc42717bee8e.png",
         "https://blog.naver.com/angel2645/222588574093");
+
+    return "OK";
+  }
+
+  @GetMapping("setup-user-review-database")
+  public String setupUserReviewDataBase() {
+    // 순서. (1) 기존 데이터 삭제, (2) 내가 원하는 데이터로 초기화
+
+    jdbcTemplate.execute("DELETE FROM user_review");
+
+    jdbcTemplate.update("" +
+            "INSERT INTO user_review(" +
+            "id, place_id, user_id, rate, body, date_of_visit, created_at, is_deleted)" +
+            " VALUES(0, 0, 0, ?, ?, ?, ?, ?)",
+        5L, "이 장소 정말 아이랑 가기 좋아요!!", "2022-04-01",
+        LocalDateTime.of(2022, 10, 8, 10, 43, 0, 0), false);
+
+    jdbcTemplate.update("" +
+            "INSERT INTO user_review(" +
+            "id, place_id, user_id, rate, body, date_of_visit, created_at, is_deleted)" +
+            " VALUES(1, 0, 1, ?, ?, ?, ?, ?)",
+        3L, "이 장소 정말 아이랑 가기 좋아요!!", "2022-04-01",
+        LocalDateTime.of(2022, 10, 8, 10, 43, 0, 0), false);
+
+    jdbcTemplate.update("" +
+            "INSERT INTO user_review(" +
+            "id, place_id, user_id, rate, body, date_of_visit, created_at, is_deleted)" +
+            " VALUES(2, 0, 2, ?, ?, ?, ?, ?)",
+        4L, "이 장소 정말 아이랑 가기 좋아요!!", "2022-04-01",
+        LocalDateTime.of(2022, 10, 8, 10, 43, 0, 0), false);
+
+    jdbcTemplate.update("" +
+            "INSERT INTO user_review(" +
+            "id, place_id, user_id, rate, body, date_of_visit, created_at, is_deleted)" +
+            " VALUES(3, 0, 3, ?, ?, ?, ?, ?)",
+        2L, "이 장소 정말 아이랑 가기 좋아요!!", "2022-04-01",
+        LocalDateTime.of(2022, 10, 8, 10, 43, 0, 0), false);
+
+    jdbcTemplate.update("" +
+            "INSERT INTO user_review(" +
+            "id, place_id, user_id, rate, body, date_of_visit, created_at, is_deleted)" +
+            " VALUES(4, 0, 3, ?, ?, ?, ?, ?)",
+        3L, "이 장소 정말 아이랑 가기 좋아요!!", "2022-04-01",
+        LocalDateTime.of(2022, 10, 8, 10, 43, 0, 0), true);
+
+    jdbcTemplate.update("" +
+            "INSERT INTO user_review(" +
+            "id, place_id, user_id, rate, body, date_of_visit, created_at, is_deleted)" +
+            " VALUES(5, 1, 4, ?, ?, ?, ?, ?)",
+        1L, "이 장소 정말 아이랑 가기 좋아요!!", "2022-04-01",
+        LocalDateTime.of(2022, 10, 8, 10, 43, 0, 0), false);
+
+    jdbcTemplate.update("" +
+            "INSERT INTO user_review(" +
+            "id, place_id, user_id, rate, body, date_of_visit, created_at, is_deleted)" +
+            " VALUES(6, 2, 5, ?, ?, ?, ?, ?)",
+        2L, "이 장소 정말 아이랑 가기 좋아요!!", "2022-04-01",
+        LocalDateTime.of(2022, 10, 8, 10, 43, 0, 0), false);
+
+    jdbcTemplate.update("" +
+            "INSERT INTO user_review(" +
+            "id, place_id, user_id, rate, body, date_of_visit, created_at, is_deleted)" +
+            " VALUES(7, 3, 6, ?, ?, ?, ?, ?)",
+        5L, "이 장소 정말 아이랑 가기 좋아요!!", "2022-04-01",
+        LocalDateTime.of(2022, 10, 8, 10, 43, 0, 0), false);
+
+    jdbcTemplate.update("" +
+            "INSERT INTO user_review(" +
+            "id, place_id, user_id, rate, body, date_of_visit, created_at, is_deleted)" +
+            " VALUES(8, 4, 7, ?, ?, ?, ?, ?)",
+        4L, "이 장소 정말 아이랑 가기 좋아요!!", "2022-04-01",
+        LocalDateTime.of(2022, 10, 8, 10, 43, 0, 0), false);
+
+    jdbcTemplate.update("" +
+            "INSERT INTO user_review(" +
+            "id, place_id, user_id, rate, body, date_of_visit, created_at, is_deleted)" +
+            " VALUES(9, 5, 8, ?, ?, ?, ?, ?)",
+        5L, "이 장소 정말 아이랑 가기 좋아요!!", "2022-04-01",
+        LocalDateTime.of(2022, 10, 8, 10, 43, 0, 0), true);
 
     return "OK";
   }
