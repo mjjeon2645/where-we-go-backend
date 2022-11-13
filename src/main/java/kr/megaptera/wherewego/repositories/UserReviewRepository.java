@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.*;
 import java.util.*;
 
 public interface UserReviewRepository extends JpaRepository<UserReview, Long> {
-    List<UserReview> findAllByPlaceId(Long placeId);
+    List<UserReview> findAllByPlaceIdOrderByCreatedAtDesc(Long placeId);
 }

@@ -1,5 +1,6 @@
 package kr.megaptera.wherewego.services;
 
+import kr.megaptera.wherewego.dtos.*;
 import kr.megaptera.wherewego.models.*;
 import kr.megaptera.wherewego.repositories.*;
 import org.junit.jupiter.api.*;
@@ -43,6 +44,10 @@ class GetUserReviewServiceTest {
                 new UserReview(6L, 3L, 5L, 5L, "즐거웠어요!", "2022-10-11",
                     LocalDateTime.of(2022, 10, 15, 10, 43, 0, 0), false )
             ));
+
+        given(userReviewRepository.save(new UserReview(1L, 1L, 5L, "좋았어요!", "2022-10-23")))
+            .willReturn(new UserReview(1L, 1L, 1L, 5L, "좋았어요!", "2022-10-23",
+                any(), false));
     }
 
     @Test
@@ -57,5 +62,13 @@ class GetUserReviewServiceTest {
         assertThat(getUserReviewService.averageRate(4L)).isEqualTo("4.5");
         assertThat(getUserReviewService.averageRate(1L)).isEqualTo("5");
         assertThat(getUserReviewService.averageRate(3L)).isEqualTo("4.67");
+    }
+
+    @Test
+    void create() {
+        MyReviewDto myReviewDto = new MyReviewDto(1L, "2022-10-23", 5L, "좋았어요!");
+        UserReview createdUserReview = getUserReviewService.create(myReviewDto);
+
+        verify(userReviewRepository).save(any());
     }
 }
