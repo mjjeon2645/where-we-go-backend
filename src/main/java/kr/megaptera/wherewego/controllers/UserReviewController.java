@@ -28,4 +28,15 @@ public class UserReviewController {
 
         return new UserReviewsDto(averageRate, userReviews);
     }
+
+    @PostMapping("{placeId}")
+    public UserReviewDto myReview(
+        @RequestBody MyReviewDto myReviewDto
+    ) {
+        //TODO. user 로그인 정보 가져와서 활용해야 함
+
+        UserReview userReview = getUserReviewService.create(myReviewDto);
+
+        return userReview.toDto();
+    }
 }

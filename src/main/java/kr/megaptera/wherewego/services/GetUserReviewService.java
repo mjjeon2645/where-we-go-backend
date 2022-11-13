@@ -1,5 +1,6 @@
 package kr.megaptera.wherewego.services;
 
+import kr.megaptera.wherewego.dtos.*;
 import kr.megaptera.wherewego.models.*;
 import kr.megaptera.wherewego.repositories.*;
 import org.springframework.stereotype.*;
@@ -18,8 +19,8 @@ public class GetUserReviewService {
     }
 
     public List<UserReview> userReviews(Long placeId) {
-        // TODO. 추후 글 삭제기능 도입시 isDeleted 값이 반영되어야 하므로 미리 filtering직 구현해둠
-        return userReviewRepository.findAllByPlaceId(placeId)
+        // TODO. 추후 글 삭제기능 도입시 isDeleted 값이 반영되어야 하므로 미리 filtering 로직 구현해둠
+        return userReviewRepository.findAllByPlaceIdOrderByCreatedAtDesc(placeId)
             .stream().filter(review -> !review.isDeleted())
             .collect(Collectors.toList());
     }
@@ -42,5 +43,16 @@ public class GetUserReviewService {
         }
 
         return averageToString;
+    }
+
+    public UserReview create(MyReviewDto myReviewDto) {
+        // TODO. user id 10L로 임의 설정한 것은 추후 로그인 기능 구현 시 바꾸도록 하기
+
+        UserReview userReview = new UserReview(myReviewDto.getPlaceId(),
+            10L, myReviewDto.getRate(), myReviewDto.getBody(), myReviewDto.getDateOfVisit());
+
+        UserReview createdUserReview = userReviewRepository.save(userReview);
+
+        return createdUserReview;
     }
 }

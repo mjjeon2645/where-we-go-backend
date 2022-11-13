@@ -9,6 +9,7 @@ import java.time.*;
 
 @Entity
 public class UserReview {
+
     @Id
     @GeneratedValue
     private Long id;
@@ -29,6 +30,15 @@ public class UserReview {
     private Boolean isDeleted;
 
     public UserReview() {
+    }
+
+    public UserReview(Long placeId, Long userId, Long rate, String body, String dateOfVisit) {
+        this.placeId = placeId;
+        this.userId = userId;
+        this.rate = rate;
+        this.body = body;
+        this.dateOfVisit = dateOfVisit;
+        this.isDeleted = false;
     }
 
     public UserReview(Long id, Long placeId, Long userId, Long rate, String body,
@@ -78,5 +88,12 @@ public class UserReview {
     public UserReviewDto toDto() {
         return new UserReviewDto(id, placeId, userId, rate, body, dateOfVisit,
             createdAt, isDeleted);
+    }
+
+    @Override
+    public String toString() {
+        return "id: " + id + " placeId: " + placeId + " userId: " + userId + " rate: " + rate +
+            " body: " + body + " dateOfVisit: " + dateOfVisit + " createdAt: " + createdAt +
+            " isDeleted: " + isDeleted;
     }
 }
