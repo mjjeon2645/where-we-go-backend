@@ -21,28 +21,28 @@ class GetUserReviewServiceTest {
 
         getUserReviewService = new GetUserReviewService(userReviewRepository);
 
-        given(userReviewRepository.findAllByPlaceId(4L))
+        given(userReviewRepository.findAllByPlaceIdOrderByCreatedAtDesc(4L))
             .willReturn(List.of(
                 new UserReview(1L, 4L, 0L, 4L, "재밌게 다녀왔어요!", "2022-07-09",
-                    LocalDateTime.of(2022, 10, 8, 10, 43, 0, 0), false ),
+                    LocalDateTime.of(2022, 10, 23, 10, 43, 0, 0), false ),
                 new UserReview(2L, 4L, 1L, 5L, "즐거웠어요!", "2022-10-11",
                     LocalDateTime.of(2022, 10, 15, 10, 43, 0, 0), false )
             ));
 
-        given(userReviewRepository.findAllByPlaceId(1L))
+        given(userReviewRepository.findAllByPlaceIdOrderByCreatedAtDesc(1L))
             .willReturn(List.of(
                 new UserReview(3L, 1L, 2L, 5L, "즐거웠어요!", "2022-10-11",
                     LocalDateTime.of(2022, 10, 15, 10, 43, 0, 0), false )
             ));
 
-        given(userReviewRepository.findAllByPlaceId(3L))
+        given(userReviewRepository.findAllByPlaceIdOrderByCreatedAtDesc(3L))
             .willReturn(List.of(
                 new UserReview(4L, 3L, 3L, 4L, "즐거웠어요!", "2022-10-11",
-                    LocalDateTime.of(2022, 10, 15, 10, 43, 0, 0), false ),
+                    LocalDateTime.of(2022, 10, 23, 10, 43, 0, 0), false ),
                 new UserReview(5L, 3L, 4L, 5L, "즐거웠어요!", "2022-10-11",
                     LocalDateTime.of(2022, 10, 15, 10, 43, 0, 0), false ),
                 new UserReview(6L, 3L, 5L, 5L, "즐거웠어요!", "2022-10-11",
-                    LocalDateTime.of(2022, 10, 15, 10, 43, 0, 0), false )
+                    LocalDateTime.of(2022, 10, 05, 10, 43, 0, 0), false )
             ));
 
         given(userReviewRepository.save(new UserReview(1L, 1L, 5L, "좋았어요!", "2022-10-23")))

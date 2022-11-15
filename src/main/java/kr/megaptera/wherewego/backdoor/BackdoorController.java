@@ -376,4 +376,83 @@ public class BackdoorController {
 
     return "OK";
   }
+
+  @GetMapping("setup-id0-place-database")
+  public String setupId0PlaceDataBase() {
+    // 순서. (1) 기존 데이터 삭제, (2) 내가 원하는 데이터로 초기화
+
+    jdbcTemplate.execute("DELETE FROM place");
+
+    jdbcTemplate.update("" +
+            "INSERT INTO place(" +
+            "id, name, latitude, longitude, full_address, sido, sigungu, " +
+            "category, monday, tuesday, wednesday, thursday, friday, saturday, sunday, " +
+            "first_image, second_image, third_image, homepage, phone, reservation, " +
+            "parking, outside_food, nursing_room, place_id)" +
+            " VALUES(0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " +
+            "?, ?, ?, ?, ?, ?, 0)",
+        "덕수궁", 37.565804, 126.975146, "서울특별시 중구 세종대로 99", "서울", "중구",
+        "교육/체험", "월요일: 10:01~18:00", "화요일: 10:02~18:00", "수요일: 10:03~18:00",
+        "목요일: 10:04~18:00", "금요일: 10:05~18:00", "토요일: 10:06~18:00", "일요일: 10:07~18:00",
+        "https://ldb-phinf.pstatic.net/20150831_46/1440997732945CYxgU_JPEG/11571730_0.jpg",
+        "https://ldb-phinf.pstatic.net/20150831_46/1440997732945CYxgU_JPEG/11571730_0.jpg",
+        "https://ldb-phinf.pstatic.net/20150831_46/1440997732945CYxgU_JPEG/11571730_0.jpg",
+        "https://megaptera.kr/", "010-5634-1111", "possible", "possible", "impossible", "unchecked");
+
+    return "ok";
+  }
+
+  @GetMapping("setup-blog-review-database-id0")
+  public String setupBlogReviewDataBaseId0() {
+    // 순서. (1) 기존 데이터 삭제, (2) 내가 원하는 데이터로 초기화
+
+    jdbcTemplate.execute("DELETE FROM blog_review");
+
+    jdbcTemplate.update("" +
+            "INSERT INTO blog_review(" +
+            "id, place_id, title, author, date, image_source, url)" +
+            " VALUES(0, 0, ?, ?, ?, ?, ?)",
+        "덕수궁 다녀왔어요!", "작성자0", "2022. 4. 21.",
+        "https://user-images.githubusercontent.com/104840243/198858240-ef8949d2-c294-4ab8-8a4c-fc42717bee8e.png",
+        "https://blog.naver.com/angel2645/222706901645");
+
+    return "ok";
+  }
+
+  @GetMapping("setup-user-review-database-id0")
+  public String setupUserReviewDataBaseId0() {
+    // 순서. (1) 기존 데이터 삭제, (2) 내가 원하는 데이터로 초기화
+
+    jdbcTemplate.execute("DELETE FROM user_review");
+
+    jdbcTemplate.update("" +
+            "INSERT INTO user_review(" +
+            "id, place_id, user_id, rate, body, date_of_visit, created_at, is_deleted)" +
+            " VALUES(0, 0, 0, ?, ?, ?, ?, ?)",
+        5L, "이 장소 정말 아이랑 가기 좋아요!!", "2022-04-01",
+        LocalDateTime.of(2022, 10, 4, 10, 43, 0, 0), false);
+
+    jdbcTemplate.update("" +
+            "INSERT INTO user_review(" +
+            "id, place_id, user_id, rate, body, date_of_visit, created_at, is_deleted)" +
+            " VALUES(1, 0, 1, ?, ?, ?, ?, ?)",
+        3L, "마음에 들었습니다~!!", "2022-04-01",
+        LocalDateTime.of(2022, 11, 8, 10, 43, 0, 0), false);
+
+    jdbcTemplate.update("" +
+            "INSERT INTO user_review(" +
+            "id, place_id, user_id, rate, body, date_of_visit, created_at, is_deleted)" +
+            " VALUES(2, 0, 2, ?, ?, ?, ?, ?)",
+        4L, "아이랑 엄마랑 아빠랑 모두 신나는 시간!", "2022-04-01",
+        LocalDateTime.of(2022, 03, 8, 10, 43, 0, 0), false);
+
+    jdbcTemplate.update("" +
+            "INSERT INTO user_review(" +
+            "id, place_id, user_id, rate, body, date_of_visit, created_at, is_deleted)" +
+            " VALUES(3, 0, 3, ?, ?, ?, ?, ?)",
+        5L, "또 가고싶은 곳이예요~~~!", "2022-04-01",
+        LocalDateTime.of(2021, 10, 8, 10, 43, 0, 0), false);
+
+    return "ok";
+  }
 }
