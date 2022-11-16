@@ -30,8 +30,8 @@ public class UserReview {
     private Boolean isDeleted;
 
 
-    public static UserReview fakeForTopThree(Long id, Long placeId, Long rate) {
-        return new UserReview(id, placeId, 1L, rate, "안녕", "",
+    public static UserReview fakeForTopThree(Long placeId, Long rate) {
+        return new UserReview(1L, placeId, 1L, rate, "안녕", "",
             LocalDateTime.of(2022, 10, 4, 10, 43, 0, 0), false);
     }
 

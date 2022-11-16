@@ -38,31 +38,11 @@ public class GetTopThreePlacesService {
 
         makeTopThreePlacesWithResults(topThreePlaces, results);
 
-//        Long firstPlaceId = results.get(0).getKey();
-//        Long secondPlaceId = results.get(1).getKey();
-//        Long thirdPlaceId = results.get(2).getKey();
-//
-//        Double firstPlaceAverageRate = results.get(0).getValue();
-//        Double secondPlaceAverageRate = results.get(1).getValue();
-//        Double thirdPlaceAverageRate = results.get(2).getValue();
-//
-//        String firstPlaceName = placeRepository.getReferenceById(firstPlaceId).name();
-//        String secondPlaceName = placeRepository.getReferenceById(secondPlaceId).name();
-//        String thirdPlaceName = placeRepository.getReferenceById(thirdPlaceId).name();
-//
-//        Address firstPlaceAddress = placeRepository.getReferenceById(firstPlaceId).address();
-//        Address secondPlaceAddress = placeRepository.getReferenceById(secondPlaceId).address();
-//        Address thirdPlaceAddress = placeRepository.getReferenceById(thirdPlaceId).address();
-//
-//
-//        topThreePlaces.add(new TopThreePlaceDto(firstPlaceId, firstPlaceName, firstPlaceAddress.toDto(), firstPlaceAverageRate));
-//        topThreePlaces.add(new TopThreePlaceDto(secondPlaceId, secondPlaceName, secondPlaceAddress.toDto(), secondPlaceAverageRate));
-//        topThreePlaces.add(new TopThreePlaceDto(thirdPlaceId, thirdPlaceName, thirdPlaceAddress.toDto(), thirdPlaceAverageRate));
-
         return topThreePlaces;
     }
 
-    public void makeMapWithPlaceIdAndAverageRate(List<Long> placeIds, Map<Long, Double> averageRatesSet) {
+    public void makeMapWithPlaceIdAndAverageRate(List<Long> placeIds,
+                                                 Map<Long, Double> averageRatesSet) {
         for (Long placeId : placeIds) {
             List<UserReview> filteredUserReviews = userReviewRepository
                 .findAllByPlaceId(placeId).stream().toList();
@@ -75,7 +55,8 @@ public class GetTopThreePlacesService {
         }
     }
 
-    public void makeTopThreePlacesWithResults(List<TopThreePlaceDto> topThreePlaces, List<Map.Entry<Long, Double>> results) {
+    public void makeTopThreePlacesWithResults(List<TopThreePlaceDto> topThreePlaces,
+                                              List<Map.Entry<Long, Double>> results) {
         for (int i = 0; i < 3; i += 1) {
           Long placeId = results.get(i).getKey();
           String name = placeRepository.getReferenceById(placeId).name();
