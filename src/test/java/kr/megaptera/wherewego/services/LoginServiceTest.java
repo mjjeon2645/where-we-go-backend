@@ -15,7 +15,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 class LoginServiceTest {
-    private LoginService loginService;
+    private GetLoginService loginService;
 
     private UserRepository userRepository;
 
@@ -26,7 +26,7 @@ class LoginServiceTest {
         userRepository = mock(UserRepository.class);
         passwordEncoder = new Argon2PasswordEncoder();
 
-        loginService = new LoginService(userRepository, passwordEncoder);
+        loginService = new GetLoginService(userRepository, passwordEncoder);
 
         User user = User.fake("angel2645@naver.com");
         user.changePassword("Tester1234", passwordEncoder);

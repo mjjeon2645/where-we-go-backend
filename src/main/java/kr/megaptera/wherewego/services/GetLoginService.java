@@ -9,11 +9,11 @@ import org.springframework.transaction.annotation.*;
 
 @Service
 @Transactional
-public class LoginService {
+public class GetLoginService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public LoginService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public GetLoginService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
