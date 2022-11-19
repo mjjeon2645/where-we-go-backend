@@ -19,6 +19,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
 	implementation 'com.google.code.gson:gson:2.10'
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+	implementation 'com.auth0:java-jwt:4.2.1'
+
+	implementation 'org.bouncycastle:bcprov-jdk15on:1.70'
 
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.h2database:h2'
