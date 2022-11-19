@@ -99,5 +99,6 @@ public class KakaoLoginService {
         kakaoUserInformation.put("kakaoUserId", id);
         kakaoUserInformation.put("nickName", nickname);
         kakaoUserInformation.put("email", email);
+
     }
 }
