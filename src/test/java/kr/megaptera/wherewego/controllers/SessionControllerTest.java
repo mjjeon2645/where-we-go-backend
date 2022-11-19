@@ -22,15 +22,14 @@ class SessionControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private LoginService loginService;
+    private GetLoginService getLoginService;
 
     @BeforeEach
     void setUp() {
-        User user = new User();
-        given(loginService.login("angel2645@naver.com", "Tester1234"))
+        given(getLoginService.login("angel2645@naver.com", "Tester1234"))
             .willReturn(new User(1L, "angel2645@naver.com", "Tester1234", "nickName"));
 
-        given(loginService.login("angel2645@naver.com", "xxx"))
+        given(getLoginService.login("angel2645@naver.com", "xxx"))
             .willThrow(new LoginFailedException());
     }
 
