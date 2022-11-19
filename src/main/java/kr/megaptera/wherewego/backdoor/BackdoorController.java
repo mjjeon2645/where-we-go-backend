@@ -1,6 +1,7 @@
 package kr.megaptera.wherewego.backdoor;
 
 import org.springframework.jdbc.core.*;
+import org.springframework.security.crypto.password.*;
 import org.springframework.transaction.annotation.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,9 +12,28 @@ import java.time.*;
 @Transactional
 public class BackdoorController {
   private final JdbcTemplate jdbcTemplate;
+  private final PasswordEncoder passwordEncoder;
 
-  public BackdoorController(JdbcTemplate jdbcTemplate) {
+  public BackdoorController(JdbcTemplate jdbcTemplate,
+                            PasswordEncoder passwordEncoder) {
     this.jdbcTemplate = jdbcTemplate;
+    this.passwordEncoder = passwordEncoder;
+  }
+
+  @GetMapping("setup-user")
+  public String setupUser() {
+    // 1. 기존 데이터 리셋
+    jdbcTemplate.execute("DELETE FROM users");
+
+    // 2. 원하는 데이터 세팅
+    jdbcTemplate.update("" +
+        "INSERT INTO users(" +
+        "id, email, encoded_password, nick_name" +
+        ") " +
+        "VALUES(1, 'angel2645@naver.com', ?, '민지룽룽')",
+        passwordEncoder.encode("Tester1234"));
+
+    return "ok";
   }
 
   @GetMapping("setup-place-database")
