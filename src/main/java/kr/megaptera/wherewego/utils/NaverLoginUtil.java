@@ -1,19 +1,17 @@
-package kr.megaptera.wherewego.infrastructure;
+package kr.megaptera.wherewego.utils;
 
 import com.google.gson.*;
 import kr.megaptera.wherewego.dtos.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.*;
-import org.springframework.stereotype.*;
 import org.springframework.transaction.annotation.*;
 import org.springframework.util.*;
 import org.springframework.web.client.*;
 
 import java.util.*;
 
-@Service
 @Transactional
-public class NaverLoginService {
+public class NaverLoginUtil {
     @Value("${naver.api-key}")
     private String apiKey;
 
@@ -28,15 +26,23 @@ public class NaverLoginService {
 
     private Map<String, String> naverUserInformation;
 
-    public NaverLoginService() {
+    public NaverLoginUtil() {
         naverUserInformation = new LinkedHashMap<>();
     }
 
-    public LoginResultDto naverLogin(String code) {
+    public SocialLoginProcessResultDto process(String code) {
         String accessToken = getAccessToken(code);
         getDetail(accessToken);
+        naverUserInformation.put("auth", "naver");
 
-        return new LoginResultDto(accessToken, naverUserInformation.get("nickName"));
+        return new SocialLoginProcessResultDto(
+            naverUserInformation.get("accessToken"),
+            naverUserInformation.get("refreshToken"),
+            naverUserInformation.get("nickname"),
+            naverUserInformation.get("email"),
+            naverUserInformation.get("naverUserId"),
+            naverUserInformation.get("auth")
+        );
     }
 
     public String getAccessToken(String code) {
@@ -107,7 +113,7 @@ public class NaverLoginService {
         String email = naverAccount.getAsJsonObject().get("email").getAsString();
 
         naverUserInformation.put("naverUserId", id);
-        naverUserInformation.put("nickName", nickname);
+        naverUserInformation.put("nickname", nickname);
         naverUserInformation.put("email", email);
     }
 }

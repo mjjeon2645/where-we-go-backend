@@ -57,4 +57,15 @@ public class WhereWeGoApplication {
 	public PasswordEncoder passwordEncoder() {
 		return new Argon2PasswordEncoder();
 	}
+
+	// third party login
+	@Bean
+	public KakaoLoginUtil kakaoLoginUtil() {
+		return new KakaoLoginUtil();
+	}
+
+	@Bean
+	public NaverLoginUtil naverLoginUtil() {
+		return new NaverLoginUtil();
+	}
 }

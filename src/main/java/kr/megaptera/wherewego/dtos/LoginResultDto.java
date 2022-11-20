@@ -3,21 +3,21 @@ package kr.megaptera.wherewego.dtos;
 public class LoginResultDto {
     private String accessToken;
 
-    private String nickName;
+    private String nickname;
 
     public LoginResultDto() {
     }
 
-    public LoginResultDto(String accessToken, String nickName) {
+    public LoginResultDto(String accessToken, String nickname) {
         this.accessToken = accessToken;
-        this.nickName = nickName;
+        this.nickname = nickname;
     }
 
     public String getAccessToken() {
         return accessToken;
     }
 
-    public String getNickName() {
-        return nickName;
+    public String getNickname() {
+        return nickname;
     }
 }

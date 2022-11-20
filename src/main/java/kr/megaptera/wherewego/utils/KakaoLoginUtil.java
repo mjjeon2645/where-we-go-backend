@@ -1,4 +1,4 @@
-package kr.megaptera.wherewego.infrastructure;
+package kr.megaptera.wherewego.utils;
 
 import com.google.gson.*;
 import kr.megaptera.wherewego.dtos.*;
@@ -11,9 +11,8 @@ import org.springframework.web.client.*;
 
 import java.util.*;
 
-@Service
 @Transactional
-public class KakaoLoginService {
+public class KakaoLoginUtil {
     @Value("${kakao.api-key}")
     private String apiKey;
 
@@ -22,12 +21,15 @@ public class KakaoLoginService {
 
     private Map<String, String> kakaoUserInformation;
 
-    public KakaoLoginService() {
+    public KakaoLoginUtil() {
         kakaoUserInformation = new LinkedHashMap<>();
     }
 
-    public LoginResultDto kakaoLogin(String code) {
+    public LoginResultDto proceess(String code) {
+        // 액세스 토큰 받아오기
         String accessToken = getAccessToken(code);
+
+        // 유저 정보 디테일 받아오기
         getDetail(accessToken);
 
         return new LoginResultDto(accessToken, kakaoUserInformation.get("nickName"));
@@ -100,6 +102,5 @@ public class KakaoLoginService {
         kakaoUserInformation.put("kakaoUserId", id);
         kakaoUserInformation.put("nickName", nickname);
         kakaoUserInformation.put("email", email);
-
     }
 }

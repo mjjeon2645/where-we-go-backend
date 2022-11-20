@@ -22,7 +22,7 @@ class SessionControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private GetLoginService getLoginService;
+    private GetUserService getLoginService;
 
     @BeforeEach
     void setUp() {

@@ -1,5 +1,6 @@
 package kr.megaptera.wherewego.services;
 
+import kr.megaptera.wherewego.dtos.*;
 import kr.megaptera.wherewego.exceptions.*;
 import kr.megaptera.wherewego.models.*;
 import kr.megaptera.wherewego.repositories.*;
@@ -9,11 +10,11 @@ import org.springframework.transaction.annotation.*;
 
 @Service
 @Transactional
-public class GetLoginService {
+public class GetUserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public GetLoginService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public GetUserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
@@ -29,5 +30,17 @@ public class GetLoginService {
         }
 
         return foundUser;
+    }
+
+    public LoginResultDto socialLogin(SocialLoginProcessResultDto dto) {
+        String accessToken = dto.getAccessToken();
+        String refreshToken = dto.getRefreshToken();
+        String nickname = dto.getNickname();
+        String email = dto.getEmail();
+        String socialLoginId = dto.getSocialLoginId();
+        String auth = dto.getAuth();
+
+        User foundUser = userRepository.findBySocialLoginId(socialLoginId);
+        return null;
     }
 }
