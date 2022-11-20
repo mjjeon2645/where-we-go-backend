@@ -58,6 +58,9 @@ public class GetUserService {
     }
 
     public User information(Long userId) {
-        return null;
+        User found = userRepository.findById(userId)
+            .orElseThrow(() -> new UserNotFoundException());
+
+        return found;
     }
 }

@@ -39,7 +39,7 @@ class LoginServiceTest {
     void loginSuccess() {
         User found = loginService.login("angel2645@naver.com", "Tester1234");
 
-        assertThat(found.nickName()).isEqualTo("nickname");
+        assertThat(found.nickname()).isEqualTo("nickname");
     }
 
     @Test
