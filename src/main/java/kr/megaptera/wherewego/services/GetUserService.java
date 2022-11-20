@@ -38,9 +38,26 @@ public class GetUserService {
         String nickname = dto.getNickname();
         String email = dto.getEmail();
         String socialLoginId = dto.getSocialLoginId();
-        String auth = dto.getAuth();
+        String authBy = dto.getAuthBy();
 
         User foundUser = userRepository.findBySocialLoginId(socialLoginId);
+
+        if (foundUser == null) {
+            // TODO. 소셜 로그인의 경우 비밀번호 입력을 받지 않으므로 socialLoginId를 비밀번호로 취급
+            String passwordForSocialLogin = socialLoginId;
+
+            User user = new User(passwordForSocialLogin, email, nickname, socialLoginId, authBy, "unregistered");
+            user.changePassword(passwordForSocialLogin, passwordEncoder);
+
+            userRepository.save(user);
+
+            return new LoginResultDto(user.id(), accessToken, nickname, user.state());
+        }
+
+        return new LoginResultDto(foundUser.id(), accessToken, foundUser.nickname(), foundUser.state());
+    }
+
+    public User information(Long userId) {
         return null;
     }
 }

@@ -31,7 +31,7 @@ public class SessionController {
 
         String accessToken = jwtUtil.encode(email);
 
-        return new LoginResultDto(accessToken, user.getNickname());
+        return new LoginResultDto(user.id(), accessToken, user.nickname(), user.state());
     }
 
     @ExceptionHandler(LoginFailedException.class)

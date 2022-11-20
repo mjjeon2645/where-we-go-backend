@@ -11,19 +11,21 @@ public class SocialLoginProcessResultDto {
 
     private String socialLoginId;
 
-    private String auth;
+    private String authBy;
+
 
     public SocialLoginProcessResultDto() {
     }
 
     public SocialLoginProcessResultDto(String accessToken, String refreshToken,
-                                       String nickname, String email, String socialLoginId, String auth) {
+                                       String nickname, String email, String socialLoginId,
+                                       String authBy) {
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
         this.nickname = nickname;
         this.email = email;
         this.socialLoginId = socialLoginId;
-        this.auth = auth;
+        this.authBy = authBy;
     }
 
     public String getAccessToken() {
@@ -46,7 +48,7 @@ public class SocialLoginProcessResultDto {
         return socialLoginId;
     }
 
-    public String getAuth() {
-        return auth;
+    public String getAuthBy() {
+        return authBy;
     }
 }

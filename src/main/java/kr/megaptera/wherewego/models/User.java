@@ -21,8 +21,10 @@ public class User {
 
     private String authBy;
 
+    private String state;
+
     public static User fake(String email) {
-        return new User(1L, "", email, "nickname", "socialId", "kakao");
+        return new User(1L, "encodedPassword", email, "nickname", "socialId", "kakao", "unregistered");
     }
 
     public boolean authenticate(String password, PasswordEncoder passwordEncoder) {
@@ -33,40 +35,55 @@ public class User {
         this.encodedPassword = passwordEncoder.encode(password);
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getEncodedPassword() {
-        return encodedPassword;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public String getSocialLoginId() {
-        return socialLoginId;
-    }
-
-    public String getAuthBy() {
-        return authBy;
-    }
-
     public User() {
     }
 
+    public User(String passwordForSocialLogin, String email, String nickname,
+                String socialLoginId, String authBy, String state) {
+        this.encodedPassword = passwordForSocialLogin;
+        this.email = email;
+        this.nickname = nickname;
+        this.socialLoginId = socialLoginId;
+        this.authBy = authBy;
+        this.state = state;
+    }
+
     public User(Long id, String encodedPassword, String email, String nickname,
-                String socialLoginId, String authBy) {
+                String socialLoginId, String authBy, String state) {
         this.id = id;
         this.encodedPassword = encodedPassword;
         this.email = email;
         this.nickname = nickname;
         this.socialLoginId = socialLoginId;
         this.authBy = authBy;
+        this.state = state;
+    }
+
+    public Long id() {
+        return id;
+    }
+
+    public String encodedPassword() {
+        return encodedPassword;
+    }
+
+    public String email() {
+        return email;
+    }
+
+    public String nickname() {
+        return nickname;
+    }
+
+    public String socialLoginId() {
+        return socialLoginId;
+    }
+
+    public String authBy() {
+        return authBy;
+    }
+
+    public String state() {
+        return state;
     }
 }

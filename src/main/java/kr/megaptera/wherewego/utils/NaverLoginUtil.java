@@ -33,7 +33,7 @@ public class NaverLoginUtil {
     public SocialLoginProcessResultDto process(String code) {
         String accessToken = getAccessToken(code);
         getDetail(accessToken);
-        naverUserInformation.put("auth", "naver");
+        naverUserInformation.put("authBy", "naver");
 
         return new SocialLoginProcessResultDto(
             naverUserInformation.get("accessToken"),
@@ -41,7 +41,7 @@ public class NaverLoginUtil {
             naverUserInformation.get("nickname"),
             naverUserInformation.get("email"),
             naverUserInformation.get("naverUserId"),
-            naverUserInformation.get("auth")
+            naverUserInformation.get("authBy")
         );
     }
 

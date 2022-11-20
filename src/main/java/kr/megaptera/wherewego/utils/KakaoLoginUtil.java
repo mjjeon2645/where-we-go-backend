@@ -4,7 +4,6 @@ import com.google.gson.*;
 import kr.megaptera.wherewego.dtos.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.*;
-import org.springframework.stereotype.*;
 import org.springframework.transaction.annotation.*;
 import org.springframework.util.*;
 import org.springframework.web.client.*;
@@ -25,14 +24,23 @@ public class KakaoLoginUtil {
         kakaoUserInformation = new LinkedHashMap<>();
     }
 
-    public LoginResultDto proceess(String code) {
+    public SocialLoginProcessResultDto process(String code) {
         // 액세스 토큰 받아오기
         String accessToken = getAccessToken(code);
 
         // 유저 정보 디테일 받아오기
         getDetail(accessToken);
 
-        return new LoginResultDto(accessToken, kakaoUserInformation.get("nickName"));
+        kakaoUserInformation.put("authBy", "kakao");
+
+        return new SocialLoginProcessResultDto(
+            kakaoUserInformation.get("accessToken"),
+            kakaoUserInformation.get("refreshToken"),
+            kakaoUserInformation.get("nickname"),
+            kakaoUserInformation.get("email"),
+            kakaoUserInformation.get("kakaoUserId"),
+            kakaoUserInformation.get("authBy")
+        );
     }
 
     public String getAccessToken(String code) {
@@ -100,7 +108,7 @@ public class KakaoLoginUtil {
         String email = kakaoAccount.getAsJsonObject().get("email").getAsString();
 
         kakaoUserInformation.put("kakaoUserId", id);
-        kakaoUserInformation.put("nickName", nickname);
+        kakaoUserInformation.put("nickname", nickname);
         kakaoUserInformation.put("email", email);
     }
 }
