@@ -11,7 +11,7 @@ import org.springframework.web.client.*;
 import java.util.*;
 
 @Transactional
-public class NaverLoginUtil {
+public class NaverAuthUtil {
     @Value("${naver.api-key}")
     private String apiKey;
 
@@ -26,7 +26,7 @@ public class NaverLoginUtil {
 
     private Map<String, String> naverUserInformation;
 
-    public NaverLoginUtil() {
+    public NaverAuthUtil() {
         naverUserInformation = new LinkedHashMap<>();
     }
 

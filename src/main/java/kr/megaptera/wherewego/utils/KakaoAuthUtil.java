@@ -11,7 +11,7 @@ import org.springframework.web.client.*;
 import java.util.*;
 
 @Transactional
-public class KakaoLoginUtil {
+public class KakaoAuthUtil {
     @Value("${kakao.api-key}")
     private String apiKey;
 
@@ -20,7 +20,7 @@ public class KakaoLoginUtil {
 
     private Map<String, String> kakaoUserInformation;
 
-    public KakaoLoginUtil() {
+    public KakaoAuthUtil() {
         kakaoUserInformation = new LinkedHashMap<>();
     }
 

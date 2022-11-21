@@ -1,5 +1,6 @@
 package kr.megaptera.wherewego.models;
 
+import kr.megaptera.wherewego.dtos.*;
 import org.springframework.security.crypto.password.*;
 
 import javax.persistence.*;
@@ -85,5 +86,18 @@ public class User {
 
     public String state() {
         return state;
+    }
+
+    public void register(UserInformationDto userInformationDto) {
+        String changedNickname = userInformationDto.getNickname();
+
+        this.nickname = changedNickname;
+        this.state = "registered";
+    }
+
+    public void changeNickname(UserInformationDto userInformationDto) {
+        String changedNickname = userInformationDto.getNickname();
+
+        this.nickname = changedNickname;
     }
 }

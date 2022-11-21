@@ -25,6 +25,24 @@ public class UserController {
             foundUser.nickname(), foundUser.authBy());
     }
 
+    @PostMapping("{userId}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public CreatedUserDto signUp(
+        @PathVariable() Long userId,
+        @RequestBody UserInformationDto userInformationDto
+    ) {
+        return getUserService.create(userId, userInformationDto);
+    }
+
+    @PatchMapping("{userId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public CreatedUserDto changeNickname(
+        @PathVariable() Long userId,
+        @RequestBody UserInformationDto userInformationDto
+    ) {
+        return getUserService.update(userId, userInformationDto);
+    }
+
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String userNotFound() {

@@ -8,19 +8,20 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("oauth")
 public class KakaoLoginController {
-    private final KakaoLoginUtil kakaoLoginUtil;
-    private GetUserService getUserService;
+    private final KakaoAuthUtil kakaoAuthUtil;
+    private GetLoginService getLoginService;
 
-    public KakaoLoginController(GetUserService getUserService, KakaoLoginUtil kakaoLoginUtil) {
-        this.getUserService = getUserService;
-        this.kakaoLoginUtil = kakaoLoginUtil;
+    public KakaoLoginController(GetLoginService getLoginService,
+                                KakaoAuthUtil kakaoAuthUtil) {
+        this.getLoginService = getLoginService;
+        this.kakaoAuthUtil = kakaoAuthUtil;
     }
 
     @GetMapping("kakao-token")
     public LoginResultDto login(String code) {
-        SocialLoginProcessResultDto kakaoDto = kakaoLoginUtil.process(code);
+        SocialLoginProcessResultDto kakaoDto = kakaoAuthUtil.process(code);
 
-        LoginResultDto loginResultDto = getUserService.socialLogin(kakaoDto);
+        LoginResultDto loginResultDto = getLoginService.socialLogin(kakaoDto);
 
        return loginResultDto;
     }

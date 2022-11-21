@@ -12,6 +12,10 @@ public class UserInformationDto {
     public UserInformationDto() {
     }
 
+    public UserInformationDto(String nickname) {
+        this.nickname = nickname;
+    }
+
     public UserInformationDto(Long id, String email, String nickname, String authBy) {
         this.id = id;
         this.email = email;

@@ -8,19 +8,19 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("oauth")
 public class NaverLoginController {
-    private final NaverLoginUtil naverLoginUtil;
-    private GetUserService getUserService;
+    private final NaverAuthUtil naverAuthUtil;
+    private GetLoginService getLoginService;
 
-    public NaverLoginController(GetUserService getUserService, NaverLoginUtil naverLoginUtil) {
-        this.getUserService = getUserService;
-        this.naverLoginUtil = naverLoginUtil;
+    public NaverLoginController(GetLoginService getLoginService,
+                                NaverAuthUtil naverAuthUtil) {
+        this.getLoginService = getLoginService;
+        this.naverAuthUtil = naverAuthUtil;
     }
 
     @GetMapping("naver-token")
     public LoginResultDto login(String code) {
-        SocialLoginProcessResultDto naverDto = naverLoginUtil.process(code);
-
-        LoginResultDto loginResultDto = getUserService.socialLogin(naverDto);
+        SocialLoginProcessResultDto naverDto = naverAuthUtil.process(code);
+        LoginResultDto loginResultDto = getLoginService.socialLogin(naverDto);
        return loginResultDto;
     }
 }

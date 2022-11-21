@@ -21,7 +21,6 @@ public class BlogReviewController {
     public BlogReviewsDto blogReviewsOfThePlace(
         @PathVariable() Long placeId
     ) {
-
         List<BlogReviewDto> blogReviews = getBlogReviewService.blogReviews(placeId)
             .stream().map(BlogReview::toDto).collect(Collectors.toList());
         return new BlogReviewsDto(blogReviews);

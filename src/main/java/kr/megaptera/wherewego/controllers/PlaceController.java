@@ -7,13 +7,10 @@ import kr.megaptera.wherewego.services.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
-import java.util.stream.*;
-
 @RestController
 @RequestMapping("places")
 public class PlaceController {
-    private MapService mapService;
+    private final MapService mapService;
 
     public PlaceController(MapService mapService) {
         this.mapService = mapService;

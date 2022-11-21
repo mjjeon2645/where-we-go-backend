@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("session")
 public class SessionController {
-    private final GetUserService getUserService;
+    private final GetLoginService getUserService;
     private final JwtUtil jwtUtil;
 
-    public SessionController(GetUserService getUserService, JwtUtil jwtUtil) {
+    public SessionController(GetLoginService getUserService, JwtUtil jwtUtil) {
         this.getUserService = getUserService;
         this.jwtUtil = jwtUtil;
     }
