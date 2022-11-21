@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.*;
 import org.springframework.context.annotation.*;
+import org.springframework.http.*;
 import org.springframework.security.config.annotation.web.configuration.*;
 import org.springframework.security.crypto.argon2.*;
 import org.springframework.security.crypto.password.*;
@@ -32,7 +33,12 @@ public class WhereWeGoApplication {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**").allowedOrigins("*");
+				registry.addMapping("/**").allowedOrigins("*")
+					.allowedMethods(
+						HttpMethod.GET.name(),
+						HttpMethod.POST.name(),
+						HttpMethod.PATCH.name()
+					);
 			}
 
 			@Override
@@ -56,5 +62,16 @@ public class WhereWeGoApplication {
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new Argon2PasswordEncoder();
+	}
+
+	// third party login
+	@Bean
+	public KakaoAuthUtil kakaoLoginUtil() {
+		return new KakaoAuthUtil();
+	}
+
+	@Bean
+	public NaverAuthUtil naverLoginUtil() {
+		return new NaverAuthUtil();
 	}
 }

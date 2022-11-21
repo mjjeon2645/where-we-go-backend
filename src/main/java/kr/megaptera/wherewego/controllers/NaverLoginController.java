@@ -1,22 +1,26 @@
 package kr.megaptera.wherewego.controllers;
 
 import kr.megaptera.wherewego.dtos.*;
-import kr.megaptera.wherewego.infrastructure.*;
+import kr.megaptera.wherewego.services.*;
+import kr.megaptera.wherewego.utils.*;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("oauth")
 public class NaverLoginController {
-    private final NaverLoginService naverLoginService;
+    private final NaverAuthUtil naverAuthUtil;
+    private GetLoginService getLoginService;
 
-    public NaverLoginController(NaverLoginService naverLoginService) {
-        this.naverLoginService = naverLoginService;
+    public NaverLoginController(GetLoginService getLoginService,
+                                NaverAuthUtil naverAuthUtil) {
+        this.getLoginService = getLoginService;
+        this.naverAuthUtil = naverAuthUtil;
     }
 
     @GetMapping("naver-token")
     public LoginResultDto login(String code) {
-        LoginResultDto loginResultDto = naverLoginService.naverLogin(code);
-
+        SocialLoginProcessResultDto naverDto = naverAuthUtil.process(code);
+        LoginResultDto loginResultDto = getLoginService.socialLogin(naverDto);
        return loginResultDto;
     }
 }

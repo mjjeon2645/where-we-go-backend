@@ -1,21 +1,27 @@
 package kr.megaptera.wherewego.controllers;
 
 import kr.megaptera.wherewego.dtos.*;
-import kr.megaptera.wherewego.infrastructure.*;
+import kr.megaptera.wherewego.services.*;
+import kr.megaptera.wherewego.utils.*;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("oauth")
 public class KakaoLoginController {
-    private final KakaoLoginService kakaoLoginService;
+    private final KakaoAuthUtil kakaoAuthUtil;
+    private GetLoginService getLoginService;
 
-    public KakaoLoginController(KakaoLoginService kakaoLoginService) {
-        this.kakaoLoginService = kakaoLoginService;
+    public KakaoLoginController(GetLoginService getLoginService,
+                                KakaoAuthUtil kakaoAuthUtil) {
+        this.getLoginService = getLoginService;
+        this.kakaoAuthUtil = kakaoAuthUtil;
     }
 
     @GetMapping("kakao-token")
     public LoginResultDto login(String code) {
-        LoginResultDto loginResultDto = kakaoLoginService.kakaoLogin(code);
+        SocialLoginProcessResultDto kakaoDto = kakaoAuthUtil.process(code);
+
+        LoginResultDto loginResultDto = getLoginService.socialLogin(kakaoDto);
 
        return loginResultDto;
     }

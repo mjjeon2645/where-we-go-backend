@@ -1,5 +1,6 @@
 package kr.megaptera.wherewego.models;
 
+import kr.megaptera.wherewego.dtos.*;
 import org.springframework.security.crypto.password.*;
 
 import javax.persistence.*;
@@ -11,40 +12,20 @@ public class User {
     @GeneratedValue
     private Long id;
 
-    private String email;
-
     private String encodedPassword;
 
-    private String nickName;
+    private String email;
 
-    public User() {
-    }
+    private String nickname;
 
-    public User(Long id, String email, String encodedPassword, String nickName) {
-        this.id = id;
-        this.email = email;
-        this.encodedPassword = encodedPassword;
-        this.nickName = nickName;
-    }
+    private String socialLoginId;
 
-    public Long id() {
-        return id;
-    }
+    private String authBy;
 
-    public String email() {
-        return email;
-    }
-
-    public String encodedPassword() {
-        return encodedPassword;
-    }
-
-    public String nickName() {
-        return nickName;
-    }
+    private String state;
 
     public static User fake(String email) {
-        return new User(1L, email, "Tester1234", "nickname");
+        return new User(1L, "encodedPassword", email, "nickname", "socialId", "kakao", "unregistered");
     }
 
     public boolean authenticate(String password, PasswordEncoder passwordEncoder) {
@@ -53,5 +34,70 @@ public class User {
 
     public void changePassword(String password, PasswordEncoder passwordEncoder) {
         this.encodedPassword = passwordEncoder.encode(password);
+    }
+
+    public User() {
+    }
+
+    public User(String passwordForSocialLogin, String email, String nickname,
+                String socialLoginId, String authBy, String state) {
+        this.encodedPassword = passwordForSocialLogin;
+        this.email = email;
+        this.nickname = nickname;
+        this.socialLoginId = socialLoginId;
+        this.authBy = authBy;
+        this.state = state;
+    }
+
+    public User(Long id, String encodedPassword, String email, String nickname,
+                String socialLoginId, String authBy, String state) {
+        this.id = id;
+        this.encodedPassword = encodedPassword;
+        this.email = email;
+        this.nickname = nickname;
+        this.socialLoginId = socialLoginId;
+        this.authBy = authBy;
+        this.state = state;
+    }
+
+    public Long id() {
+        return id;
+    }
+
+    public String encodedPassword() {
+        return encodedPassword;
+    }
+
+    public String email() {
+        return email;
+    }
+
+    public String nickname() {
+        return nickname;
+    }
+
+    public String socialLoginId() {
+        return socialLoginId;
+    }
+
+    public String authBy() {
+        return authBy;
+    }
+
+    public String state() {
+        return state;
+    }
+
+    public void register(UserInformationDto userInformationDto) {
+        String changedNickname = userInformationDto.getNickname();
+
+        this.nickname = changedNickname;
+        this.state = "registered";
+    }
+
+    public void changeNickname(UserInformationDto userInformationDto) {
+        String changedNickname = userInformationDto.getNickname();
+
+        this.nickname = changedNickname;
     }
 }

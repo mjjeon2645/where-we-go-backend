@@ -1,6 +1,6 @@
 package kr.megaptera.wherewego.dtos;
 
-public class LoginResultDto {
+public class CreatedUserDto {
     private Long userId;
 
     private String accessToken;
@@ -9,10 +9,10 @@ public class LoginResultDto {
 
     private String state;
 
-    public LoginResultDto() {
+    public CreatedUserDto() {
     }
 
-    public LoginResultDto(Long userId, String accessToken, String nickname, String state) {
+    public CreatedUserDto(Long userId, String accessToken, String nickname, String state) {
         this.userId = userId;
         this.accessToken = accessToken;
         this.nickname = nickname;
