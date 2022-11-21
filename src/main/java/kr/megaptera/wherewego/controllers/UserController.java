@@ -4,12 +4,13 @@ import kr.megaptera.wherewego.dtos.*;
 import kr.megaptera.wherewego.models.*;
 import kr.megaptera.wherewego.services.*;
 import org.springframework.http.*;
+import org.springframework.validation.annotation.*;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("users")
 public class UserController {
-    private GetUserService getUserService;
+    private final GetUserService getUserService;
 
     public UserController(GetUserService getUserService) {
         this.getUserService = getUserService;
@@ -29,18 +30,18 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     public CreatedUserDto signUp(
         @PathVariable() Long userId,
-        @RequestBody UserInformationDto userInformationDto
+        @Validated @RequestBody SetNicknameDto setNicknameDto
     ) {
-        return getUserService.create(userId, userInformationDto);
+        return getUserService.create(userId, setNicknameDto);
     }
 
     @PatchMapping("{userId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public CreatedUserDto changeNickname(
         @PathVariable() Long userId,
-        @RequestBody UserInformationDto userInformationDto
+        @Validated @RequestBody SetNicknameDto setNicknameDto
     ) {
-        return getUserService.update(userId, userInformationDto);
+        return getUserService.update(userId, setNicknameDto);
     }
 
     @ExceptionHandler

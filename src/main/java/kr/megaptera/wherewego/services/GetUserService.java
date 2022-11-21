@@ -11,8 +11,8 @@ import org.springframework.transaction.annotation.*;
 @Service
 @Transactional
 public class GetUserService {
-    private UserRepository userRepository;
-    private JwtUtil jwtUtil;
+    private final UserRepository userRepository;
+    private final JwtUtil jwtUtil;
 
     public GetUserService(UserRepository userRepository, JwtUtil jwtUtil) {
         this.userRepository = userRepository;
@@ -26,11 +26,11 @@ public class GetUserService {
         return found;
     }
 
-    public CreatedUserDto create(Long userId, UserInformationDto userInformationDto) {
+    public CreatedUserDto create(Long userId, SetNicknameDto setNicknameDto) {
         User found = userRepository.findById(userId)
             .orElseThrow(() -> new UserNotFoundException());
 
-        found.register(userInformationDto);
+        found.register(setNicknameDto);
 
         String accessToken = jwtUtil.encode(found.email());
         return new CreatedUserDto(
@@ -38,11 +38,11 @@ public class GetUserService {
         );
     }
 
-    public CreatedUserDto update(Long userId, UserInformationDto userInformationDto) {
+    public CreatedUserDto update(Long userId, SetNicknameDto setNicknameDto) {
         User found = userRepository.findById(userId)
             .orElseThrow(() -> new UserNotFoundException());
 
-        found.changeNickname(userInformationDto);
+        found.changeNickname(setNicknameDto);
 
         String accessToken = jwtUtil.encode(found.email());
 

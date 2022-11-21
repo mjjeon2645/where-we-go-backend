@@ -88,15 +88,15 @@ public class User {
         return state;
     }
 
-    public void register(UserInformationDto userInformationDto) {
-        String changedNickname = userInformationDto.getNickname();
+    public void register(SetNicknameDto setNicknameDto) {
+        String changedNickname = setNicknameDto.getNickname();
 
         this.nickname = changedNickname;
         this.state = "registered";
     }
 
-    public void changeNickname(UserInformationDto userInformationDto) {
-        String changedNickname = userInformationDto.getNickname();
+    public void changeNickname(SetNicknameDto setNicknameDto) {
+        String changedNickname = setNicknameDto.getNickname();
 
         this.nickname = changedNickname;
     }
