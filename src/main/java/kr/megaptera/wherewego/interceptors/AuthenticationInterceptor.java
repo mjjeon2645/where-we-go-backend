@@ -2,7 +2,6 @@ package kr.megaptera.wherewego.interceptors;
 
 import com.auth0.jwt.exceptions.*;
 import kr.megaptera.wherewego.exceptions.*;
-import kr.megaptera.wherewego.repositories.*;
 import kr.megaptera.wherewego.utils.*;
 import org.springframework.web.servlet.*;
 
@@ -30,14 +29,14 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         String accessToken = authorization.substring("Bearer ".length());
 
         try {
-            String email = jwtUtil.decode(accessToken);
+            String socialLoginId = jwtUtil.decode(accessToken);
 
-            // 1. JWT -> email 획득 -> 클레임토큰으로만 사용하겠다는 의미
-            // 2. email을 이용해서 user 확인 -> 좀 더 강화된 보안
-            // userRepository.findByEmail(email); 활용
-            // 3. email과 JWT가 연결되었는지를 확인 -> 더욱 강화된 보안
+            // 1. JWT -> socialLoginId 획득 -> 클레임토큰으로만 사용하겠다는 의미
+            // 2. socialLoginId 이용해서 user 확인 -> 좀 더 강화된 보안
+            // userRepository.findBySocialLoginId(socialLoginId); 활용
+            // 3. socialLoginId JWT가 연결되었는지를 확인 -> 더욱 강화된 보안
 
-            request.setAttribute("email", email);
+            request.setAttribute("socialLoginId", socialLoginId);
 
             return true;
         } catch(JWTDecodeException exception) {

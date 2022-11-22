@@ -21,8 +21,6 @@ public class KakaoLoginController {
     public LoginResultDto login(String code) {
         SocialLoginProcessResultDto kakaoDto = kakaoAuthUtil.process(code);
 
-        LoginResultDto loginResultDto = getLoginService.socialLogin(kakaoDto);
-
-       return loginResultDto;
+        return getLoginService.socialLogin(kakaoDto);
     }
 }

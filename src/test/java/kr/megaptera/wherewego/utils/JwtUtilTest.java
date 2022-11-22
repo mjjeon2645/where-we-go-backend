@@ -16,17 +16,12 @@ class JwtUtilTest {
 
     @Test
     void encodeAndDecode() {
-        String originalUserEmail = "angel2645@naver.com";
+        String originalSocialLoginId = "R9QMnn20w5Z4woJff9AJdPIa3X4ydGoBAlpjBpu_j0E";
 
-        String token = jwtUtil.encode(originalUserEmail);
+        String token = jwtUtil.encode(originalSocialLoginId);
 
-        String userEmail = jwtUtil.decode(token);
+        String socialLoginId = jwtUtil.decode(token);
 
-        assertThat(userEmail).isEqualTo(originalUserEmail);
-    }
-
-    @Test
-    void decodeError() {
-
+        assertThat(socialLoginId).isEqualTo(originalSocialLoginId);
     }
 }

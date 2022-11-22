@@ -8,7 +8,7 @@ import java.util.*;
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
 
-    User findBySocialLoginId(String socialLoginId);
+    Optional<User> findBySocialLoginId(String socialLoginId);
 
     User findByNickname(String nickname);
 }

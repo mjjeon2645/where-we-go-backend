@@ -112,6 +112,8 @@ public class NaverAuthUtil {
         String nickname = naverAccount.getAsJsonObject().get("nickname").getAsString();
         String email = naverAccount.getAsJsonObject().get("email").getAsString();
 
+        System.out.println(id);
+
         naverUserInformation.put("naverUserId", id);
         naverUserInformation.put("nickname", nickname);
         naverUserInformation.put("email", email);

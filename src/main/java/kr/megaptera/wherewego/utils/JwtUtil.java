@@ -12,15 +12,15 @@ public class JwtUtil {
         this.algorithm = Algorithm.HMAC256(secret);
     }
 
-    public String encode(String email) {
+    public String encode(String socialLoginId) {
         return JWT.create()
-            .withClaim("email", email)
+            .withClaim("socialLoginId", socialLoginId)
             .sign(algorithm);
     }
 
     public String decode(String token) {
         JWTVerifier verifier = JWT.require(algorithm).build();
         DecodedJWT verify = verifier.verify(token);
-        return verify.getClaim("email").asString();
+        return verify.getClaim("socialLoginId").asString();
     }
 }

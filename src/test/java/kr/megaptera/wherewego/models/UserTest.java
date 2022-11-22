@@ -4,6 +4,8 @@ import org.junit.jupiter.api.*;
 import org.springframework.security.crypto.argon2.*;
 import org.springframework.security.crypto.password.*;
 
+import java.util.*;
+
 import static org.assertj.core.api.Assertions.*;
 
 class UserTest {
@@ -27,7 +29,7 @@ class UserTest {
     @Test
     void register() {
         User user = new User(1L, "encodedPassword", "email", "또또누나", "id",
-            "kakao", "unregistered");
+            "kakao", "unregistered", List.of());
 
         assertThat(user.nickname()).isEqualTo("또또누나");
         assertThat(user.state()).isEqualTo("unregistered");
@@ -40,7 +42,7 @@ class UserTest {
     @Test
     void changeNickname() {
         User user = new User(1L, "encodedPassword", "email", "또또누나", "id",
-            "kakao", "unregistered");
+            "kakao", "unregistered", List.of());
 
         assertThat(user.nickname()).isEqualTo("또또누나");
         assertThat(user.state()).isEqualTo("unregistered");
@@ -48,5 +50,23 @@ class UserTest {
         user.changeNickname("민지룽룽");
 
         assertThat(user.state()).isEqualTo("unregistered");
+    }
+
+    @Test
+    void addAndRemoveBookmark() {
+        List<Bookmark> bookmarks = new ArrayList<>();
+
+        User user = new User(1L, "PW", "email", "nick", "tester", "authBy", "registered", bookmarks);
+
+        assertThat(user.bookmarks().size()).isEqualTo(0);
+
+        user.addBookmark(bookmarks, 1L);
+        user.addBookmark(bookmarks, 2L);
+
+        assertThat(user.bookmarks().size()).isEqualTo(2);
+
+        user.removeBookmark(bookmarks, 1L);
+
+        assertThat(user.bookmarks().size()).isEqualTo(1);
     }
 }

@@ -9,6 +9,8 @@ import org.springframework.security.crypto.password.*;
 import org.springframework.stereotype.*;
 import org.springframework.transaction.annotation.*;
 
+import java.util.*;
+
 @Service
 @Transactional
 public class GetLoginService {
@@ -44,28 +46,34 @@ public class GetLoginService {
         String socialLoginId = dto.getSocialLoginId();
         String authBy = dto.getAuthBy();
 
-        User foundUser = userRepository.findBySocialLoginId(socialLoginId);
+        System.out.println(socialLoginId);
+
+        User foundUser = userRepository.findBySocialLoginId(socialLoginId)
+            .orElseThrow(UserNotFoundException::new);
 
         // 1. 신규 유저일 떄
         if (foundUser == null) {
             // memo. 소셜 로그인의 경우 비밀번호 입력을 받지 않으므로 socialLoginId를 비밀번호로 취급하고자 함
             String passwordForSocialLogin = socialLoginId;
+            List<Bookmark> bookmarks = new ArrayList<>();
 
             User user = new User(passwordForSocialLogin, email, "",
-                socialLoginId, authBy, "unregistered");
+                socialLoginId, authBy, "unregistered", bookmarks);
             user.changePassword(passwordForSocialLogin, passwordEncoder);
 
             userRepository.save(user);
 
-            // memo. 소셜 로그인은 해당 유저의 소셜로그인 이메일 계정으로 액세스 토큰 생성
-            String accessToken = jwtUtil.encode(email);
+            // memo. 소셜 로그인은 해당 유저의 소셜로그인 아이디로 액세스 토큰 생성
+            String accessToken = jwtUtil.encode(socialLoginId);
+            System.out.println(socialLoginId);
 
             return new LoginResultDto(user.id(), accessToken, nickname, user.state());
         }
 
         // 2. 기존 유저일 때
-        // memo. 소셜 로그인은 해당 유저의 소셜로그인 이메일 계정으로 액세스 토큰 생성
-        String accessToken = jwtUtil.encode(email);
+        // memo. 소셜 로그인은 해당 유저의 소셜로그인 아이디로 액세스 토큰 생성
+        String accessToken = jwtUtil.encode(socialLoginId);
+        System.out.println(socialLoginId);
 
         return new LoginResultDto(foundUser.id(), accessToken, foundUser.nickname(), foundUser.state());
     }

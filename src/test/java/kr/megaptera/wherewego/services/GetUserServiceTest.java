@@ -25,10 +25,10 @@ class GetUserServiceTest {
         getUserService = new GetUserService(userRepository, jwtUtil);
 
         User user = new User(1L, "encodedPassword", "email", "또또누나", "id",
-            "kakao", "unregistered");
+            "kakao", "unregistered", List.of());
 
         User user2 = new User(2L, "encodedPassword", "email", "오예오예", "id",
-            "kakao", "unregistered");
+            "kakao", "unregistered", List.of());
 
         given(userRepository.findById(1L)).willReturn(Optional.of(user));
         given(userRepository.findById(2L)).willReturn(Optional.of(user2));

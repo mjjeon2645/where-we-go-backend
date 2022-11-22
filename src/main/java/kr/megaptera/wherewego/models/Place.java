@@ -132,4 +132,8 @@ public class Place {
   public Contact contact() {
     return contact;
   }
+
+  public BookmarkedPlaceDto toBookmarkedPlaceDto() {
+    return new BookmarkedPlaceDto(id, name, address.fullAddress());
+  }
 }
