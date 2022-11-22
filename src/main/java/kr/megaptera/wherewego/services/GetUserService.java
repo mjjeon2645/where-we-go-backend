@@ -26,29 +26,37 @@ public class GetUserService {
         return found;
     }
 
-    public CreatedUserDto create(Long userId, SetNicknameDto setNicknameDto) {
-        User found = userRepository.findById(userId)
-            .orElseThrow(() -> new UserNotFoundException());
-
-        found.register(setNicknameDto);
-
-        String accessToken = jwtUtil.encode(found.email());
-        return new CreatedUserDto(
-            found.id(), found.nickname(), accessToken, found.state()
-        );
-    }
-
     public CreatedUserDto update(Long userId, SetNicknameDto setNicknameDto) {
+        String nickname = setNicknameDto.getNickname();
+
+        User userFoundByNickname = userRepository.findByNickname(nickname);
         User found = userRepository.findById(userId)
             .orElseThrow(() -> new UserNotFoundException());
 
-        found.changeNickname(setNicknameDto);
+        // 1. 자신의 닉네임일 경우
+        if (found.nickname().equals(nickname)) {
+            throw new UnchangedNicknameException();
+        }
 
-        String accessToken = jwtUtil.encode(found.email());
+        // 2. 다른 사람이 사용중일 경우
+        if (userFoundByNickname != null) {
+            throw new NicknameDuplicatedException();
+        }
 
-        // CreatedUserDto 재활용
+        // 3. 신규/기존 유저에 따른 별도 처리
+        if (found.state().equals(User.REGISTERED)) {
+            found.changeNickname(nickname);
+        }
+
+        if (found.state().equals(User.UNREGISTERED)) {
+            found.register(nickname);
+        }
+
+        // 4. access token 발급 및 프로세스 종료
+        String accessToken = jwtUtil.encode(found.socialLoginId());
+
         return new CreatedUserDto(
-            found.id(), found.nickname(), accessToken, found.state()
+            found.id(), accessToken, found.nickname(), found.state()
         );
     }
 }

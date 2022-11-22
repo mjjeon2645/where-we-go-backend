@@ -1,10 +1,14 @@
 package kr.megaptera.wherewego.controllers;
 
 import kr.megaptera.wherewego.dtos.*;
+import kr.megaptera.wherewego.errorDtos.*;
+import kr.megaptera.wherewego.exceptions.*;
 import kr.megaptera.wherewego.models.*;
 import kr.megaptera.wherewego.services.*;
 import org.springframework.http.*;
+import org.springframework.validation.*;
 import org.springframework.validation.annotation.*;
+import org.springframework.web.bind.*;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -32,7 +36,7 @@ public class UserController {
         @PathVariable() Long userId,
         @Validated @RequestBody SetNicknameDto setNicknameDto
     ) {
-        return getUserService.create(userId, setNicknameDto);
+        return getUserService.update(userId, setNicknameDto);
     }
 
     @PatchMapping("{userId}")
@@ -44,9 +48,31 @@ public class UserController {
         return getUserService.update(userId, setNicknameDto);
     }
 
-    @ExceptionHandler
+    @ExceptionHandler(UserNotFoundException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String userNotFound() {
-        return "사용자 정보를 찾을 수 없습니다";
+    public ErrorDto userNotFound() {
+        return new UserNotFoundErrorDto();
+    }
+
+    @ExceptionHandler(UnchangedNicknameException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorDto unchangedNickname() {
+        return new UnchangedNicknameErrorDto();
+    }
+
+    @ExceptionHandler(NicknameDuplicatedException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorDto nicknameDuplicated() {
+        return new NicknameDuplicatedErrorDto();
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorDto nicknameValidationError(MethodArgumentNotValidException exception) {
+        BindingResult result = exception.getBindingResult();
+        for (ObjectError error : result.getAllErrors()) {
+            return new NicknameValidationErrorDto(1004, error.getDefaultMessage());
+        }
+        return new NicknameValidationErrorDto(1005, "Bad Request!");
     }
 }
