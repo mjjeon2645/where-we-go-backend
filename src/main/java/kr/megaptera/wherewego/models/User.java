@@ -1,6 +1,5 @@
 package kr.megaptera.wherewego.models;
 
-import kr.megaptera.wherewego.dtos.*;
 import org.springframework.security.crypto.password.*;
 
 import javax.persistence.*;
@@ -8,6 +7,10 @@ import javax.persistence.*;
 @Entity
 @Table(name = "USERS")
 public class User {
+    public static final String UNREGISTERED = "unregistered";
+    public static final String REGISTERED = "registered";
+    public static final String DEACTIVATED = "deactivated";
+
     @Id
     @GeneratedValue
     private Long id;
@@ -25,7 +28,7 @@ public class User {
     private String state;
 
     public static User fake(String email) {
-        return new User(1L, "encodedPassword", email, "nickname", "socialId", "kakao", "unregistered");
+        return new User(1L, "encodedPassword", email, "nickname", "socialId", "kakao", User.UNREGISTERED);
     }
 
     public boolean authenticate(String password, PasswordEncoder passwordEncoder) {
@@ -88,16 +91,12 @@ public class User {
         return state;
     }
 
-    public void register(UserInformationDto userInformationDto) {
-        String changedNickname = userInformationDto.getNickname();
-
-        this.nickname = changedNickname;
-        this.state = "registered";
+    public void register(String nickname) {
+        this.nickname = nickname;
+        this.state = User.REGISTERED;
     }
 
-    public void changeNickname(UserInformationDto userInformationDto) {
-        String changedNickname = userInformationDto.getNickname();
-
-        this.nickname = changedNickname;
+    public void changeNickname(String nickname) {
+        this.nickname = nickname;
     }
 }

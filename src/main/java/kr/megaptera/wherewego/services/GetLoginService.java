@@ -46,11 +46,12 @@ public class GetLoginService {
 
         User foundUser = userRepository.findBySocialLoginId(socialLoginId);
 
+        // 1. 신규 유저일 떄
         if (foundUser == null) {
             // memo. 소셜 로그인의 경우 비밀번호 입력을 받지 않으므로 socialLoginId를 비밀번호로 취급하고자 함
             String passwordForSocialLogin = socialLoginId;
 
-            User user = new User(passwordForSocialLogin, email, nickname,
+            User user = new User(passwordForSocialLogin, email, "",
                 socialLoginId, authBy, "unregistered");
             user.changePassword(passwordForSocialLogin, passwordEncoder);
 
@@ -62,6 +63,7 @@ public class GetLoginService {
             return new LoginResultDto(user.id(), accessToken, nickname, user.state());
         }
 
+        // 2. 기존 유저일 때
         // memo. 소셜 로그인은 해당 유저의 소셜로그인 이메일 계정으로 액세스 토큰 생성
         String accessToken = jwtUtil.encode(email);
 

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("oauth")
 public class NaverLoginController {
     private final NaverAuthUtil naverAuthUtil;
-    private GetLoginService getLoginService;
+    private final GetLoginService getLoginService;
 
     public NaverLoginController(GetLoginService getLoginService,
                                 NaverAuthUtil naverAuthUtil) {
