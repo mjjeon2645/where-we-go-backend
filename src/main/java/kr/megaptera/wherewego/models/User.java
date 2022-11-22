@@ -3,6 +3,7 @@ package kr.megaptera.wherewego.models;
 import org.springframework.security.crypto.password.*;
 
 import javax.persistence.*;
+import java.util.*;
 
 @Entity
 @Table(name = "USERS")
@@ -27,8 +28,13 @@ public class User {
 
     private String state;
 
+    @Embedded
+    @ElementCollection
+    private List<Bookmark> bookmarks = new ArrayList<>();
+
     public static User fake(String email) {
-        return new User(1L, "encodedPassword", email, "nickname", "socialId", "kakao", User.UNREGISTERED);
+        return new User(1L, "encodedPassword", email, "nickname", "socialId",
+            "kakao", User.UNREGISTERED, List.of());
     }
 
     public boolean authenticate(String password, PasswordEncoder passwordEncoder) {
@@ -43,17 +49,18 @@ public class User {
     }
 
     public User(String passwordForSocialLogin, String email, String nickname,
-                String socialLoginId, String authBy, String state) {
+                String socialLoginId, String authBy, String state, List<Bookmark> bookmarks) {
         this.encodedPassword = passwordForSocialLogin;
         this.email = email;
         this.nickname = nickname;
         this.socialLoginId = socialLoginId;
         this.authBy = authBy;
         this.state = state;
+        this.bookmarks = bookmarks;
     }
 
     public User(Long id, String encodedPassword, String email, String nickname,
-                String socialLoginId, String authBy, String state) {
+                String socialLoginId, String authBy, String state, List<Bookmark> bookmarks) {
         this.id = id;
         this.encodedPassword = encodedPassword;
         this.email = email;
@@ -61,6 +68,7 @@ public class User {
         this.socialLoginId = socialLoginId;
         this.authBy = authBy;
         this.state = state;
+        this.bookmarks = bookmarks;
     }
 
     public Long id() {
@@ -91,6 +99,10 @@ public class User {
         return state;
     }
 
+    public List<Bookmark> bookmarks() {
+        return bookmarks;
+    }
+
     public void register(String nickname) {
         this.nickname = nickname;
         this.state = User.REGISTERED;
@@ -98,5 +110,19 @@ public class User {
 
     public void changeNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public void addBookmark(List<Bookmark> bookmarks, Long placeId) {
+        bookmarks.add(new Bookmark(placeId));
+//        this.bookmarks = bookmarks;
+    }
+
+    public void removeBookmark(List<Bookmark> bookmarks, Long placeId) {
+        Bookmark filtered = bookmarks.stream()
+            .filter(bookmark -> bookmark.getPlaceId().equals(placeId))
+            .findFirst().orElseThrow();
+
+        bookmarks.remove(filtered);
+//        this.bookmarks = bookmarks;
     }
 }

@@ -20,7 +20,6 @@ public class NaverLoginController {
     @GetMapping("naver-token")
     public LoginResultDto login(String code) {
         SocialLoginProcessResultDto naverDto = naverAuthUtil.process(code);
-        LoginResultDto loginResultDto = getLoginService.socialLogin(naverDto);
-       return loginResultDto;
+        return getLoginService.socialLogin(naverDto);
     }
 }
