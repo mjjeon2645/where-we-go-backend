@@ -23,10 +23,10 @@ public class GetChildService {
        return children.stream().map(Child::toChildDto).collect(Collectors.toList());
     }
 
-    public List<ChildDto> create(Long userId, ChildRequestDto childRequestDto) {
-        String birthday = childRequestDto.getBirthday();
+    public List<ChildDto> create(Long userId, ChildCreateDto childCreateDto) {
+        String birthday = childCreateDto.getBirthday();
+        String gender = childCreateDto.getGender();
 
-        String gender = childRequestDto.getGender();
         if (gender.equals("왕자님")) {
             gender = Child.BOY;
         }
@@ -47,5 +47,11 @@ public class GetChildService {
             .stream()
             .map(Child::toChildDto)
             .collect(Collectors.toList());
+    }
+
+    public void delete(Long userId, ChildDeleteDto childDeleteDto) {
+        Long childId = childDeleteDto.getChildId();
+
+        childRepository.deleteById(childId);
     }
 }

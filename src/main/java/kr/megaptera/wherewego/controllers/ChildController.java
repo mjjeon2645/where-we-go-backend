@@ -1,7 +1,12 @@
 package kr.megaptera.wherewego.controllers;
 
 import kr.megaptera.wherewego.dtos.*;
+import kr.megaptera.wherewego.errorDtos.*;
 import kr.megaptera.wherewego.services.*;
+import org.springframework.http.*;
+import org.springframework.validation.*;
+import org.springframework.validation.annotation.*;
+import org.springframework.web.bind.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -25,13 +30,32 @@ public class ChildController {
     }
 
     @PostMapping("{userId}")
-    public ChildDtos children(
+    @ResponseStatus(HttpStatus.CREATED)
+    public ChildDtos create(
         @PathVariable Long userId,
-        @RequestBody ChildRequestDto childRequestDto
+        @Validated @RequestBody ChildCreateDto childCreateDto
     ){
-        List<ChildDto> children = getChildService.create(userId, childRequestDto);
+        List<ChildDto> children = getChildService.create(userId, childCreateDto);
 
         return new ChildDtos(children);
     }
 
+    @PatchMapping("{userId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(
+        @PathVariable Long userId,
+        @RequestBody ChildDeleteDto childDeleteDto
+    ){
+        getChildService.delete(userId, childDeleteDto);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorDto childInformationMissing(MethodArgumentNotValidException exception) {
+        BindingResult result = exception.getBindingResult();
+        for (ObjectError error : result.getAllErrors()) {
+            return new ChildInformationMissingDto(4001, error.getDefaultMessage());
+        }
+        return new ChildInformationMissingDto(4002, "Bad Request!");
+    }
 }

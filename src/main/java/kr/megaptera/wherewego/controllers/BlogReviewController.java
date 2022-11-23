@@ -11,7 +11,7 @@ import java.util.stream.*;
 @RestController
 @RequestMapping("blog-reviews")
 public class BlogReviewController {
-    private GetBlogReviewService getBlogReviewService;
+    private final GetBlogReviewService getBlogReviewService;
 
     public BlogReviewController(GetBlogReviewService getBlogReviewService) {
         this.getBlogReviewService = getBlogReviewService;
