@@ -114,7 +114,6 @@ public class User {
 
     public void addBookmark(List<Bookmark> bookmarks, Long placeId) {
         bookmarks.add(new Bookmark(placeId));
-//        this.bookmarks = bookmarks;
     }
 
     public void removeBookmark(List<Bookmark> bookmarks, Long placeId) {
@@ -123,6 +122,5 @@ public class User {
             .findFirst().orElseThrow();
 
         bookmarks.remove(filtered);
-//        this.bookmarks = bookmarks;
     }
 }
