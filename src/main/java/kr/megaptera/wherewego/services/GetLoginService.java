@@ -46,10 +46,8 @@ public class GetLoginService {
         String socialLoginId = dto.getSocialLoginId();
         String authBy = dto.getAuthBy();
 
-        System.out.println(socialLoginId);
-
         User foundUser = userRepository.findBySocialLoginId(socialLoginId)
-            .orElseThrow(UserNotFoundException::new);
+            .orElse(null);
 
         // 1. 신규 유저일 떄
         if (foundUser == null) {
@@ -75,6 +73,7 @@ public class GetLoginService {
         String accessToken = jwtUtil.encode(socialLoginId);
         System.out.println(socialLoginId);
 
-        return new LoginResultDto(foundUser.id(), accessToken, foundUser.nickname(), foundUser.state());
+        return new LoginResultDto(foundUser.id(), accessToken, foundUser.nickname(),
+            foundUser.state());
     }
 }
