@@ -37,7 +37,8 @@ public class WhereWeGoApplication {
 					.allowedMethods(
 						HttpMethod.GET.name(),
 						HttpMethod.POST.name(),
-						HttpMethod.PATCH.name()
+						HttpMethod.PATCH.name(),
+						HttpMethod.DELETE.name()
 					);
 			}
 
