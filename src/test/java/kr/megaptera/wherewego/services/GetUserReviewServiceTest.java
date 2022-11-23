@@ -19,7 +19,7 @@ class GetUserReviewServiceTest {
     void setUp() {
         userReviewRepository = mock(UserReviewRepository.class);
 
-        getUserReviewService = new GetUserReviewService(userReviewRepository);
+        getUserReviewService = new GetUserReviewService(userReviewRepository, userRepository);
 
         given(userReviewRepository.findAllByPlaceIdOrderByCreatedAtDesc(4L))
             .willReturn(List.of(
@@ -67,7 +67,7 @@ class GetUserReviewServiceTest {
     @Test
     void create() {
         MyReviewDto myReviewDto = new MyReviewDto(1L, "2022-10-23", 5L, "좋았어요!");
-        UserReview createdUserReview = getUserReviewService.create(myReviewDto);
+        UserReview createdUserReview = getUserReviewService.create(myReviewDto, socialLoginId);
 
         verify(userReviewRepository).save(any());
     }

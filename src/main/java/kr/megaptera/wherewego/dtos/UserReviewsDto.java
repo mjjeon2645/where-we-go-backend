@@ -7,12 +7,15 @@ public class UserReviewsDto {
 
     private List<UserReviewDto> userReviews;
 
+    private UserReviewDto userReview;
+
     public UserReviewsDto() {
     }
 
-    public UserReviewsDto(String averageRate, List<UserReviewDto> userReviews) {
+    public UserReviewsDto(String averageRate, List<UserReviewDto> userReviews, UserReviewDto userReview) {
         this.averageRate = averageRate;
         this.userReviews = userReviews;
+        this.userReview = userReview;
     }
 
     public String getAverageRate() {
@@ -21,5 +24,9 @@ public class UserReviewsDto {
 
     public List<UserReviewDto> getUserReviews() {
         return userReviews;
+    }
+
+    public UserReviewDto getUserReview() {
+        return userReview;
     }
 }

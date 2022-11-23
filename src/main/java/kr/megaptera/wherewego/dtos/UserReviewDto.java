@@ -1,7 +1,5 @@
 package kr.megaptera.wherewego.dtos;
 
-import org.hibernate.annotations.*;
-
 import java.time.*;
 
 public class UserReviewDto {
@@ -12,6 +10,8 @@ public class UserReviewDto {
     private Long userId;
 
     private Long rate;
+
+    private String nickname;
 
     private String body;
 
@@ -24,12 +24,13 @@ public class UserReviewDto {
     public UserReviewDto() {
     }
 
-    public UserReviewDto(Long id, Long placeId, Long userId, Long rate, String body,
+    public UserReviewDto(Long id, Long placeId, Long userId, Long rate, String nickname, String body,
                          String dateOfVisit, LocalDateTime createdAt, Boolean isDeleted) {
         this.id = id;
         this.placeId = placeId;
         this.userId = userId;
         this.rate = rate;
+        this.nickname = nickname;
         this.body = body;
         this.dateOfVisit = dateOfVisit;
         this.createdAt = createdAt;
@@ -50,6 +51,10 @@ public class UserReviewDto {
 
     public Long getRate() {
         return rate;
+    }
+
+    public String getNickname() {
+        return nickname;
     }
 
     public String getBody() {

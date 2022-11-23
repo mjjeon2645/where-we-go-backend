@@ -9,4 +9,6 @@ public interface UserReviewRepository extends JpaRepository<UserReview, Long> {
     List<UserReview> findAllByPlaceIdOrderByCreatedAtDesc(Long placeId);
 
     List<UserReview> findAllByPlaceId(Long placeId);
+
+    Optional<UserReview> findByUserId(Long userId);
 }

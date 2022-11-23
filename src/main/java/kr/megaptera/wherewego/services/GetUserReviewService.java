@@ -1,6 +1,7 @@
 package kr.megaptera.wherewego.services;
 
 import kr.megaptera.wherewego.dtos.*;
+import kr.megaptera.wherewego.exceptions.*;
 import kr.megaptera.wherewego.models.*;
 import kr.megaptera.wherewego.repositories.*;
 import org.springframework.stereotype.*;
@@ -13,9 +14,12 @@ import java.util.stream.*;
 @Transactional
 public class GetUserReviewService {
     private final UserReviewRepository userReviewRepository;
+    private final UserRepository userRepository;
 
-    public GetUserReviewService(UserReviewRepository userReviewRepository) {
+    public GetUserReviewService(UserReviewRepository userReviewRepository,
+                                UserRepository userRepository) {
         this.userReviewRepository = userReviewRepository;
+        this.userRepository = userRepository;
     }
 
     public List<UserReview> userReviews(Long placeId) {
@@ -45,14 +49,38 @@ public class GetUserReviewService {
         return averageToString;
     }
 
-    public UserReview create(MyReviewDto myReviewDto) {
-        // TODO. user id 10L로 임의 설정한 것은 추후 로그인 기능 구현 시 바꾸도록 하기
+    public UserReview create(MyReviewDto myReviewDto, String socialLoginId) {
+
+        User found = userRepository.findBySocialLoginId(socialLoginId)
+            .orElseThrow(AuthenticationError::new);
+
+        String nickname = found.nickname();
 
         UserReview userReview = new UserReview(myReviewDto.getPlaceId(),
-            10L, myReviewDto.getRate(), myReviewDto.getBody(), myReviewDto.getDateOfVisit());
+            found.id(), myReviewDto.getRate(), nickname, myReviewDto.getBody(), myReviewDto.getDateOfVisit());
 
-        UserReview createdUserReview = userReviewRepository.save(userReview);
+        return userReviewRepository.save(userReview);
+    }
 
-        return createdUserReview;
+    public UserReviewDto findUserReview(Long placeId, String socialLoginId) {
+        List<UserReview> foundReviews = userReviewRepository.findAllByPlaceId(placeId).stream().toList();
+
+        User found = userRepository.findBySocialLoginId(socialLoginId)
+            .orElseThrow(AuthenticationError::new);
+
+        UserReview userReview = foundReviews.stream()
+            .filter(item -> item.userId().equals(found.id()))
+            .findFirst()
+            .orElse(null);
+
+        if (userReview == null) {
+            return null;
+        }
+
+        return userReview.toDto();
+    }
+
+    public void delete(Long reviewId) {
+        userReviewRepository.deleteById(reviewId);
     }
 }

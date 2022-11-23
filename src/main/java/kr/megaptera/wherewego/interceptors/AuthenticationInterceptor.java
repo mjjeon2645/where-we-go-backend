@@ -42,6 +42,5 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         } catch(JWTDecodeException exception) {
             throw new AuthenticationError();
         }
-
     }
 }
