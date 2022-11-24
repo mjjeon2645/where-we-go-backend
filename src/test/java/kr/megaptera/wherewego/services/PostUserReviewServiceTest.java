@@ -35,5 +35,4 @@ class PostUserReviewServiceTest {
 
         verify(userReviewRepository).save(any());
     }
-
 }
