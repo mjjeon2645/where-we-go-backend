@@ -7,8 +7,7 @@ import org.junit.jupiter.api.*;
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.*;
+import static org.mockito.BDDMockito.*;
 
 class GetTopThreePlacesServiceTest {
     private GetTopThreePlacesService getTopThreePlacesService;
@@ -48,7 +47,6 @@ class GetTopThreePlacesServiceTest {
 
     @Test
     void topThreePlaces() {
-
         assertThat(getTopThreePlacesService.topThreePlaces().size()).isEqualTo(3);
         assertThat(getTopThreePlacesService.topThreePlaces().get(0).getPlaceId()).isEqualTo(1L);
     }

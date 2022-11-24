@@ -27,4 +27,18 @@ public class BookmarkedPlaceDto {
     public String getAddress() {
         return address;
     }
+
+    @Override
+    public boolean equals(Object other) {
+        BookmarkedPlaceDto otherBookmarkedPlace = (BookmarkedPlaceDto) other;
+
+        return placeId.equals(otherBookmarkedPlace.getPlaceId())
+            && name.equals(otherBookmarkedPlace.getName())
+            && address.equals(otherBookmarkedPlace.getAddress());
+    }
+
+    @Override
+    public String toString() {
+        return "placeId: " + placeId + " name: " + name + " address:" + address;
+    }
 }

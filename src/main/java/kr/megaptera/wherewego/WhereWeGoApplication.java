@@ -14,65 +14,65 @@ import org.springframework.web.servlet.config.annotation.*;
 
 @SpringBootApplication
 public class WhereWeGoApplication {
-	@Value("${jwt.secret}")
-	private String jwtSecret;
+    @Value("${jwt.secret}")
+    private String jwtSecret;
 
-	public static void main(String[] args) {
-		SpringApplication.run(WhereWeGoApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(WhereWeGoApplication.class, args);
+    }
 
-	// Spring Security customized setting
-	@Bean
-	public WebSecurityCustomizer ignoringCustomizer() {
-		return (web) -> web.ignoring().antMatchers("/**");
-	}
+    // Spring Security customized setting
+    @Bean
+    public WebSecurityCustomizer ignoringCustomizer() {
+        return (web) -> web.ignoring().antMatchers("/**");
+    }
 
-	// CORS 이슈 관련
-	@Bean
-	public WebMvcConfigurer webMvcConfigurer() {
-		return new WebMvcConfigurer() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**").allowedOrigins("*")
-					.allowedMethods(
-						HttpMethod.GET.name(),
-						HttpMethod.POST.name(),
-						HttpMethod.PATCH.name(),
-						HttpMethod.DELETE.name()
-					);
-			}
+    // CORS 이슈 관련
+    @Bean
+    public WebMvcConfigurer webMvcConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**").allowedOrigins("*")
+                    .allowedMethods(
+                        HttpMethod.GET.name(),
+                        HttpMethod.POST.name(),
+                        HttpMethod.PATCH.name(),
+                        HttpMethod.DELETE.name()
+                    );
+            }
 
-			@Override
-			public void addInterceptors(InterceptorRegistry registry) {
-				registry.addInterceptor(authenticationInterceptor());
-			}
-		};
-	}
+            @Override
+            public void addInterceptors(InterceptorRegistry registry) {
+                registry.addInterceptor(authenticationInterceptor());
+            }
+        };
+    }
 
-	@Bean
-	public AuthenticationInterceptor authenticationInterceptor() {
-		return new AuthenticationInterceptor(jwtUtil());
-	}
+    @Bean
+    public AuthenticationInterceptor authenticationInterceptor() {
+        return new AuthenticationInterceptor(jwtUtil());
+    }
 
-	@Bean
-	public JwtUtil jwtUtil() {
-		return new JwtUtil(jwtSecret);
-	}
+    @Bean
+    public JwtUtil jwtUtil() {
+        return new JwtUtil(jwtSecret);
+    }
 
-	// PasswordEncoder(Argon2)
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new Argon2PasswordEncoder();
-	}
+    // PasswordEncoder(Argon2)
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new Argon2PasswordEncoder();
+    }
 
-	// third party login
-	@Bean
-	public KakaoAuthUtil kakaoLoginUtil() {
-		return new KakaoAuthUtil();
-	}
+    // third party login
+    @Bean
+    public KakaoAuthUtil kakaoLoginUtil() {
+        return new KakaoAuthUtil();
+    }
 
-	@Bean
-	public NaverAuthUtil naverLoginUtil() {
-		return new NaverAuthUtil();
-	}
+    @Bean
+    public NaverAuthUtil naverLoginUtil() {
+        return new NaverAuthUtil();
+    }
 }

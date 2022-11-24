@@ -14,8 +14,7 @@ import org.springframework.test.web.servlet.request.*;
 
 import java.util.*;
 
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.verify;
+import static org.mockito.BDDMockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(BookmarkController.class)
@@ -25,6 +24,9 @@ class BookmarkControllerTest {
 
     @MockBean
     private GetBookmarkService getBookmarkService;
+
+    @MockBean
+    private PostBookmarkService postBookmarkService;
 
     @MockBean
     private UserRepository userRepository;
@@ -54,12 +56,11 @@ class BookmarkControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isCreated());
 
-        verify(getBookmarkService).toggle(placeId, socialLoginId);
+        verify(postBookmarkService).toggle(placeId, socialLoginId);
     }
 
     @Test
     void toggleBookmarkWithInvalidAccessToken() throws Exception {
-        Long placeId = 1L;
         String socialLoginId = "tester";
 
         List<Bookmark> bookmarks = List.of(

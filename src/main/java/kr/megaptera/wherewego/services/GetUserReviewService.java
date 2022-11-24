@@ -49,19 +49,6 @@ public class GetUserReviewService {
         return averageToString;
     }
 
-    public UserReview create(MyReviewDto myReviewDto, String socialLoginId) {
-
-        User found = userRepository.findBySocialLoginId(socialLoginId)
-            .orElseThrow(AuthenticationError::new);
-
-        String nickname = found.nickname();
-
-        UserReview userReview = new UserReview(myReviewDto.getPlaceId(),
-            found.id(), myReviewDto.getRate(), nickname, myReviewDto.getBody(), myReviewDto.getDateOfVisit());
-
-        return userReviewRepository.save(userReview);
-    }
-
     public UserReviewDto findUserReview(Long placeId, String socialLoginId) {
         List<UserReview> foundReviews = userReviewRepository.findAllByPlaceId(placeId).stream().toList();
 
@@ -78,9 +65,5 @@ public class GetUserReviewService {
         }
 
         return userReview.toDto();
-    }
-
-    public void delete(Long reviewId) {
-        userReviewRepository.deleteById(reviewId);
     }
 }

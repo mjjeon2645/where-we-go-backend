@@ -12,21 +12,37 @@ import java.util.stream.*;
 
 @Service
 @Transactional
-public class GetBookmarkService {
+public class PostBookmarkService {
     private final UserRepository userRepository;
     private final PlaceRepository placeRepository;
 
-    public GetBookmarkService(UserRepository userRepository,
-                              PlaceRepository placeRepository) {
+    public PostBookmarkService(UserRepository userRepository,
+                               PlaceRepository placeRepository) {
         this.userRepository = userRepository;
         this.placeRepository = placeRepository;
     }
 
-    public List<BookmarkedPlaceDto> bookmarks(String socialLoginId) {
-        User found = userRepository.findBySocialLoginId(socialLoginId)
+    public List<BookmarkedPlaceDto> toggle(Long placeId, String socialLoginId) {
+        User foundUser = userRepository.findBySocialLoginId(socialLoginId)
             .orElseThrow(UserNotFoundException::new);
 
-        List<Bookmark> bookmarks = found.bookmarks();
+        List<Bookmark> bookmarks = foundUser.bookmarks();
+
+        Bookmark foundBookmark = bookmarks
+            .stream().filter(bookmark -> bookmark.getPlaceId().equals(placeId))
+            .findFirst().orElse(null);
+
+        if (foundBookmark == null) {
+            foundUser.addBookmark(bookmarks, placeId);
+
+            List<Place> bookmarkedPlaces = makePlacesList(bookmarks);
+
+            return bookmarkedPlaces.stream()
+                .map(Place::toBookmarkedPlaceDto)
+                .collect(Collectors.toList());
+        }
+
+        foundUser.removeBookmark(bookmarks, placeId);
 
         List<Place> bookmarkedPlaces = makePlacesList(bookmarks);
 

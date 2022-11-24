@@ -13,10 +13,10 @@ import java.util.stream.*;
 @RestController
 @RequestMapping("map")
 public class MapController {
-    private final MapService mapService;
+    private final GetMapService getMapService;
 
-    public MapController(MapService mapService) {
-        this.mapService = mapService;
+    public MapController(GetMapService getMapService) {
+        this.getMapService = getMapService;
     }
 
     @GetMapping
@@ -25,7 +25,7 @@ public class MapController {
         @RequestParam(required = false, defaultValue = "전체") String sigungu,
         @RequestParam(required = false, defaultValue = "전체") String category
     ) {
-        List<PlaceDto> places = mapService.filteredPlaces(sido, sigungu, category)
+        List<PlaceDto> places = getMapService.filteredPlaces(sido, sigungu, category)
             .stream().map(Place::toPlaceDto).collect(Collectors.toList());
 
         return new PlacesDto(places);

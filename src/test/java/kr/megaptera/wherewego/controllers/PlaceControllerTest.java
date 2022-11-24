@@ -20,7 +20,7 @@ class PlaceControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private MapService mapService;
+    private GetMapService mapService;
 
     @MockBean
     private PlaceRepository placeRepository;

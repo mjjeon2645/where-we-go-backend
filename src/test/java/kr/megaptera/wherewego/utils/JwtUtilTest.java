@@ -2,7 +2,7 @@ package kr.megaptera.wherewego.utils;
 
 import org.junit.jupiter.api.*;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 class JwtUtilTest {
     static final String SECRET = "SECRET";

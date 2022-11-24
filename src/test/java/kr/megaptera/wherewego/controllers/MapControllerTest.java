@@ -14,18 +14,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(MapController.class)
 class MapControllerTest {
 
-  @Autowired
-  private MockMvc mockMvc;
+    @Autowired
+    private MockMvc mockMvc;
 
-  @MockBean
-  private MapService mapService;
+    @MockBean
+    private GetMapService mapService;
 
-  @MockBean
-  private PlaceRepository placeRepository;
+    @MockBean
+    private PlaceRepository placeRepository;
 
-  @Test
-  void places() throws Exception {
-    mockMvc.perform(MockMvcRequestBuilders.get("/map"))
-        .andExpect(status().isOk());
-  }
+    @Test
+    void places() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/map"))
+            .andExpect(status().isOk());
+    }
 }

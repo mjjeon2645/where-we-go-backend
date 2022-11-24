@@ -1,16 +1,14 @@
 package kr.megaptera.wherewego.services;
 
-import kr.megaptera.wherewego.exceptions.*;
+import kr.megaptera.wherewego.dtos.*;
 import kr.megaptera.wherewego.models.*;
 import kr.megaptera.wherewego.repositories.*;
 import org.junit.jupiter.api.*;
 
 import java.util.*;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.BDDMockito.*;
 
 class GetBookmarkServiceTest {
     private UserRepository userRepository;
@@ -33,17 +31,13 @@ class GetBookmarkServiceTest {
         given(placeRepository.findById(1L)).willReturn(Optional.of(Place.fake1(1L, "자연")));
     }
 
-    //TODO. 보강 필요
-//    @Test
-    void toggleBookmarkWithValidUser() {
-        assertThat(getBookmarkService.toggle(1L, "tester")).hasSize(0);
-        assertThat(getBookmarkService.toggle(5L, "tester")).hasSize(1);
-    }
-
     @Test
-    void toggleBookmarkWithInvalidUser() {
-        assertThrows(UserNotFoundException.class, () -> {
-            getBookmarkService.toggle(1L, "");
-        });
+    void bookmarks() {
+        assertThat(getBookmarkService.bookmarks("tester"))
+            .isEqualTo(List.of(
+                new BookmarkedPlaceDto(1L, "과천 서울랜드", "경기도 과천시 블라블라")
+            ));
+
+        verify(userRepository).findBySocialLoginId("tester");
     }
 }
