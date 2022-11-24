@@ -39,7 +39,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             request.setAttribute("socialLoginId", socialLoginId);
 
             return true;
-        } catch(JWTDecodeException exception) {
+        } catch (JWTDecodeException exception) {
             throw new AuthenticationError();
         }
     }

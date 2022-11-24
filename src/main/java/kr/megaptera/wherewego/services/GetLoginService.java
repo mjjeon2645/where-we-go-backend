@@ -28,7 +28,7 @@ public class GetLoginService {
     public User login(String email, String password) {
         // 1. email 찾고
         User foundUser = userRepository.findByEmail(email)
-            .orElseThrow(() -> new LoginFailedException());
+            .orElseThrow(LoginFailedException::new);
 
         // 2. 패스워드 비교하고
         if (!foundUser.authenticate(password, passwordEncoder)) {
@@ -39,15 +39,12 @@ public class GetLoginService {
     }
 
     public LoginResultDto socialLogin(SocialLoginProcessResultDto dto) {
-        String accessTokenFromSocialLogin = dto.getAccessToken();
-        String refreshTokenFromSocialLogin = dto.getRefreshToken();
         String nickname = dto.getNickname();
         String email = dto.getEmail();
         String socialLoginId = dto.getSocialLoginId();
         String authBy = dto.getAuthBy();
 
-        User foundUser = userRepository.findBySocialLoginId(socialLoginId)
-            .orElse(null);
+        User foundUser = userRepository.findBySocialLoginId(socialLoginId).orElse(null);
 
         // 1. 신규 유저일 떄
         if (foundUser == null) {
@@ -63,7 +60,6 @@ public class GetLoginService {
 
             // memo. 소셜 로그인은 해당 유저의 소셜로그인 아이디로 액세스 토큰 생성
             String accessToken = jwtUtil.encode(socialLoginId);
-            System.out.println(socialLoginId);
 
             return new LoginResultDto(user.id(), accessToken, nickname, user.state());
         }
@@ -71,7 +67,6 @@ public class GetLoginService {
         // 2. 기존 유저일 때
         // memo. 소셜 로그인은 해당 유저의 소셜로그인 아이디로 액세스 토큰 생성
         String accessToken = jwtUtil.encode(socialLoginId);
-        System.out.println(socialLoginId);
 
         return new LoginResultDto(foundUser.id(), accessToken, foundUser.nickname(),
             foundUser.state());

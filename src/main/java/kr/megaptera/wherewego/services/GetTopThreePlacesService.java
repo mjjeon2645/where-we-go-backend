@@ -58,12 +58,12 @@ public class GetTopThreePlacesService {
     public void makeTopThreePlacesWithResults(List<TopThreePlaceDto> topThreePlaces,
                                               List<Map.Entry<Long, Double>> results) {
         for (int i = 0; i < 3; i += 1) {
-          Long placeId = results.get(i).getKey();
-          String name = placeRepository.getReferenceById(placeId).name();
-          Address address = placeRepository.getReferenceById(placeId).address();
-          String averageRate = process(results.get(i).getValue());
+            Long placeId = results.get(i).getKey();
+            String name = placeRepository.getReferenceById(placeId).name();
+            Address address = placeRepository.getReferenceById(placeId).address();
+            String averageRate = process(results.get(i).getValue());
 
-          topThreePlaces.add(new TopThreePlaceDto(placeId, name, address.toDto(), averageRate));
+            topThreePlaces.add(new TopThreePlaceDto(placeId, name, address.toDto(), averageRate));
         }
     }
 

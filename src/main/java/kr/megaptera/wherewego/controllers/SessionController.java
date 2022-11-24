@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("session")
 public class SessionController {
-    private final GetLoginService getUserService;
+    private final GetLoginService getLoginService;
     private final JwtUtil jwtUtil;
 
-    public SessionController(GetLoginService getUserService, JwtUtil jwtUtil) {
-        this.getUserService = getUserService;
+    public SessionController(GetLoginService getLoginService, JwtUtil jwtUtil) {
+        this.getLoginService = getLoginService;
         this.jwtUtil = jwtUtil;
     }
 
@@ -27,7 +27,7 @@ public class SessionController {
         String email = loginRequestDto.getEmail();
         String password = loginRequestDto.getPassword();
 
-        User user = getUserService.login(email, password);
+        User user = getLoginService.login(email, password);
 
         String accessToken = jwtUtil.encode(email);
 

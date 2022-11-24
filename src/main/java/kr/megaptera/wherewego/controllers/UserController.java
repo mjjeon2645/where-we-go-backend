@@ -15,9 +15,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("users")
 public class UserController {
     private final GetUserService getUserService;
+    private final UpdateUserService updateUserService;
 
-    public UserController(GetUserService getUserService) {
+    public UserController(GetUserService getUserService,
+                          UpdateUserService updateUserService) {
         this.getUserService = getUserService;
+        this.updateUserService = updateUserService;
     }
 
     @GetMapping("{userId}")
@@ -36,7 +39,7 @@ public class UserController {
         @PathVariable() Long userId,
         @Validated @RequestBody SetNicknameDto setNicknameDto
     ) {
-        return getUserService.update(userId, setNicknameDto);
+        return updateUserService.update(userId, setNicknameDto);
     }
 
     @PatchMapping("{userId}")
@@ -45,7 +48,7 @@ public class UserController {
         @PathVariable() Long userId,
         @Validated @RequestBody SetNicknameDto setNicknameDto
     ) {
-        return getUserService.update(userId, setNicknameDto);
+        return updateUserService.update(userId, setNicknameDto);
     }
 
     @ExceptionHandler(UserNotFoundException.class)

@@ -6,8 +6,8 @@ import org.junit.jupiter.api.*;
 
 import java.util.*;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.BDDMockito.given;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.BDDMockito.*;
 import static org.mockito.Mockito.*;
 
 class GetBlogReviewServiceTest {
@@ -21,7 +21,7 @@ class GetBlogReviewServiceTest {
 
         given(blogReviewRepository.findAllByPlaceId(1L))
             .willReturn(List.of(
-                new BlogReview(1L, 1L ,"12개월 아이와 다녀온 곳", "tester", "2022.10.23",
+                new BlogReview(1L, 1L, "12개월 아이와 다녀온 곳", "tester", "2022.10.23",
                     "imageUrl", "url")));
     }
 
@@ -30,5 +30,9 @@ class GetBlogReviewServiceTest {
         assertThat(getBlogReviewService.blogReviews(1L).size()).isEqualTo(1);
         assertThat(getBlogReviewService.blogReviews(1L).get(0).title())
             .isEqualTo("12개월 아이와 다녀온 곳");
+
+        getBlogReviewService.blogReviews(3L);
+
+        verify(blogReviewRepository).findAllByPlaceId(3L);
     }
 }

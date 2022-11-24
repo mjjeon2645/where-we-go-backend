@@ -12,7 +12,7 @@ import org.springframework.test.web.servlet.request.*;
 import java.util.*;
 
 import static org.hamcrest.Matchers.*;
-import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(BlogReviewController.class)
@@ -28,7 +28,7 @@ class BlogReviewControllerTest {
         given(getBlogReviewService.blogReviews(5L)).willReturn(List.of(
             new BlogReview(5L, 5L, "아기랑 놀러다녀왔어요~", "tester", "2022.10.23.", "imageUrl", "url"),
             new BlogReview(6L, 5L, "아기랑 놀러다녀왔어요~22", "tester", "2022.10.23.", "imageUrl", "url")
-            ));
+        ));
     }
 
     @Test

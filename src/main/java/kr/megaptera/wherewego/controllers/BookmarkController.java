@@ -13,9 +13,12 @@ import java.util.*;
 @RequestMapping("bookmarks")
 public class BookmarkController {
     private final GetBookmarkService getBookmarkService;
+    private final PostBookmarkService postBookmarkService;
 
-    public BookmarkController(GetBookmarkService getBookmarkService) {
+    public BookmarkController(GetBookmarkService getBookmarkService,
+                              PostBookmarkService postBookmarkService) {
         this.getBookmarkService = getBookmarkService;
+        this.postBookmarkService = postBookmarkService;
     }
 
     @GetMapping()
@@ -35,7 +38,7 @@ public class BookmarkController {
         @RequestAttribute String socialLoginId
     ) {
         List<BookmarkedPlaceDto> bookmarkedPlaces =
-            getBookmarkService.toggle(placeId, socialLoginId);
+            postBookmarkService.toggle(placeId, socialLoginId);
 
         return new BookmarkedPlaceDtos(bookmarkedPlaces);
     }

@@ -34,4 +34,19 @@ public class LoginResultDto {
     public String getState() {
         return state;
     }
+
+    @Override
+    public boolean equals(Object other) {
+        LoginResultDto otherLoginResultDto = (LoginResultDto) other;
+
+        return accessToken.equals(otherLoginResultDto.getAccessToken())
+            && nickname.equals(otherLoginResultDto.getNickname())
+            && state.equals(otherLoginResultDto.getState());
+    }
+
+    @Override
+    public String toString() {
+        return "userId : " + userId + " accessToken : " + accessToken +
+            " nickname : " + nickname + " state : " + state;
+    }
 }

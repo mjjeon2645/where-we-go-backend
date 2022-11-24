@@ -15,9 +15,15 @@ import java.util.*;
 @RequestMapping("children")
 public class ChildController {
     private final GetChildService getChildService;
+    private final PostChildService postChildService;
+    private final DeleteChildService deleteChildService;
 
-    public ChildController(GetChildService getChildService) {
+    public ChildController(GetChildService getChildService,
+                           PostChildService postChildService,
+                           DeleteChildService deleteChildService) {
         this.getChildService = getChildService;
+        this.postChildService = postChildService;
+        this.deleteChildService = deleteChildService;
     }
 
     @GetMapping("{userId}")
@@ -34,19 +40,19 @@ public class ChildController {
     public ChildDtos create(
         @PathVariable Long userId,
         @Validated @RequestBody ChildCreateDto childCreateDto
-    ){
-        List<ChildDto> children = getChildService.create(userId, childCreateDto);
+    ) {
+        List<ChildDto> children = postChildService.create(userId, childCreateDto);
 
         return new ChildDtos(children);
     }
 
-    @PatchMapping("{userId}")
+    @DeleteMapping("{userId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(
         @PathVariable Long userId,
         @RequestBody ChildDeleteDto childDeleteDto
-    ){
-        getChildService.delete(userId, childDeleteDto);
+    ) {
+        deleteChildService.delete(childDeleteDto);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

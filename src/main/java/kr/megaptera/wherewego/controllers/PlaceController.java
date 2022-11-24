@@ -10,30 +10,17 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("places")
 public class PlaceController {
-    private final MapService mapService;
+    private final GetMapService getMapService;
 
-    public PlaceController(MapService mapService) {
-        this.mapService = mapService;
+    public PlaceController(GetMapService getMapService) {
+        this.getMapService = getMapService;
     }
-
-    // API 고민중
-//    @GetMapping
-//    public PlacesDto filteredPlaces(
-//        @RequestParam(required = false, defaultValue = "전체") String sido,
-//        @RequestParam(required = false, defaultValue = "전체") String sigungu,
-//        @RequestParam(required = false, defaultValue = "전체") String category
-//    ) {
-//        List<PlaceDto> places = mapService.filteredPlaces(sido, sigungu, category)
-//            .stream().map(Place::toPlaceDto).collect(Collectors.toList());
-//
-//        return new PlacesDto(places);
-//    }
 
     @GetMapping("{id}")
     public PlaceDto selectedPlace(
         @PathVariable("id") Long id
     ) {
-        Place selectedPlace = mapService.selectedPlace(id);
+        Place selectedPlace = getMapService.selectedPlace(id);
 
         return selectedPlace.toPlaceDto();
     }

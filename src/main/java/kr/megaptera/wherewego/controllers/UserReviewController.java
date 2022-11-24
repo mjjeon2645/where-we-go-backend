@@ -15,9 +15,15 @@ import java.util.stream.*;
 @RequestMapping("user-reviews")
 public class UserReviewController {
     private final GetUserReviewService getUserReviewService;
+    private final PostUserReviewService postUserReviewService;
+    private final DeleteUserReviewService deleteUserReviewService;
 
-    public UserReviewController(GetUserReviewService getUserReviewService) {
+    public UserReviewController(GetUserReviewService getUserReviewService,
+                                PostUserReviewService postUserReviewService,
+                                DeleteUserReviewService deleteUserReviewService) {
         this.getUserReviewService = getUserReviewService;
+        this.postUserReviewService = postUserReviewService;
+        this.deleteUserReviewService = deleteUserReviewService;
     }
 
     @GetMapping("{placeId}")
@@ -41,8 +47,7 @@ public class UserReviewController {
         @RequestAttribute String socialLoginId,
         @RequestBody MyReviewDto myReviewDto
     ) {
-
-        UserReview userReview = getUserReviewService.create(myReviewDto, socialLoginId);
+        UserReview userReview = postUserReviewService.create(myReviewDto, socialLoginId);
 
         return userReview.toDto();
     }
@@ -52,7 +57,7 @@ public class UserReviewController {
     public void deleteMyReview(
         @PathVariable Long reviewId
     ) {
-        getUserReviewService.delete(reviewId);
+        deleteUserReviewService.delete(reviewId);
     }
 
     @ExceptionHandler(AuthenticationError.class)

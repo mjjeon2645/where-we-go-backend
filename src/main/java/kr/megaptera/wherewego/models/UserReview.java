@@ -3,8 +3,8 @@ package kr.megaptera.wherewego.models;
 import kr.megaptera.wherewego.dtos.*;
 import org.hibernate.annotations.*;
 
-import javax.persistence.*;
 import javax.persistence.Entity;
+import javax.persistence.*;
 import java.time.*;
 
 @Entity
