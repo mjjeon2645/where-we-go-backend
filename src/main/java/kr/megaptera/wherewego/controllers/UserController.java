@@ -23,32 +23,32 @@ public class UserController {
         this.updateUserService = updateUserService;
     }
 
-    @GetMapping("{userId}")
+    @GetMapping()
     public UserInformationDto userInformation(
-        @PathVariable() Long userId
+        @RequestAttribute String socialLoginId
     ) {
-        User foundUser = getUserService.information(userId);
+        User foundUser = getUserService.information(socialLoginId);
 
         return new UserInformationDto(foundUser.id(), foundUser.email(),
             foundUser.nickname(), foundUser.authBy());
     }
 
-    @PostMapping("{userId}")
+    @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public CreatedUserDto signUp(
-        @PathVariable() Long userId,
-        @Validated @RequestBody SetNicknameDto setNicknameDto
+        @Validated @RequestBody SetNicknameDto setNicknameDto,
+        @RequestAttribute String socialLoginId
     ) {
-        return updateUserService.update(userId, setNicknameDto);
+        return updateUserService.update(socialLoginId, setNicknameDto);
     }
 
-    @PatchMapping("{userId}")
+    @PatchMapping()
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public CreatedUserDto changeNickname(
-        @PathVariable() Long userId,
-        @Validated @RequestBody SetNicknameDto setNicknameDto
+        @Validated @RequestBody SetNicknameDto setNicknameDto,
+        @RequestAttribute String socialLoginId
     ) {
-        return updateUserService.update(userId, setNicknameDto);
+        return updateUserService.update(socialLoginId, setNicknameDto);
     }
 
     @ExceptionHandler(UserNotFoundException.class)

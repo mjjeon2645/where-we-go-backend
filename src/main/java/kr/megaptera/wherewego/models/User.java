@@ -33,7 +33,7 @@ public class User {
     private List<Bookmark> bookmarks = new ArrayList<>();
 
     public static User fake(String email) {
-        return new User(1L, "encodedPassword", email, "nickname", "socialId",
+        return new User(1L, "encodedPassword", email, "nickname", "socialLoginId",
             "kakao", User.UNREGISTERED, List.of());
     }
 

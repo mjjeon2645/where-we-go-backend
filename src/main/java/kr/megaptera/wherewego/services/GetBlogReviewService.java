@@ -10,7 +10,7 @@ import java.util.*;
 @Service
 @Transactional
 public class GetBlogReviewService {
-    private BlogReviewRepository blogReviewRepository;
+    private final BlogReviewRepository blogReviewRepository;
 
     public GetBlogReviewService(BlogReviewRepository blogReviewRepository) {
         this.blogReviewRepository = blogReviewRepository;

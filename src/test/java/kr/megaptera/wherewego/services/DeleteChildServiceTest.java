@@ -1,26 +1,38 @@
 package kr.megaptera.wherewego.services;
 
 import kr.megaptera.wherewego.dtos.*;
+import kr.megaptera.wherewego.exceptions.*;
+import kr.megaptera.wherewego.models.*;
 import kr.megaptera.wherewego.repositories.*;
 import org.junit.jupiter.api.*;
 
-import static org.mockito.ArgumentMatchers.*;
+import java.util.*;
+
 import static org.mockito.BDDMockito.*;
 
 class DeleteChildServiceTest {
     private DeleteChildService deleteChildService;
     private ChildRepository childRepository;
+    private UserRepository userRepository;
 
     @BeforeEach
     void setUp() {
         childRepository = mock(ChildRepository.class);
-        deleteChildService = new DeleteChildService(childRepository);
-        given(childRepository.findById(2L)).willReturn(any());
+        userRepository = mock(UserRepository.class);
+        deleteChildService = new DeleteChildService(childRepository, userRepository);
+
+        given(userRepository.findBySocialLoginId("socialLoginId"))
+            .willReturn(Optional.of(User.fake("angel2645@naver.com")));
+
+        Child child = new Child(2L, 1L, "공주님", "2022-01-01");
+
+        given(childRepository.findById(2L)).willReturn(Optional.of(child));
+        given(childRepository.findById(3L)).willThrow(ChildNotFoundException.class);
     }
 
     @Test
     void delete() {
-        deleteChildService.delete(new ChildDeleteDto(2L));
+        deleteChildService.delete("socialLoginId", new ChildDeleteDto(2L));
 
         verify(childRepository).deleteById(2L);
     }

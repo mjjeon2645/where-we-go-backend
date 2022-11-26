@@ -2,6 +2,7 @@ package kr.megaptera.wherewego.controllers;
 
 import kr.megaptera.wherewego.models.*;
 import kr.megaptera.wherewego.services.*;
+import kr.megaptera.wherewego.utils.*;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.test.autoconfigure.web.servlet.*;
@@ -25,15 +26,21 @@ class UserControllerTest {
     @MockBean
     private UpdateUserService updateUserService;
 
+    @SpyBean
+    private JwtUtil jwtUtil;
+
     @BeforeEach
     void setUp() {
-        given(getUserService.information(1L))
+        given(getUserService.information("socialLoginId"))
             .willReturn(User.fake("angel2645@naver.com"));
     }
 
     @Test
     void userInformation() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/users/1"))
+        String accessToken = jwtUtil.encode("socialLoginId");
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/users")
+                .header("Authorization", "Bearer " + accessToken))
             .andExpect(status().isOk())
             .andExpect(content().string(
                 containsString("\"email\":\"angel2645@naver.com\"")
@@ -42,7 +49,10 @@ class UserControllerTest {
 
     @Test
     void sighUp() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/users/2")
+        String accessToken = jwtUtil.encode("socialLoginId");
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/users")
+                .header("Authorization", "Bearer " + accessToken)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"nickname\":\"ttotto\"}"))
             .andExpect(status().isCreated());

@@ -26,33 +26,33 @@ public class ChildController {
         this.deleteChildService = deleteChildService;
     }
 
-    @GetMapping("{userId}")
+    @GetMapping()
     public ChildDtos children(
-        @PathVariable Long userId
+        @RequestAttribute String socialLoginId
     ) {
-        List<ChildDto> children = getChildService.children(userId);
+        List<ChildDto> children = getChildService.children(socialLoginId);
 
         return new ChildDtos(children);
     }
 
-    @PostMapping("{userId}")
+    @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public ChildDtos create(
-        @PathVariable Long userId,
+        @RequestAttribute String socialLoginId,
         @Validated @RequestBody ChildCreateDto childCreateDto
     ) {
-        List<ChildDto> children = postChildService.create(userId, childCreateDto);
+        List<ChildDto> children = postChildService.create(socialLoginId, childCreateDto);
 
         return new ChildDtos(children);
     }
 
-    @DeleteMapping("{userId}")
+    @DeleteMapping()
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(
-        @PathVariable Long userId,
+        @RequestAttribute String socialLoginId,
         @RequestBody ChildDeleteDto childDeleteDto
     ) {
-        deleteChildService.delete(childDeleteDto);
+        deleteChildService.delete(socialLoginId, childDeleteDto);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

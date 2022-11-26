@@ -23,22 +23,24 @@ class GetUserServiceTest {
         User user = new User(1L, "encodedPassword", "email", "또또누나", "id",
             "kakao", "unregistered", List.of());
 
-        User user2 = new User(2L, "encodedPassword", "email", "오예오예", "id",
+        User user2 = new User(2L, "encodedPassword", "email", "오예오예", "id2",
             "kakao", "unregistered", List.of());
 
-        given(userRepository.findById(1L)).willReturn(Optional.of(user));
+        given(userRepository.findBySocialLoginId("id")).willReturn(Optional.of(user));
+        given(userRepository.findBySocialLoginId("id2")).willReturn(Optional.of(user2));
     }
 
     @Test
     void informationWithExistUser() {
-        assertThat(getUserService.information(1L).nickname()).isEqualTo("또또누나");
-        assertThat(getUserService.information(1L).state()).isEqualTo("unregistered");
+        assertThat(getUserService.information("id").nickname()).isEqualTo("또또누나");
+        assertThat(getUserService.information("id").state()).isEqualTo("unregistered");
+        assertThat(getUserService.information("id2").nickname()).isEqualTo("오예오예");
     }
 
     @Test
     void informationWithNotExistUser() {
         assertThrows(UserNotFoundException.class, () -> {
-            getUserService.information(3L);
+            getUserService.information("idid");
         });
     }
 }
