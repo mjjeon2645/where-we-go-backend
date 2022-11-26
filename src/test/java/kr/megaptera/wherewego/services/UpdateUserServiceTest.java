@@ -27,11 +27,11 @@ class UpdateUserServiceTest {
         User user = new User(1L, "encodedPassword", "email", "또또누나", "id",
             "kakao", "unregistered", List.of());
 
-        User user2 = new User(2L, "encodedPassword", "email", "오예오예", "id",
+        User user2 = new User(2L, "encodedPassword", "email", "오예오예", "id2",
             "kakao", "unregistered", List.of());
 
-        given(userRepository.findById(1L)).willReturn(Optional.of(user));
-        given(userRepository.findById(2L)).willReturn(Optional.of(user2));
+        given(userRepository.findBySocialLoginId("id")).willReturn(Optional.of(user));
+        given(userRepository.findBySocialLoginId("id2")).willReturn(Optional.of(user2));
         given(userRepository.findByNickname("또또누나")).willReturn(user);
         given(userRepository.findByNickname("오예오예")).willReturn(user2);
     }
@@ -52,7 +52,7 @@ class UpdateUserServiceTest {
     @Test
     void updateWithDuplicatedNickname() {
         assertThrows(NicknameDuplicatedException.class, () -> {
-            updateUserService.update("id", new SetNicknameDto("또또누나"));
+            updateUserService.update("id2", new SetNicknameDto("또또누나"));
         });
     }
 }

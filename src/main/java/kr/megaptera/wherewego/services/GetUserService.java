@@ -15,8 +15,8 @@ public class GetUserService {
         this.userRepository = userRepository;
     }
 
-    public User information(Long userId) {
-        return userRepository.findById(userId)
+    public User information(String socialLoinId) {
+        return userRepository.findBySocialLoginId(socialLoinId)
             .orElseThrow(UserNotFoundException::new);
     }
 }

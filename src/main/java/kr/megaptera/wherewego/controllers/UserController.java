@@ -23,11 +23,11 @@ public class UserController {
         this.updateUserService = updateUserService;
     }
 
-    @GetMapping("{userId}")
+    @GetMapping()
     public UserInformationDto userInformation(
-        @PathVariable() Long userId
+        @RequestAttribute String socialLoginId
     ) {
-        User foundUser = getUserService.information(userId);
+        User foundUser = getUserService.information(socialLoginId);
 
         return new UserInformationDto(foundUser.id(), foundUser.email(),
             foundUser.nickname(), foundUser.authBy());
