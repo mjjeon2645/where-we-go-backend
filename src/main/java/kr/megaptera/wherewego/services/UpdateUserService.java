@@ -19,11 +19,11 @@ public class UpdateUserService {
         this.jwtUtil = jwtUtil;
     }
 
-    public CreatedUserDto update(Long userId, SetNicknameDto setNicknameDto) {
+    public CreatedUserDto update(String socialLoginId, SetNicknameDto setNicknameDto) {
         String nickname = setNicknameDto.getNickname();
 
         User userFoundByNickname = userRepository.findByNickname(nickname);
-        User found = userRepository.findById(userId)
+        User found = userRepository.findBySocialLoginId(socialLoginId)
             .orElseThrow(UserNotFoundException::new);
 
         // 1. 자신의 닉네임일 경우

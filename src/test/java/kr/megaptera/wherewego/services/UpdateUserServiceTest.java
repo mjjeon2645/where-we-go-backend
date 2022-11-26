@@ -38,21 +38,21 @@ class UpdateUserServiceTest {
 
     @Test
     void updateWithNewUser() {
-        assertThat(updateUserService.update(1L, new SetNicknameDto("민지룽룽")).getNickname())
+        assertThat(updateUserService.update("id", new SetNicknameDto("민지룽룽")).getNickname())
             .isEqualTo("민지룽룽");
     }
 
     @Test
     void updateWithUnchangedNickname() {
         assertThrows(UnchangedNicknameException.class, () -> {
-            updateUserService.update(1L, new SetNicknameDto("또또누나"));
+            updateUserService.update("id", new SetNicknameDto("또또누나"));
         });
     }
 
     @Test
     void updateWithDuplicatedNickname() {
         assertThrows(NicknameDuplicatedException.class, () -> {
-            updateUserService.update(2L, new SetNicknameDto("또또누나"));
+            updateUserService.update("id", new SetNicknameDto("또또누나"));
         });
     }
 }
