@@ -14,7 +14,7 @@ public class TrialLoginRequestDto {
     }
 
     public String getTrialId() {
-        return trialId;     
+        return trialId;
     }
 
     public String getPassword() {

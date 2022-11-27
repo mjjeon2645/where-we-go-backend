@@ -1,8 +1,6 @@
 package kr.megaptera.wherewego.dtos;
 
 public class TrialLoginResultDto {
-    private Long trialId;
-
     private String accessToken;
 
     private String nickname;
@@ -12,15 +10,10 @@ public class TrialLoginResultDto {
     public TrialLoginResultDto() {
     }
 
-    public TrialLoginResultDto(Long trialId, String accessToken, String nickname, String state) {
-        this.trialId = trialId;
+    public TrialLoginResultDto(String accessToken, String nickname, String state) {
         this.accessToken = accessToken;
         this.nickname = nickname;
         this.state = state;
-    }
-
-    public Long getTrialId() {
-        return trialId;
     }
 
     public String getAccessToken() {
