@@ -9,29 +9,28 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("session")
-public class SessionController {
-    private final GetLoginService getLoginService;
+@RequestMapping("trial-session")
+public class TrialSessionController {
     private final JwtUtil jwtUtil;
+    private PostTrialLoginService postTrialLoginService;
 
-    public SessionController(GetLoginService getLoginService, JwtUtil jwtUtil) {
-        this.getLoginService = getLoginService;
+    public TrialSessionController(JwtUtil jwtUtil) {
         this.jwtUtil = jwtUtil;
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public LoginResultDto login(
-        @RequestBody LoginRequestDto loginRequestDto
+    public TrialLoginResultDto trialLogin(
+        @RequestBody TrialLoginRequestDto trialLoginRequestDto
     ) {
-        String email = loginRequestDto.getEmail();
-        String password = loginRequestDto.getPassword();
+        String trialId = trialLoginRequestDto.getTrialId();
+        String password = trialLoginRequestDto.getPassword();
 
-        User user = getLoginService.login(email, password);
+        User user = postTrialLoginService.login(trialId, password);
 
-        String accessToken = jwtUtil.encode(email);
+        String accessToken = jwtUtil.encode(identifier);
 
-        return new LoginResultDto(user.id(), accessToken, user.nickname(), user.state());
+        return new TrialLoginResultDto(user.socialLoginId(), accessToken, user.nickname(), user.state());
     }
 
     @ExceptionHandler(LoginFailedException.class)

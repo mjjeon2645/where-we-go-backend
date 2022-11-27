@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.request.*;
 import static org.mockito.BDDMockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(SessionController.class)
+@WebMvcTest(TrialSessionController.class)
 @ActiveProfiles("test")
 class SessionControllerTest {
     @Autowired
