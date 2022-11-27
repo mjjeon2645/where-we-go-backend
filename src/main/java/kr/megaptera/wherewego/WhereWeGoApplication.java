@@ -75,4 +75,10 @@ public class WhereWeGoApplication {
     public NaverAuthUtil naverLoginUtil() {
         return new NaverAuthUtil();
     }
+
+    // naver-blog-scraping with official api
+    @Bean
+    public NaverBlogUtil naverBlog() {
+        return new NaverBlogUtil();
+    }
 }
