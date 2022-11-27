@@ -1,8 +1,6 @@
 package kr.megaptera.wherewego.dtos;
 
 public class BlogReviewDto {
-    private Long id;
-
     private Long placeId;
 
     private String title;
@@ -18,19 +16,13 @@ public class BlogReviewDto {
     public BlogReviewDto() {
     }
 
-    public BlogReviewDto(Long id, Long placeId, String title, String author, String date,
-                         String imageSource, String url) {
-        this.id = id;
+    public BlogReviewDto(Long placeId, String title, String author, String date, String imageSource, String url) {
         this.placeId = placeId;
         this.title = title;
         this.author = author;
         this.date = date;
         this.imageSource = imageSource;
         this.url = url;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public Long getPlaceId() {

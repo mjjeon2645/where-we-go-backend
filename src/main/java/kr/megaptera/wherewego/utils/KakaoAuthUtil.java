@@ -68,8 +68,7 @@ public class KakaoAuthUtil {
             kakaoTokenRequest,
             String.class).getBody();
 
-        JsonParser parser = new JsonParser();
-        JsonElement element = parser.parse(response);
+        JsonElement element = JsonParser.parseString(response);
         String accessToken = element.getAsJsonObject().get("access_token").getAsString();
         String refreshToken = element.getAsJsonObject().get("refresh_token").getAsString();
 
@@ -97,8 +96,7 @@ public class KakaoAuthUtil {
             kakaoProfileRequest,
             String.class).getBody();
 
-        JsonParser parser = new JsonParser();
-        JsonElement element = parser.parse(response);
+        JsonElement element = JsonParser.parseString(response);
 
         JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
         JsonObject kakaoAccount = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
