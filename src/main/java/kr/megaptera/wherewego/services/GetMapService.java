@@ -78,6 +78,6 @@ public class GetMapService {
     }
 
     public Place selectedPlace(Long id) {
-        return placeRepository.findById(id).orElseThrow(() -> new SelectedPlaceNotFound());
+        return placeRepository.findById(id).orElseThrow(SelectedPlaceNotFound::new);
     }
 }
