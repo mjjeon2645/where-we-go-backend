@@ -25,9 +25,9 @@ public class GetLoginService {
         this.jwtUtil = jwtUtil;
     }
 
-    public User login(String email, String password) {
+    public User login(String identifier, String password) {
         // 1. email 찾고
-        User foundUser = userRepository.findByEmail(email)
+        User foundUser = userRepository.findBySocialLoginId(identifier)
             .orElseThrow(LoginFailedException::new);
 
         // 2. 패스워드 비교하고

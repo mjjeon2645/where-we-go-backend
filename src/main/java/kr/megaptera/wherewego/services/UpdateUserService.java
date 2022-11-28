@@ -31,8 +31,8 @@ public class UpdateUserService {
             throw new UnchangedNicknameException();
         }
 
-        // 2. 다른 사람이 사용중일 경우
-        if (userFoundByNickname != null) {
+        // 2. 다른 사람이 사용중일 경우, 또는 '테스터'라는 이름을 사용할 경우
+        if (userFoundByNickname != null || nickname.equals("테스터")) {
             throw new NicknameDuplicatedException();
         }
 

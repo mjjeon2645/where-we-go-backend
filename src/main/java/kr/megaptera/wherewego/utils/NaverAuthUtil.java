@@ -72,8 +72,7 @@ public class NaverAuthUtil {
             naverTokenRequest,
             String.class).getBody();
 
-        JsonParser parser = new JsonParser();
-        JsonElement element = parser.parse(response);
+        JsonElement element = JsonParser.parseString(response);
         String accessToken = element.getAsJsonObject().get("access_token").getAsString();
         String refreshToken = element.getAsJsonObject().get("refresh_token").getAsString();
         String expiresIn = element.getAsJsonObject().get("expires_in").getAsString();
@@ -103,8 +102,7 @@ public class NaverAuthUtil {
             naverProfileRequest,
             String.class).getBody();
 
-        JsonParser parser = new JsonParser();
-        JsonElement element = parser.parse(response);
+        JsonElement element = JsonParser.parseString(response);
 
         JsonObject naverAccount = element.getAsJsonObject().get("response").getAsJsonObject();
 

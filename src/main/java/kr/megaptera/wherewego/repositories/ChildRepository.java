@@ -7,4 +7,6 @@ import java.util.*;
 
 public interface ChildRepository extends JpaRepository<Child, Long> {
     List<Child> findAllByUserId(Long userId);
+
+    void deleteAllByUserId(Long userId);
 }

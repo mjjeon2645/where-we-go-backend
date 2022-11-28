@@ -1,20 +1,20 @@
 package kr.megaptera.wherewego.dtos;
 
 public class LoginRequestDto {
-    private String email;
+    private String identifier;
 
     private String password;
 
     public LoginRequestDto() {
     }
 
-    public LoginRequestDto(String email, String password) {
-        this.email = email;
+    public LoginRequestDto(String identifier, String password) {
+        this.identifier = identifier;
         this.password = password;
     }
 
-    public String getEmail() {
-        return email;
+    public String getIdentifier() {
+        return identifier;
     }
 
     public String getPassword() {
