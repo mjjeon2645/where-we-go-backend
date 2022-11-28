@@ -29,7 +29,7 @@ public class DeleteTrialUserService {
 
         List<Bookmark> bookmarks = foundToDelete.bookmarks();
 
-        if (bookmarks.size() > 0) {
+        if (bookmarks != null && bookmarks.size() > 0) {
             bookmarks.subList(0, bookmarks.size()).clear();
         }
 

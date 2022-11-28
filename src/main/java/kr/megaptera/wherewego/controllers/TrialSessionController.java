@@ -12,25 +12,22 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("trial-session")
 public class TrialSessionController {
-    private final PostTrialUserService postTrialUserService;
+    private final GetTrialUserService getTrialUserService;
     private final DeleteTrialUserService deleteTrialUserService;
     private final JwtUtil jwtUtil;
 
-    public TrialSessionController(PostTrialUserService postTrialUserService,
+    public TrialSessionController(GetTrialUserService getTrialUserService,
                                   DeleteTrialUserService deleteTrialUserService, JwtUtil jwtUtil) {
-        this.postTrialUserService = postTrialUserService;
+        this.getTrialUserService = getTrialUserService;
         this.deleteTrialUserService = deleteTrialUserService;
         this.jwtUtil = jwtUtil;
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public TrialLoginResultDto trial(
-        @RequestBody TrialLoginRequestDto trialLoginRequestDto
-    ) {
-        User trialUser = postTrialUserService.create(trialLoginRequestDto);
+    @GetMapping
+    public TrialLoginResultDto trialLoginResultDto() {
+        User trialUser = getTrialUserService.trialUser();
 
-        String accessToken = jwtUtil.encode(trialLoginRequestDto.getPassword());
+        String accessToken = jwtUtil.encode(trialUser.socialLoginId());
 
         return new TrialLoginResultDto(accessToken, trialUser.nickname(), trialUser.state());
     }
