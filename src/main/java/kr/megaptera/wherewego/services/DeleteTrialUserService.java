@@ -22,7 +22,6 @@ public class DeleteTrialUserService {
         this.userReviewRepository = userReviewRepository;
     }
 
-
     public void delete(String socialLoginId) {
         User foundToDelete = userRepository.findBySocialLoginId(socialLoginId)
             .orElseThrow(UserNotFoundException::new);
