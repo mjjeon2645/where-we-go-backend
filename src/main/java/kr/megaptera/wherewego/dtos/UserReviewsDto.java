@@ -12,6 +12,10 @@ public class UserReviewsDto {
     public UserReviewsDto() {
     }
 
+    public UserReviewsDto(List<UserReviewDto> userReviews) {
+        this.userReviews = userReviews;
+    }
+
     public UserReviewsDto(String averageRate, List<UserReviewDto> userReviews, UserReviewDto userReview) {
         this.averageRate = averageRate;
         this.userReviews = userReviews;

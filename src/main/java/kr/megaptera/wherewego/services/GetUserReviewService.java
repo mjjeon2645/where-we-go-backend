@@ -22,6 +22,12 @@ public class GetUserReviewService {
         this.userRepository = userRepository;
     }
 
+    public List<UserReviewDto> allReviews() {
+        return userReviewRepository.findAll()
+            .stream().map(UserReview::toDto)
+            .collect(Collectors.toList());
+    }
+
     public List<UserReview> userReviews(Long placeId) {
         // TODO. 추후 글 삭제기능 도입시 isDeleted 값이 반영되어야 하므로 미리 filtering 로직 구현해둠
         return userReviewRepository.findAllByPlaceIdOrderByCreatedAtDesc(placeId)
