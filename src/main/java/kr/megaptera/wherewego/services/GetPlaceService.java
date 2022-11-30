@@ -1,5 +1,6 @@
 package kr.megaptera.wherewego.services;
 
+import kr.megaptera.wherewego.exceptions.*;
 import kr.megaptera.wherewego.models.*;
 import kr.megaptera.wherewego.repositories.*;
 import org.springframework.stereotype.*;
@@ -19,5 +20,10 @@ public class GetPlaceService {
     public List<Place> places() {
         List<Place> places = placeRepository.findAll();
         return new ArrayList<>(places);
+    }
+
+    public Place selectedPlace(Long id) {
+        return placeRepository.findById(id)
+            .orElseThrow(PlaceNotFoundException::new);
     }
 }

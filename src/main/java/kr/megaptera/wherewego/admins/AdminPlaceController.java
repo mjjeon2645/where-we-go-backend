@@ -9,10 +9,10 @@ import java.util.*;
 
 @RestController
 @RequestMapping("admin-places")
-public class PlaceController {
+public class AdminPlaceController {
     private final GetPlaceService getPlaceService;
 
-    public PlaceController(GetPlaceService getPlaceService) {
+    public AdminPlaceController(GetPlaceService getPlaceService) {
         this.getPlaceService = getPlaceService;
     }
 
@@ -23,5 +23,12 @@ public class PlaceController {
             .toList();
 
         return new PlacesDto(places);
+    }
+
+    @GetMapping("{id}")
+    public PlaceDto selectedPlace(
+        @PathVariable Long id
+    ) {
+        return getPlaceService.selectedPlace(id).toPlaceDto();
     }
 }

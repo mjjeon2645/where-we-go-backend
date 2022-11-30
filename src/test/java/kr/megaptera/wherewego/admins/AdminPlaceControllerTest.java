@@ -10,8 +10,8 @@ import org.springframework.test.web.servlet.request.*;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(PlaceController.class)
-class PlaceControllerTest {
+@WebMvcTest(AdminPlaceController.class)
+class AdminPlaceControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
