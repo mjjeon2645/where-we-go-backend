@@ -31,9 +31,11 @@ public class PostPlaceService {
         String weekdayEnd = placeRequestDto.getWeekdayEnd();
         String weekendStart = placeRequestDto.getWeekendStart();
         String weekendEnd = placeRequestDto.getWeekendEnd();
+        Double longitude = placeRequestDto.getLongitude();
+        Double latitude = placeRequestDto.getLatitude();
 
-        Place createdPlace = new Place(
-            placeName, Position.fake(), new Address(fullAddress, sido, sigungu), category,
+        Place createdPlace = new Place(null,
+            placeName, new Position(latitude, longitude), new Address(fullAddress, sido, sigungu), category,
             new BusinessHours(
                 "월요일: " + weekdayStart + ":" + weekdayEnd,
                 "화요일: " + weekdayStart + ":" + weekdayEnd,

@@ -50,18 +50,18 @@ public class Place {
         this.contact = contact;
     }
 
-    public Place(String name, Position position, Address address, String category,
-                 BusinessHours businessHours, ImageSource imageSource, PlaceServices placeServices,
-                 Contact contact) {
-        this.name = name;
-        this.position = position;
-        this.address = address;
-        this.category = category;
-        this.businessHours = businessHours;
-        this.imageSource = imageSource;
-        this.placeServices = placeServices;
-        this.contact = contact;
-    }
+//    public Place(String name, Position position, Address address, String category,
+//                 BusinessHours businessHours, ImageSource imageSource, PlaceServices placeServices,
+//                 Contact contact) {
+//        this.name = name;
+//        this.position = position;
+//        this.address = address;
+//        this.category = category;
+//        this.businessHours = businessHours;
+//        this.imageSource = imageSource;
+//        this.placeServices = placeServices;
+//        this.contact = contact;
+//    }
 
     public PlaceDto toPlaceDto() {
         return new PlaceDto(id, name, position.toDto(), address.toDto(), category,
