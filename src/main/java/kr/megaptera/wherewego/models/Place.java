@@ -50,29 +50,42 @@ public class Place {
         this.contact = contact;
     }
 
+    public Place(String name, Position position, Address address, String category,
+                 BusinessHours businessHours, ImageSource imageSource, PlaceServices placeServices,
+                 Contact contact) {
+        this.name = name;
+        this.position = position;
+        this.address = address;
+        this.category = category;
+        this.businessHours = businessHours;
+        this.imageSource = imageSource;
+        this.placeServices = placeServices;
+        this.contact = contact;
+    }
+
     public PlaceDto toPlaceDto() {
         return new PlaceDto(id, name, position.toDto(), address.toDto(), category,
             businessHours.toDto(), imageSource.toDto(), placeServices.toDto(),
             contact.toDto());
     }
 
-    public static Place fake1(Long id, String category) {
-        return new Place(id, "과천 서울랜드", new Position(1L, 37D, 120D),
-            new Address(1L, "경기도 과천시 블라블라", "경기", "과천시"),
-            category, new BusinessHours(1L, "월", "화", "수", "목", "금", "토", "일"),
-            new ImageSource(1L, "", "", ""),
-            new PlaceServices(1L, "possible", "possible", "possible", "unchecked"),
-            new Contact(1L, "010-5634-1740", "https://~~"));
-    }
-
-    public static Place fake2(Long id, String category) {
-        return new Place(id, "서울숲 공원", new Position(1L, 37D, 120D),
-            new Address(2L, "서울시 성동구 블라블라", "서울", "성동구"),
-            category, new BusinessHours(1L, "월", "화", "수", "목", "금", "토", "일"),
-            new ImageSource(1L, "", "", ""),
-            new PlaceServices(2L, "possible", "possible", "possible", "unchecked"),
-            new Contact(2L, "010-5634-1740", "https://~~"));
-    }
+//    public static Place fake1(Long id, String category) {
+//        return new Place(id, "과천 서울랜드", new Position(1L, 37D, 120D),
+//            new Address(1L, "경기도 과천시 블라블라", "경기", "과천시"),
+//            category, new BusinessHours(1L, "월", "화", "수", "목", "금", "토", "일"),
+//            new ImageSource(1L, "", "", ""),
+//            new PlaceServices(1L, "possible", "possible", "possible", "unchecked"),
+//            new Contact(1L, "010-5634-1740", "https://~~"));
+//    }
+//
+//    public static Place fake2(Long id, String category) {
+//        return new Place(id, "서울숲 공원", new Position(1L, 37D, 120D),
+//            new Address(2L, "서울시 성동구 블라블라", "서울", "성동구"),
+//            category, new BusinessHours(1L, "월", "화", "수", "목", "금", "토", "일"),
+//            new ImageSource(1L, "", "", ""),
+//            new PlaceServices(2L, "possible", "possible", "possible", "unchecked"),
+//            new Contact(2L, "010-5634-1740", "https://~~"));
+//    }
 
     @Override
     public String toString() {

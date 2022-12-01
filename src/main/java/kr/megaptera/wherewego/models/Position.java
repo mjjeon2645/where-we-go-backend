@@ -6,8 +6,8 @@ import javax.persistence.*;
 
 @Embeddable
 public class Position {
-    @Column(name = "place_id", insertable = false, updatable = false)
-    private Long placeId;
+//    @Column(name = "place_id", insertable = false, updatable = false)
+//    private Long placeId;
 
     private Double latitude;
 
@@ -16,23 +16,36 @@ public class Position {
     public Position() {
     }
 
-    public Position(Long placeId, Double latitude, Double longitude) {
-        this.placeId = placeId;
+    public Position(Double latitude, Double longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
+//    public Position(Long placeId, Double latitude, Double longitude) {
+//        this.placeId = placeId;
+//        this.latitude = latitude;
+//        this.longitude = longitude;
+//    }
+
+//    public PositionDto toDto() {
+//        return new PositionDto(placeId, latitude, longitude);
+//    }
+
     public PositionDto toDto() {
-        return new PositionDto(placeId, latitude, longitude);
+        return new PositionDto(latitude, longitude);
     }
+
+//    public static Position fake() {
+//        return new Position(1L, 37.434156D, 127.020126D);
+//    }
 
     public static Position fake() {
-        return new Position(1L, 37.434156D, 127.020126D);
+        return new Position(37.434156D, 127.020126D);
     }
 
-    public Long placeId() {
-        return placeId;
-    }
+//    public Long placeId() {
+//        return placeId;
+//    }
 
     public Double latitude() {
         return latitude;
@@ -42,17 +55,30 @@ public class Position {
         return longitude;
     }
 
+//    @Override
+//    public String toString() {
+//        return "placeId: " + placeId + " latitude: " + latitude + " longitude: " + longitude;
+//    }
+
     @Override
     public String toString() {
-        return "placeId: " + placeId + " latitude: " + latitude + " longitude: " + longitude;
+        return "latitude: " + latitude + " longitude: " + longitude;
     }
+
+//    @Override
+//    public boolean equals(Object other) {
+//        Position otherPosition = (Position) other;
+//
+//        return placeId.equals(otherPosition.placeId())
+//            && latitude.equals(otherPosition.latitude())
+//            && longitude.equals(otherPosition.longitude());
+//    }
 
     @Override
     public boolean equals(Object other) {
         Position otherPosition = (Position) other;
 
-        return placeId.equals(otherPosition.placeId())
-            && latitude.equals(otherPosition.latitude())
+        return latitude.equals(otherPosition.latitude())
             && longitude.equals(otherPosition.longitude());
     }
 }

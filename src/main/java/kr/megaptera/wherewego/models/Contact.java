@@ -6,8 +6,8 @@ import javax.persistence.*;
 
 @Embeddable
 public class Contact {
-    @Column(name = "place_id", insertable = false, updatable = false)
-    private Long placeId;
+//    @Column(name = "place_id", insertable = false, updatable = false)
+//    private Long placeId;
 
     private String phone;
 
@@ -16,16 +16,21 @@ public class Contact {
     public Contact() {
     }
 
-    public Contact(Long placeId, String phone, String homepage) {
-        this.placeId = placeId;
+//    public Contact(Long placeId, String phone, String homepage) {
+//        this.placeId = placeId;
+//        this.phone = phone;
+//        this.homepage = homepage;
+//    }
+
+    public Contact(String phone, String homepage) {
         this.phone = phone;
         this.homepage = homepage;
     }
 
-    @Column(name = "place_id", insertable = false, updatable = false)
-    public Long placeId() {
-        return placeId;
-    }
+//    @Column(name = "place_id", insertable = false, updatable = false)
+//    public Long placeId() {
+//        return placeId;
+//    }
 
     public String phone() {
         return phone;
@@ -35,25 +40,46 @@ public class Contact {
         return homepage;
     }
 
+//    public ContactDto toDto() {
+//        return new ContactDto(placeId, phone, homepage);
+//    }
+
     public ContactDto toDto() {
-        return new ContactDto(placeId, phone, homepage);
+        return new ContactDto(phone, homepage);
     }
 
+//    public static Contact fake() {
+//        return new Contact(1L, "010-5634-1740", "https://megaptera.kr/");
+//    }
+
     public static Contact fake() {
-        return new Contact(1L, "010-5634-1740", "https://megaptera.kr/");
+        return new Contact("010-5634-1740", "https://megaptera.kr/");
     }
 
     @Override
     public String toString() {
-        return "placeid: " + placeId + " phone: " + phone + " homepage: " + homepage;
+        return " phone: " + phone + " homepage: " + homepage;
     }
+
+//    @Override
+//    public String toString() {
+//        return "placeid: " + placeId + " phone: " + phone + " homepage: " + homepage;
+//    }
 
     @Override
     public boolean equals(Object other) {
         Contact otherContact = (Contact) other;
 
-        return placeId.equals(otherContact.placeId())
-            && phone.equals(otherContact.phone())
+        return phone.equals(otherContact.phone())
             && homepage.equals(otherContact.homepage());
     }
+
+//    @Override
+//    public boolean equals(Object other) {
+//        Contact otherContact = (Contact) other;
+//
+//        return placeId.equals(otherContact.placeId())
+//            && phone.equals(otherContact.phone())
+//            && homepage.equals(otherContact.homepage());
+//    }
 }

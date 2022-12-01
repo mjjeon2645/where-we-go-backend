@@ -1,7 +1,7 @@
 package kr.megaptera.wherewego.dtos;
 
 public class AddressDto {
-    private Long placeId;
+//    private Long placeId;
 
     private String fullAddress;
 
@@ -12,16 +12,22 @@ public class AddressDto {
     public AddressDto() {
     }
 
-    public AddressDto(Long placeId, String fullAddress, String sido, String sigungu) {
-        this.placeId = placeId;
+//    public AddressDto(Long placeId, String fullAddress, String sido, String sigungu) {
+//        this.placeId = placeId;
+//        this.fullAddress = fullAddress;
+//        this.sido = sido;
+//        this.sigungu = sigungu;
+//    }
+
+    public AddressDto(String fullAddress, String sido, String sigungu) {
         this.fullAddress = fullAddress;
         this.sido = sido;
         this.sigungu = sigungu;
     }
 
-    public Long getPlaceId() {
-        return placeId;
-    }
+//    public Long getPlaceId() {
+//        return placeId;
+//    }
 
     public String getFullAddress() {
         return fullAddress;
