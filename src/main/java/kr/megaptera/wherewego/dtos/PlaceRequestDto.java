@@ -31,14 +31,19 @@ public class PlaceRequestDto {
 
     private String weekendEnd;
 
+    private Double longitude;
+
+    private Double latitude;
+
     public PlaceRequestDto() {
     }
 
-    public PlaceRequestDto(String placeName, String fullAddress, String sido, String sigungu,
-                           String category, String phone, String homepage, String parking,
-                           String reservation, String outsideFood, String nursingRoom,
-                           String weekdayStart, String weekdayEnd, String weekendStart,
-                           String weekendEnd) {
+    public PlaceRequestDto(String placeName, String fullAddress, String sido,
+                           String sigungu, String category, String phone,
+                           String homepage, String parking, String reservation,
+                           String outsideFood, String nursingRoom, String weekdayStart,
+                           String weekdayEnd, String weekendStart, String weekendEnd,
+                           Double longitude, Double latitude) {
         this.placeName = placeName;
         this.fullAddress = fullAddress;
         this.sido = sido;
@@ -54,6 +59,8 @@ public class PlaceRequestDto {
         this.weekdayEnd = weekdayEnd;
         this.weekendStart = weekendStart;
         this.weekendEnd = weekendEnd;
+        this.longitude = longitude;
+        this.latitude = latitude;
     }
 
     public String getPlaceName() {
@@ -114,5 +121,13 @@ public class PlaceRequestDto {
 
     public String getWeekendEnd() {
         return weekendEnd;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public Double getLatitude() {
+        return latitude;
     }
 }
