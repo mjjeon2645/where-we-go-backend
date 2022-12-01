@@ -13,11 +13,14 @@ import java.util.*;
 public class AdminPlaceController {
     private final GetPlaceService getPlaceService;
     private final PostPlaceService postPlaceService;
+    private final DeletePlaceService deletePlaceService;
 
     public AdminPlaceController(GetPlaceService getPlaceService,
-                                PostPlaceService postPlaceService) {
+                                PostPlaceService postPlaceService,
+                                DeletePlaceService deletePlaceService) {
         this.getPlaceService = getPlaceService;
         this.postPlaceService = postPlaceService;
+        this.deletePlaceService = deletePlaceService;
     }
 
     @GetMapping
@@ -42,5 +45,13 @@ public class AdminPlaceController {
         @RequestBody PlaceRequestDto placeRequestDto
     ) {
         return postPlaceService.create(placeRequestDto).toPlaceDto();
+    }
+
+    @DeleteMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletePlace(
+        @PathVariable Long id
+    ) {
+        deletePlaceService.delete(id);
     }
 }

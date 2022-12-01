@@ -43,7 +43,7 @@ public class PostPlaceService {
                 "목요일: " + weekdayStart + ":" + weekdayEnd,
                 "금요일: " + weekdayStart + ":" + weekdayEnd,
                 "토요일: " + weekendStart + ":" + weekendEnd,
-                "일요일: " + weekdayStart + ":" + weekdayEnd),
+                "일요일: " + weekendStart + ":" + weekendEnd),
             ImageSource.fake(), new PlaceServices(reservation, parking, outsideFood, nursingRoom),
             new Contact(phone, homepage)
         );
