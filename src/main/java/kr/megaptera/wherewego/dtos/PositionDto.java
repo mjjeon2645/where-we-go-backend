@@ -1,7 +1,7 @@
 package kr.megaptera.wherewego.dtos;
 
 public class PositionDto {
-    private Long placeId;
+//    private Long placeId;
 
     private Double latitude;
 
@@ -10,15 +10,20 @@ public class PositionDto {
     public PositionDto() {
     }
 
-    public PositionDto(Long placeId, Double latitude, Double longitude) {
-        this.placeId = placeId;
+//    public PositionDto(Long placeId, Double latitude, Double longitude) {
+//        this.placeId = placeId;
+//        this.latitude = latitude;
+//        this.longitude = longitude;
+//    }
+
+    public PositionDto(Double latitude, Double longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
-    public Long getPlaceId() {
-        return placeId;
-    }
+//    public Long getPlaceId() {
+//        return placeId;
+//    }
 
     public Double getLatitude() {
         return latitude;

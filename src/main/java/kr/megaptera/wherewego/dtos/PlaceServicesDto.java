@@ -1,7 +1,7 @@
 package kr.megaptera.wherewego.dtos;
 
 public class PlaceServicesDto {
-    private Long placeId;
+//    private Long placeId;
 
     private String reservation;
 
@@ -14,17 +14,26 @@ public class PlaceServicesDto {
     public PlaceServicesDto() {
     }
 
-    public PlaceServicesDto(Long placeId, String reservation, String parking, String outsideFood, String nursingRoom) {
-        this.placeId = placeId;
+//    public PlaceServicesDto(Long placeId, String reservation, String parking,
+//                            String outsideFood, String nursingRoom) {
+//        this.placeId = placeId;
+//        this.reservation = reservation;
+//        this.parking = parking;
+//        this.outsideFood = outsideFood;
+//        this.nursingRoom = nursingRoom;
+//    }
+
+    public PlaceServicesDto(String reservation, String parking,
+                            String outsideFood, String nursingRoom) {
         this.reservation = reservation;
         this.parking = parking;
         this.outsideFood = outsideFood;
         this.nursingRoom = nursingRoom;
     }
 
-    public Long getPlaceId() {
-        return placeId;
-    }
+//    public Long getPlaceId() {
+//        return placeId;
+//    }
 
     public String getReservation() {
         return reservation;
