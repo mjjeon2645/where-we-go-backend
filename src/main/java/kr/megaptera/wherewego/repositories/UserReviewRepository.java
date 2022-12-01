@@ -13,4 +13,6 @@ public interface UserReviewRepository extends JpaRepository<UserReview, Long> {
     Optional<UserReview> findByUserId(Long userId);
 
     void deleteAllByUserId(Long userId);
+
+    void deleteAllByPlaceId(Long placeId);
 }
