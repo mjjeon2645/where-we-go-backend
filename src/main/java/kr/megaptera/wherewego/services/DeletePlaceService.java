@@ -6,7 +6,6 @@ import org.springframework.stereotype.*;
 import org.springframework.transaction.annotation.*;
 
 import java.util.*;
-import java.util.stream.*;
 
 @Service
 @Transactional
@@ -24,24 +23,24 @@ public class DeletePlaceService {
     }
 
     public void delete(Long id) {
-        // 유저의 북마크가 해당 아이디면 지워줘야 함
+        // 유저의 북마크의 장소 id가 해당 아이디면 지워줘야 함
         List<User> users = userRepository.findAll();
 
-        users.stream().map(User::bookmarks)
-            .map(bookmarks ->
-                bookmarks.stream().map(bookmark
-                    -> bookmark.getPlaceId().equals(id)
-                    ? bookmarks.remove(bookmark)
-                    : bookmark))
-            .toList();
+        for (User user : users) {
+            int size = user.bookmarks().size();
 
+            if (size == 0) {
+                continue;
+            }
 
-//            .stream().map(bookmark -> {
-//            if (bookmark.getPlaceId().equals(id)) {
-//                user.bookmarks().remove(bookmark);
-//            }
-//            return bookmark;
-//        }));
+            for (int j = size - 1; j >= 0; j -= 1) {
+                Bookmark found = user.bookmarks().get(j);
+
+                if (Objects.equals(found.getPlaceId(), id)) {
+                    user.bookmarks().remove(found);
+                }
+            }
+        }
 
         // 유저 리뷰의 placeId가 해당 아이디면 지워줘야 함
         userReviewRepository.deleteAllByPlaceId(id);
