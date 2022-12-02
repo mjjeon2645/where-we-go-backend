@@ -72,4 +72,11 @@ public class GetUserReviewService {
 
         return userReview.toDto();
     }
+
+    public UserReviewDto selectedReview(Long id) {
+        UserReview found = userReviewRepository.findById(id)
+            .orElseThrow(UserReviewNotFoundException::new);
+
+        return found.toDto();
+    }
 }
