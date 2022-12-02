@@ -1,6 +1,8 @@
 package kr.megaptera.wherewego.admins;
 
 import kr.megaptera.wherewego.dtos.*;
+import kr.megaptera.wherewego.errorDtos.*;
+import kr.megaptera.wherewego.exceptions.*;
 import kr.megaptera.wherewego.services.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
@@ -38,5 +40,11 @@ public class AdminUserReviewController {
         @PathVariable Long id
     ) {
         deleteUserReviewService.delete(id);
+    }
+
+    @ExceptionHandler(UserReviewNotFoundException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorDto reviewNotFoundError() {
+        return new UserReviewNotFoundErrorDto();
     }
 }
