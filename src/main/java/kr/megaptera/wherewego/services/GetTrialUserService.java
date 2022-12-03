@@ -21,28 +21,6 @@ public class GetTrialUserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-//    public User create(TrialLoginRequestDto trialLoginRequestDto) {
-//        String socialLoginId = trialLoginRequestDto.getTrialId();
-//        String password = trialLoginRequestDto.getPassword();
-//        List<Bookmark> bookmarks = new ArrayList<>();
-//
-//        User found = userRepository.findBySocialLoginId(socialLoginId).orElse(null);
-//
-//        if (found != null) {
-//            return found;
-//        }
-//
-//        User trialUser = new User(socialLoginId, "tester@tester.com", "테스터", password,
-//            "admin", User.REGISTERED, bookmarks);
-//
-//        trialUser.changePassword(password, passwordEncoder);
-//
-//        userRepository.save(trialUser);
-//
-//        return trialUser;
-//
-//    }
-
     public User trialUser() {
         String socialLoginId = "trialUserId-" + UUID.randomUUID();
 

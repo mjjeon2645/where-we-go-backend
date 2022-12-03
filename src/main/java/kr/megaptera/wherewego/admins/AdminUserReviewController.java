@@ -34,6 +34,15 @@ public class AdminUserReviewController {
         return getUserReviewService.selectedReview(id);
     }
 
+    @GetMapping("userId/{id}")
+    public UserReviewsDto findAllReviewsByUserId(
+        @PathVariable Long id
+    ) {
+        List<UserReviewDto> allReviewsFindByUserId = getUserReviewService.findAllReviewsByUserId(id);
+
+        return new UserReviewsDto(allReviewsFindByUserId);
+    }
+
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUserReview(

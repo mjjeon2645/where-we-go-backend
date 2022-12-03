@@ -21,6 +21,8 @@ public class UserReviewDto {
 
     private Boolean isDeleted;
 
+    private String placeName;
+
     public UserReviewDto() {
     }
 
@@ -35,6 +37,21 @@ public class UserReviewDto {
         this.dateOfVisit = dateOfVisit;
         this.createdAt = createdAt;
         this.isDeleted = isDeleted;
+    }
+
+    public UserReviewDto(Long id, Long placeId, Long userId, Long rate, String nickname,
+                         String body, String dateOfVisit, LocalDateTime createdAt,
+                         Boolean isDeleted, String placeName) {
+        this.id = id;
+        this.placeId = placeId;
+        this.userId = userId;
+        this.rate = rate;
+        this.nickname = nickname;
+        this.body = body;
+        this.dateOfVisit = dateOfVisit;
+        this.createdAt = createdAt;
+        this.isDeleted = isDeleted;
+        this.placeName = placeName;
     }
 
     public Long getId() {
@@ -71,5 +88,9 @@ public class UserReviewDto {
 
     public Boolean getDeleted() {
         return isDeleted;
+    }
+
+    public String getPlaceName() {
+        return placeName;
     }
 }

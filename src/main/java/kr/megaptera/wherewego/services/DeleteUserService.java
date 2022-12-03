@@ -10,22 +10,34 @@ import java.util.*;
 
 @Service
 @Transactional
-public class DeleteTrialUserService {
+public class DeleteUserService {
     private final UserRepository userRepository;
     private final ChildRepository childRepository;
     private final UserReviewRepository userReviewRepository;
 
-    public DeleteTrialUserService(UserRepository userRepository,
-                                  ChildRepository childRepository, UserReviewRepository userReviewRepository) {
+    public DeleteUserService(UserRepository userRepository,
+                             ChildRepository childRepository,
+                             UserReviewRepository userReviewRepository) {
         this.userRepository = userRepository;
         this.childRepository = childRepository;
         this.userReviewRepository = userReviewRepository;
     }
 
-    public void delete(String socialLoginId) {
+    public void deleteTrialUser(String socialLoginId) {
         User foundToDelete = userRepository.findBySocialLoginId(socialLoginId)
             .orElseThrow(UserNotFoundException::new);
 
+        deleteProcess(foundToDelete);
+    }
+
+    public void deleteUser(Long id) {
+        User foundToDelete = userRepository.findById(id)
+            .orElseThrow(UserNotFoundException::new);
+
+        deleteProcess(foundToDelete);
+    }
+
+    public void deleteProcess(User foundToDelete) {
         List<Bookmark> bookmarks = foundToDelete.bookmarks();
 
         if (bookmarks != null && bookmarks.size() > 0) {

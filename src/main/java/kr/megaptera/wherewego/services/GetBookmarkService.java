@@ -35,6 +35,19 @@ public class GetBookmarkService {
             .collect(Collectors.toList());
     }
 
+    public List<BookmarkedPlaceDto> bookmarks(Long id) {
+        User found = userRepository.findById(id)
+            .orElseThrow(UserNotFoundException::new);
+
+        List<Bookmark> bookmarks = found.bookmarks();
+
+        List<Place> bookmarkedPlaces = makePlacesList(bookmarks);
+
+        return bookmarkedPlaces.stream()
+            .map(Place::toBookmarkedPlaceDto)
+            .collect(Collectors.toList());
+    }
+
     public List<Place> makePlacesList(List<Bookmark> bookmarks) {
         return bookmarks.stream()
             .map(bookmark -> placeRepository.findById(bookmark.getPlaceId())

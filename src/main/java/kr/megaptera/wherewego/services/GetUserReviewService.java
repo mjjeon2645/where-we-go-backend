@@ -15,11 +15,14 @@ import java.util.stream.*;
 public class GetUserReviewService {
     private final UserReviewRepository userReviewRepository;
     private final UserRepository userRepository;
+    private final PlaceRepository placeRepository;
 
     public GetUserReviewService(UserReviewRepository userReviewRepository,
-                                UserRepository userRepository) {
+                                UserRepository userRepository,
+                                PlaceRepository placeRepository) {
         this.userReviewRepository = userReviewRepository;
         this.userRepository = userRepository;
+        this.placeRepository = placeRepository;
     }
 
     public List<UserReviewDto> allReviews() {
@@ -78,5 +81,13 @@ public class GetUserReviewService {
             .orElseThrow(UserReviewNotFoundException::new);
 
         return found.toDto();
+    }
+
+    public List<UserReviewDto> findAllReviewsByUserId(Long userId) {
+        return userReviewRepository.findAllByUserId(userId).stream().map(
+            userReview -> userReview.toDtoWithPlaceName(
+                placeRepository.findById(userReview.placeId()).orElseThrow(PlaceNotFoundException::new).name()
+            )
+        ).collect(Collectors.toList());
     }
 }
