@@ -1,9 +1,11 @@
 package kr.megaptera.wherewego.models;
 
+import kr.megaptera.wherewego.dtos.*;
 import org.springframework.security.crypto.password.*;
 
 import javax.persistence.*;
 import java.util.*;
+import java.util.stream.*;
 
 @Entity
 @Table(name = "USERS")
@@ -122,5 +124,9 @@ public class User {
             .findFirst().orElseThrow();
 
         bookmarks.remove(filtered);
+    }
+
+    public UserDto toDto() {
+        return new UserDto(id, email, nickname, socialLoginId, authBy, state);
     }
 }

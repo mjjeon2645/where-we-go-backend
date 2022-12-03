@@ -104,6 +104,11 @@ public class UserReview {
             createdAt, isDeleted);
     }
 
+    public UserReviewDto toDtoWithPlaceName(String placeName) {
+        return new UserReviewDto(id, placeId, userId, rate, nickname, body, dateOfVisit,
+            createdAt, isDeleted, placeName);
+    }
+
     @Override
     public String toString() {
         return "id: " + id + " placeId: " + placeId + " userId: " + userId + " rate: " + rate +

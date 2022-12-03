@@ -30,4 +30,13 @@ public class GetChildService {
 
         return children.stream().map(Child::toChildDto).collect(Collectors.toList());
     }
+
+    public List<ChildDto> children(Long id) {
+        User found = userRepository.findById(id)
+            .orElseThrow(UserNotFoundException::new);
+
+        List<Child> children = childRepository.findAllByUserId(found.id());
+
+        return children.stream().map(Child::toChildDto).collect(Collectors.toList());
+    }
 }

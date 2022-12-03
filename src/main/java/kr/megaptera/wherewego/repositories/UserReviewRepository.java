@@ -10,7 +10,7 @@ public interface UserReviewRepository extends JpaRepository<UserReview, Long> {
 
     List<UserReview> findAllByPlaceId(Long placeId);
 
-    Optional<UserReview> findByUserId(Long userId);
+    List<UserReview> findAllByUserId(Long userId);
 
     void deleteAllByUserId(Long userId);
 
