@@ -3,9 +3,12 @@ package kr.megaptera.wherewego.admins;
 import kr.megaptera.wherewego.dtos.*;
 import kr.megaptera.wherewego.models.*;
 import kr.megaptera.wherewego.services.*;
+import kr.megaptera.wherewego.utils.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.*;
 
+import java.io.*;
 import java.util.*;
 
 @RestController
@@ -14,13 +17,16 @@ public class AdminPlaceController {
     private final GetPlaceService getPlaceService;
     private final PostPlaceService postPlaceService;
     private final DeletePlaceService deletePlaceService;
+    private final S3Uploader s3Uploader;
 
     public AdminPlaceController(GetPlaceService getPlaceService,
                                 PostPlaceService postPlaceService,
-                                DeletePlaceService deletePlaceService) {
+                                DeletePlaceService deletePlaceService,
+                                S3Uploader s3Uploader) {
         this.getPlaceService = getPlaceService;
         this.postPlaceService = postPlaceService;
         this.deletePlaceService = deletePlaceService;
+        this.s3Uploader = s3Uploader;
     }
 
     @GetMapping
@@ -45,6 +51,11 @@ public class AdminPlaceController {
         @RequestBody PlaceRequestDto placeRequestDto
     ) {
         return postPlaceService.create(placeRequestDto).toPlaceDto();
+    }
+
+    @PostMapping("images")
+   public String upload(MultipartFile multipartFile) throws IOException {
+        return s3Uploader.uploadFiles(multipartFile, "wherewego");
     }
 
     @DeleteMapping("{id}")
