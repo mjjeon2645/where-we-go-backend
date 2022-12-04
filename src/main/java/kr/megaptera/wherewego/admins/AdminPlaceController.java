@@ -53,10 +53,10 @@ public class AdminPlaceController {
         return postPlaceService.create(placeRequestDto).toPlaceDto();
     }
 
-    @PostMapping("images")
-   public String upload(MultipartFile multipartFile) throws IOException {
-        return s3Uploader.uploadFiles(multipartFile, "wherewego");
-    }
+//    @PostMapping("images")
+//   public String upload(MultipartFile multipartFile) throws IOException {
+//        return s3Uploader.uploadFiles(multipartFile, "wherewego");
+//    }
 
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
