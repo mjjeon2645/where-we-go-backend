@@ -15,8 +15,8 @@ import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
 
-class GetLoginServiceTest {
-    private GetLoginService getLoginService;
+class PostLoginServiceTest {
+    private PostLoginService postLoginService;
 
     private UserRepository userRepository;
 
@@ -29,7 +29,7 @@ class GetLoginServiceTest {
         passwordEncoder = new Argon2PasswordEncoder();
         jwtUtil = new JwtUtil("SECRET");
 
-        getLoginService = new GetLoginService(userRepository, passwordEncoder, jwtUtil);
+        postLoginService = new PostLoginService(userRepository, adminRepository, passwordEncoder, jwtUtil);
 
         User user = User.fake("angel2645@naver.com");
         user.changePassword("Tester1234", passwordEncoder);
@@ -46,7 +46,7 @@ class GetLoginServiceTest {
 
     @Test
     void loginSuccess() {
-        User found = getLoginService.login("angel2645@naver.com", "Tester1234");
+        User found = postLoginService.login("angel2645@naver.com", "Tester1234");
 
         assertThat(found.nickname()).isEqualTo("nickname");
     }
@@ -54,14 +54,14 @@ class GetLoginServiceTest {
     @Test
     void loginFailedWithIncorrectEmail() {
         assertThrows(LoginFailedException.class, () -> {
-            getLoginService.login("angel1234@naver.com", "Tester1234");
+            postLoginService.login("angel1234@naver.com", "Tester1234");
         });
     }
 
     @Test
     void loginFailedWithIncorrectPassword() {
         assertThrows(LoginFailedException.class, () -> {
-            getLoginService.login("angel2645@naver.com", "xxx");
+            postLoginService.login("angel2645@naver.com", "xxx");
         });
     }
 
@@ -80,7 +80,7 @@ class GetLoginServiceTest {
             new SocialLoginProcessResultDto(
                 "accessToken", "refreshToken", "또또누나", "email", "socialLoginId2", "naver");
 
-        assertThat(getLoginService.socialLogin(socialLoginProcessResultDto))
+        assertThat(postLoginService.socialLogin(socialLoginProcessResultDto))
             .isEqualTo(new LoginResultDto(5L, jwtUtil.encode("socialLoginId2"),
                 "또또누나", "registered"));
     }

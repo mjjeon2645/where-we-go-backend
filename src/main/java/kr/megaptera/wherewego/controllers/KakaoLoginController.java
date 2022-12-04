@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("oauth")
 public class KakaoLoginController {
     private final KakaoAuthUtil kakaoAuthUtil;
-    private final GetLoginService getLoginService;
+    private final PostLoginService postLoginService;
 
-    public KakaoLoginController(GetLoginService getLoginService,
+    public KakaoLoginController(PostLoginService getLoginService,
                                 KakaoAuthUtil kakaoAuthUtil) {
-        this.getLoginService = getLoginService;
+        this.postLoginService = getLoginService;
         this.kakaoAuthUtil = kakaoAuthUtil;
     }
 
@@ -21,6 +21,6 @@ public class KakaoLoginController {
     public LoginResultDto login(String code) {
         SocialLoginProcessResultDto kakaoDto = kakaoAuthUtil.process(code);
 
-        return getLoginService.socialLogin(kakaoDto);
+        return postLoginService.socialLogin(kakaoDto);
     }
 }

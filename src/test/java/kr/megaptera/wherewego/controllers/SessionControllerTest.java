@@ -23,17 +23,17 @@ class SessionControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private GetLoginService getLoginService;
+    private PostLoginService postLoginService;
 
     @SpyBean
     private JwtUtil jwtUtil;
 
     @BeforeEach
     void setUp() {
-        given(getLoginService.login("angel2645@naver.com", "Tester1234"))
+        given(postLoginService.login("angel2645@naver.com", "Tester1234"))
             .willReturn(User.fake("angel2645@naver.com"));
 
-        given(getLoginService.login("angel2645@naver.com", "xxx"))
+        given(postLoginService.login("angel2645@naver.com", "xxx"))
             .willThrow(new LoginFailedException());
     }
 
