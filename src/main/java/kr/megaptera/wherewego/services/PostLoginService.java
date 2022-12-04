@@ -61,17 +61,17 @@ public class PostLoginService {
             foundUser.state());
     }
 
-    public Admin adminLogin(String identifier, String password) {
+    public Admin adminLogin(String socialLoginId, String password) {
         // 1. 기존 어드민 사용자 여부 확인
-        Admin foundAdmin = adminRepository.findByIdentifier(identifier)
+        Admin found = adminRepository.findBySocialLoginId(socialLoginId)
             .orElseThrow(AdminLoginFailedException::new);
 
         // 2. 패스워드 일치 여부 확인
-        if(!foundAdmin.authenticate(password, passwordEncoder)) {
+        if(!found.authenticate(password, passwordEncoder)) {
             throw new AdminLoginFailedException();
         }
 
-        return foundAdmin;
+        return found;
     }
 
     public User login(String identifier, String password) {

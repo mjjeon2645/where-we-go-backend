@@ -17,16 +17,13 @@ public class AdminPlaceController {
     private final GetPlaceService getPlaceService;
     private final PostPlaceService postPlaceService;
     private final DeletePlaceService deletePlaceService;
-    private final S3Uploader s3Uploader;
 
     public AdminPlaceController(GetPlaceService getPlaceService,
                                 PostPlaceService postPlaceService,
-                                DeletePlaceService deletePlaceService,
-                                S3Uploader s3Uploader) {
+                                DeletePlaceService deletePlaceService) {
         this.getPlaceService = getPlaceService;
         this.postPlaceService = postPlaceService;
         this.deletePlaceService = deletePlaceService;
-        this.s3Uploader = s3Uploader;
     }
 
     @GetMapping
@@ -52,11 +49,6 @@ public class AdminPlaceController {
     ) {
         return postPlaceService.create(placeRequestDto).toPlaceDto();
     }
-
-//    @PostMapping("images")
-//   public String upload(MultipartFile multipartFile) throws IOException {
-//        return s3Uploader.uploadFiles(multipartFile, "wherewego");
-//    }
 
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
