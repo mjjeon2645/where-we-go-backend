@@ -17,22 +17,32 @@ public class PostPlaceService {
 
     public Place create(PlaceRequestDto placeRequestDto) {
         String placeName = placeRequestDto.getPlaceName();
+
         String fullAddress = placeRequestDto.getFullAddress();
         String sido = placeRequestDto.getSido();
         String sigungu = placeRequestDto.getSigungu();
+
         String category = placeRequestDto.getCategory();
+
         String phone = placeRequestDto.getPhone();
         String homepage = placeRequestDto.getHomepage();
+
         String parking = placeRequestDto.getParking();
         String reservation = placeRequestDto.getReservation();
         String outsideFood = placeRequestDto.getOutsideFood();
         String nursingRoom = placeRequestDto.getNursingRoom();
+
         String weekdayStart = placeRequestDto.getWeekdayStart();
         String weekdayEnd = placeRequestDto.getWeekdayEnd();
         String weekendStart = placeRequestDto.getWeekendStart();
         String weekendEnd = placeRequestDto.getWeekendEnd();
+
         Double longitude = placeRequestDto.getLongitude();
         Double latitude = placeRequestDto.getLatitude();
+
+        String firstImage = placeRequestDto.getFirstImage();
+        String secondImage = placeRequestDto.getSecondImage();
+        String thirdImage = placeRequestDto.getThirdImage();
 
         Place createdPlace = new Place(null,
             placeName, new Position(latitude, longitude), new Address(fullAddress, sido, sigungu), category,
@@ -44,7 +54,8 @@ public class PostPlaceService {
                 "금요일: " + weekdayStart + ":" + weekdayEnd,
                 "토요일: " + weekendStart + ":" + weekendEnd,
                 "일요일: " + weekendStart + ":" + weekendEnd),
-            ImageSource.fake(), new PlaceServices(reservation, parking, outsideFood, nursingRoom),
+            new ImageSource(firstImage, secondImage, thirdImage),
+            new PlaceServices(reservation, parking, outsideFood, nursingRoom),
             new Contact(phone, homepage)
         );
 

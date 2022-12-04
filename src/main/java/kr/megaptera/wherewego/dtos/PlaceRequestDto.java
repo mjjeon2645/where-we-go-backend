@@ -35,6 +35,12 @@ public class PlaceRequestDto {
 
     private Double latitude;
 
+    private String firstImage;
+
+    private String secondImage;
+
+    private String thirdImage;
+
     public PlaceRequestDto() {
     }
 
@@ -43,7 +49,8 @@ public class PlaceRequestDto {
                            String homepage, String parking, String reservation,
                            String outsideFood, String nursingRoom, String weekdayStart,
                            String weekdayEnd, String weekendStart, String weekendEnd,
-                           Double longitude, Double latitude) {
+                           Double longitude, Double latitude, String firstImage,
+                           String secondImage, String thirdImage) {
         this.placeName = placeName;
         this.fullAddress = fullAddress;
         this.sido = sido;
@@ -61,6 +68,9 @@ public class PlaceRequestDto {
         this.weekendEnd = weekendEnd;
         this.longitude = longitude;
         this.latitude = latitude;
+        this.firstImage = firstImage;
+        this.secondImage = secondImage;
+        this.thirdImage = thirdImage;
     }
 
     public String getPlaceName() {
@@ -129,5 +139,17 @@ public class PlaceRequestDto {
 
     public Double getLatitude() {
         return latitude;
+    }
+
+    public String getFirstImage() {
+        return firstImage;
+    }
+
+    public String getSecondImage() {
+        return secondImage;
+    }
+
+    public String getThirdImage() {
+        return thirdImage;
     }
 }
