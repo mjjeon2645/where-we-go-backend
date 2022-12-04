@@ -13,29 +13,18 @@ import java.util.*;
 
 @Service
 @Transactional
-public class GetLoginService {
+public class PostLoginService {
     private final UserRepository userRepository;
+    private final AdminRepository adminRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
-    public GetLoginService(UserRepository userRepository, PasswordEncoder passwordEncoder,
-                           JwtUtil jwtUtil) {
+    public PostLoginService(UserRepository userRepository, AdminRepository adminRepository,
+                            PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
         this.userRepository = userRepository;
+        this.adminRepository = adminRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtUtil = jwtUtil;
-    }
-
-    public User login(String identifier, String password) {
-        // 1. email 찾고
-        User foundUser = userRepository.findBySocialLoginId(identifier)
-            .orElseThrow(LoginFailedException::new);
-
-        // 2. 패스워드 비교하고
-        if (!foundUser.authenticate(password, passwordEncoder)) {
-            throw new LoginFailedException();
-        }
-
-        return foundUser;
     }
 
     public LoginResultDto socialLogin(SocialLoginProcessResultDto dto) {
@@ -70,5 +59,31 @@ public class GetLoginService {
 
         return new LoginResultDto(foundUser.id(), accessToken, foundUser.nickname(),
             foundUser.state());
+    }
+
+    public Admin adminLogin(String identifier, String password) {
+        // 1. 기존 어드민 사용자 여부 확인
+        Admin foundAdmin = adminRepository.findByIdentifier(identifier)
+            .orElseThrow(AdminLoginFailedException::new);
+
+        // 2. 패스워드 일치 여부 확인
+        if(!foundAdmin.authenticate(password, passwordEncoder)) {
+            throw new AdminLoginFailedException();
+        }
+
+        return foundAdmin;
+    }
+
+    public User login(String identifier, String password) {
+        // 1. 기존 유저 여부 확인
+        User foundUser = userRepository.findBySocialLoginId(identifier)
+            .orElseThrow(LoginFailedException::new);
+
+        // 2. 패스워드 비교하고
+        if (!foundUser.authenticate(password, passwordEncoder)) {
+            throw new LoginFailedException();
+        }
+
+        return foundUser;
     }
 }

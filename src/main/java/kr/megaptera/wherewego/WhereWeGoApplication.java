@@ -59,6 +59,11 @@ public class WhereWeGoApplication {
         return new JwtUtil(jwtSecret);
     }
 
+    @Bean
+    public JwtUtilForAdmin jwtUtilForAdmin() {
+        return new JwtUtilForAdmin(jwtSecret);
+    }
+
     // PasswordEncoder(Argon2)
     @Bean
     public PasswordEncoder passwordEncoder() {

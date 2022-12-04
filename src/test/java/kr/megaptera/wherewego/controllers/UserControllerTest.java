@@ -48,7 +48,7 @@ class UserControllerTest {
     }
 
     @Test
-    void sighUp() throws Exception {
+    void signUp() throws Exception {
         String accessToken = jwtUtil.encode("socialLoginId");
 
         mockMvc.perform(MockMvcRequestBuilders.post("/users")
