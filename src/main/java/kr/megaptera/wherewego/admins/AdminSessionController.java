@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("admin-session")
 public class AdminSessionController {
     private final PostLoginService postLoginService;
-    private final JwtUtilForAdmin jwtUtilForAdmin;
+    private final JwtUtil jwtUtil;
 
     public AdminSessionController(PostLoginService postLoginService,
-                                  JwtUtilForAdmin jwtUtilForAdmin) {
+                                  JwtUtil jwtUtil) {
         this.postLoginService = postLoginService;
-        this.jwtUtilForAdmin = jwtUtilForAdmin;
+        this.jwtUtil = jwtUtil;
     }
 
     @PostMapping
@@ -26,15 +26,15 @@ public class AdminSessionController {
     public AdminLoginResultDto adminLogin(
         @RequestBody LoginRequestDto loginRequestDto
         ) {
-        String adminId = loginRequestDto.getIdentifier();
+        String socialLoginId = loginRequestDto.getSocialLoginId();
         String password = loginRequestDto.getPassword();
 
-        Admin foundAdmin = postLoginService.adminLogin(adminId, password);
+        Admin foundAdmin = postLoginService.adminLogin(socialLoginId, password);
 
-        String accessToken = jwtUtilForAdmin.encode(adminId);
+        String accessToken = jwtUtil.encode(socialLoginId);
         System.out.println(accessToken);
 
-        return new AdminLoginResultDto(adminId, accessToken);
+        return new AdminLoginResultDto(socialLoginId, accessToken);
     }
 
     @ExceptionHandler(AdminLoginFailedException.class)
