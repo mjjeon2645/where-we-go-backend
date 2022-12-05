@@ -63,4 +63,28 @@ public class Admin {
     public void changePassword(String password, PasswordEncoder passwordEncoder) {
         this.encodedPassword = passwordEncoder.encode(password);
     }
+
+    public Long id() {
+        return id;
+    }
+
+    public String socialLoginId() {
+        return socialLoginId;
+    }
+
+    public String encodedPassword() {
+        return encodedPassword;
+    }
+
+    public String name() {
+        return name;
+    }
+
+    public Long employeeIdentificationNumber() {
+        return employeeIdentificationNumber;
+    }
+
+    public LocalDateTime createdAt() {
+        return createdAt;
+    }
 }

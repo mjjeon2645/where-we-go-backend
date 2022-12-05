@@ -5,12 +5,16 @@ public class AdminLoginResultDto {
 
     private String accessToken;
 
+    private Long employeeIdentificationNumber;
+
     public AdminLoginResultDto() {
     }
 
-    public AdminLoginResultDto(String socialLoginId, String accessToken) {
+    public AdminLoginResultDto(String socialLoginId, String accessToken,
+                               Long employeeIdentificationNumber) {
         this.socialLoginId = socialLoginId;
         this.accessToken = accessToken;
+        this.employeeIdentificationNumber = employeeIdentificationNumber;
     }
 
     public String getSocialLoginId() {
@@ -19,5 +23,9 @@ public class AdminLoginResultDto {
 
     public String getAccessToken() {
         return accessToken;
+    }
+
+    public Long getEmployeeIdentificationNumber() {
+        return employeeIdentificationNumber;
     }
 }

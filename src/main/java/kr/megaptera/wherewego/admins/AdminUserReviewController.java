@@ -43,17 +43,32 @@ public class AdminUserReviewController {
         return new UserReviewsDto(allReviewsFindByUserId);
     }
 
-    @DeleteMapping("{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteUserReview(
-        @PathVariable Long id
+    @PostMapping("{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public String deleteUserReviewAndCreateLog(
+        @PathVariable Long id,
+        @RequestAttribute String socialLoginId,
+        @RequestBody DeleteReviewRequestDto deleteReviewRequestDto
     ) {
-        deleteUserReviewService.delete(id);
+        deleteUserReviewService.delete(id, socialLoginId, deleteReviewRequestDto);
+        return "Success to delete the review";
     }
 
     @ExceptionHandler(UserReviewNotFoundException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorDto reviewNotFoundError() {
         return new UserReviewNotFoundErrorDto();
+    }
+
+    @ExceptionHandler(AdminPasswordError.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorDto adminPasswordError() {
+        return new AdminPasswordErrorDto();
+    }
+
+    @ExceptionHandler(EmptyReasonException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorDto emptyReasonError() {
+        return new EmptyReasonErrorDto();
     }
 }
