@@ -80,7 +80,11 @@ public class GetUserReviewService {
         UserReview found = userReviewRepository.findById(id)
             .orElseThrow(UserReviewNotFoundException::new);
 
-        return found.toDto();
+        Place foundPlace = placeRepository.findById(found.placeId()).orElseThrow(PlaceNotFoundException::new);
+
+        String placeName = foundPlace.name();
+
+        return found.toDtoWithPlaceName(placeName);
     }
 
     public List<UserReviewDto> findAllReviewsByUserId(Long userId) {
