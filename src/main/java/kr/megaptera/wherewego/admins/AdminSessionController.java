@@ -32,7 +32,6 @@ public class AdminSessionController {
         Admin foundAdmin = postLoginService.adminLogin(socialLoginId, password);
 
         String accessToken = jwtUtil.encode(socialLoginId);
-        System.out.println(accessToken);
 
         return new AdminLoginResultDto(socialLoginId, accessToken);
     }

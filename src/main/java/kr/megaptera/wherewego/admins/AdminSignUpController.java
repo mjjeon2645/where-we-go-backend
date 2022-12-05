@@ -1,6 +1,8 @@
 package kr.megaptera.wherewego.admins;
 
 import kr.megaptera.wherewego.dtos.*;
+import kr.megaptera.wherewego.errorDtos.*;
+import kr.megaptera.wherewego.exceptions.*;
 import kr.megaptera.wherewego.models.*;
 import kr.megaptera.wherewego.services.*;
 import org.springframework.http.*;
@@ -23,5 +25,17 @@ public class AdminSignUpController {
         Admin createdAdmin = adminSignUpService.signUp(adminRequestDto);
 
         return createdAdmin.toDto();
+    }
+
+    @ExceptionHandler(ExistAdminMemberException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorDto existAdminMemberError() {
+        return new ExistAdminMemberErrorDto();
+    }
+
+    @ExceptionHandler(DuplicateIdentifierException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorDto duplicatedIdError() {
+        return new DuplicateIdentifierErrorDto();
     }
 }

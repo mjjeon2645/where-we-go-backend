@@ -8,7 +8,7 @@ import java.util.*;
 import java.util.stream.*;
 
 @Entity
-@Table(name = "USERS")
+@Table(name = "users")
 public class User {
     public static final String UNREGISTERED = "unregistered";
     public static final String REGISTERED = "registered";

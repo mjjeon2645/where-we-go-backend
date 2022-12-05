@@ -1,6 +1,8 @@
 package kr.megaptera.wherewego.admins;
 
 import kr.megaptera.wherewego.dtos.*;
+import kr.megaptera.wherewego.errorDtos.*;
+import kr.megaptera.wherewego.exceptions.*;
 import kr.megaptera.wherewego.models.*;
 import kr.megaptera.wherewego.services.*;
 import kr.megaptera.wherewego.utils.*;
@@ -56,5 +58,17 @@ public class AdminPlaceController {
         @PathVariable Long id
     ) {
         deletePlaceService.delete(id);
+    }
+
+    @ExceptionHandler(AddressMissingException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorDto addressMissingError() {
+        return new AddressMissingErrorDto();
+    }
+
+    @ExceptionHandler(CategoryMissingException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorDto categoryMissingError() {
+        return new CategoryMissingErrorDto();
     }
 }
