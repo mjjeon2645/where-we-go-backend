@@ -59,10 +59,4 @@ public class UserReviewController {
     ) {
         deleteUserReviewService.delete(reviewId);
     }
-
-    @ExceptionHandler(AuthenticationError.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorDto authenticationError() {
-        return new AuthenticationErrorDto();
-    }
 }
