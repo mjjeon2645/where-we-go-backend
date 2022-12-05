@@ -1,6 +1,7 @@
 package kr.megaptera.wherewego.services;
 
 import kr.megaptera.wherewego.dtos.*;
+import kr.megaptera.wherewego.exceptions.*;
 import kr.megaptera.wherewego.models.*;
 import kr.megaptera.wherewego.repositories.*;
 import org.springframework.stereotype.*;
@@ -44,16 +45,27 @@ public class PostPlaceService {
         String secondImage = placeRequestDto.getSecondImage();
         String thirdImage = placeRequestDto.getThirdImage();
 
+        // 서버측에서 처리하는 예외처리 1. 주소 미입력으로 인해 위도, 경도 없을 시
+        if (longitude == 0.0) {
+            throw new AddressMissingException();
+        }
+
+        // 서버측에서 처리하는 예외처리 2. 카테고리 미입력
+        if (category == null || category.equals("select")) {
+            throw new CategoryMissingException();
+        }
+
         Place createdPlace = new Place(null,
-            placeName, new Position(latitude, longitude), new Address(fullAddress, sido, sigungu), category,
+            placeName, new Position(latitude, longitude),
+            new Address(fullAddress, sido, sigungu), category,
             new BusinessHours(
-                "월요일: " + weekdayStart + ":" + weekdayEnd,
-                "화요일: " + weekdayStart + ":" + weekdayEnd,
-                "수요일: " + weekdayStart + ":" + weekdayEnd,
-                "목요일: " + weekdayStart + ":" + weekdayEnd,
-                "금요일: " + weekdayStart + ":" + weekdayEnd,
-                "토요일: " + weekendStart + ":" + weekendEnd,
-                "일요일: " + weekendStart + ":" + weekendEnd),
+                "월요일: " + weekdayStart + "~" + weekdayEnd,
+                "화요일: " + weekdayStart + "~" + weekdayEnd,
+                "수요일: " + weekdayStart + "~" + weekdayEnd,
+                "목요일: " + weekdayStart + "~" + weekdayEnd,
+                "금요일: " + weekdayStart + "~" + weekdayEnd,
+                "토요일: " + weekendStart + "~" + weekendEnd,
+                "일요일: " + weekendStart + "~" + weekendEnd),
             new ImageSource(firstImage, secondImage, thirdImage),
             new PlaceServices(reservation, parking, outsideFood, nursingRoom),
             new Contact(phone, homepage)
