@@ -1,9 +1,13 @@
 package kr.megaptera.wherewego.models;
 
 import kr.megaptera.wherewego.dtos.*;
+import org.hibernate.annotations.*;
 import org.springframework.security.crypto.password.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import java.time.*;
 import java.util.*;
 
 @Entity
@@ -33,9 +37,12 @@ public class User {
     @ElementCollection
     private List<Bookmark> bookmarks = new ArrayList<>();
 
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
     public static User fake(String email) {
         return new User(1L, "encodedPassword", email, "nickname", "socialLoginId",
-            "kakao", User.UNREGISTERED, List.of());
+            "kakao", User.UNREGISTERED, List.of(), LocalDateTime.of(2022, 10, 8, 10, 43, 0, 0));
     }
 
     public boolean authenticate(String password, PasswordEncoder passwordEncoder) {
@@ -61,7 +68,8 @@ public class User {
     }
 
     public User(Long id, String encodedPassword, String email, String nickname,
-                String socialLoginId, String authBy, String state, List<Bookmark> bookmarks) {
+                String socialLoginId, String authBy, String state, List<Bookmark> bookmarks,
+                LocalDateTime createdAt) {
         this.id = id;
         this.encodedPassword = encodedPassword;
         this.email = email;
@@ -70,6 +78,7 @@ public class User {
         this.authBy = authBy;
         this.state = state;
         this.bookmarks = bookmarks;
+        this.createdAt = createdAt;
     }
 
     public Long id() {
@@ -104,6 +113,10 @@ public class User {
         return bookmarks;
     }
 
+    public LocalDateTime createdAt() {
+        return createdAt;
+    }
+
     public void register(String nickname) {
         this.nickname = nickname;
         this.state = User.REGISTERED;
@@ -126,6 +139,6 @@ public class User {
     }
 
     public UserDto toDto() {
-        return new UserDto(id, email, nickname, socialLoginId, authBy, state);
+        return new UserDto(id, email, nickname, socialLoginId, authBy, state, createdAt);
     }
 }
