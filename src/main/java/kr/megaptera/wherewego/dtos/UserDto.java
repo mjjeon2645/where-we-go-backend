@@ -1,5 +1,6 @@
 package kr.megaptera.wherewego.dtos;
 
+import java.time.*;
 import java.util.*;
 
 public class UserDto {
@@ -17,21 +18,24 @@ public class UserDto {
 
     private List<BookmarkedPlaceDto> bookmarkedPlaces;
 
+    private LocalDateTime createdAt;
+
     public UserDto() {
     }
 
     public UserDto(Long id, String email, String nickname, String socialLoginId,
-                   String authBy, String state) {
+                   String authBy, String state, LocalDateTime createdAt) {
         this.id = id;
         this.email = email;
         this.nickname = nickname;
         this.socialLoginId = socialLoginId;
         this.authBy = authBy;
         this.state = state;
+        this.createdAt = createdAt;
     }
 
     public UserDto(Long id, String email, String nickname, String socialLoginId,
-                   String authBy, String state, List<BookmarkedPlaceDto> bookmarkedPlaces) {
+                   String authBy, String state, List<BookmarkedPlaceDto> bookmarkedPlaces, LocalDateTime createdAt) {
         this.id = id;
         this.email = email;
         this.nickname = nickname;
@@ -39,6 +43,7 @@ public class UserDto {
         this.authBy = authBy;
         this.state = state;
         this.bookmarkedPlaces = bookmarkedPlaces;
+        this.createdAt = createdAt;
     }
 
     public Long getId() {
@@ -67,5 +72,9 @@ public class UserDto {
 
     public List<BookmarkedPlaceDto> getBookmarkedPlaces() {
         return bookmarkedPlaces;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 }
