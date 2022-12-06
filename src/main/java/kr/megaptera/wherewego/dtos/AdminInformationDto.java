@@ -1,21 +1,21 @@
 package kr.megaptera.wherewego.dtos;
 
-public class AdminLoginResultDto {
+public class AdminInformationDto {
     private String socialLoginId;
 
-    private String accessToken;
+    private String name;
 
     private Long employeeIdentificationNumber;
 
     private String profileImage;
 
-    public AdminLoginResultDto() {
+    public AdminInformationDto() {
     }
 
-    public AdminLoginResultDto(String socialLoginId, String accessToken,
+    public AdminInformationDto(String socialLoginId, String name,
                                Long employeeIdentificationNumber, String profileImage) {
         this.socialLoginId = socialLoginId;
-        this.accessToken = accessToken;
+        this.name = name;
         this.employeeIdentificationNumber = employeeIdentificationNumber;
         this.profileImage = profileImage;
     }
@@ -24,8 +24,8 @@ public class AdminLoginResultDto {
         return socialLoginId;
     }
 
-    public String getAccessToken() {
-        return accessToken;
+    public String getName() {
+        return name;
     }
 
     public Long getEmployeeIdentificationNumber() {

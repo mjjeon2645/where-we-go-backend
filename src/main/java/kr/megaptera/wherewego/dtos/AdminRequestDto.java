@@ -9,15 +9,19 @@ public class AdminRequestDto {
 
     private String password;
 
+    private String profileImage;
+
     public AdminRequestDto() {
     }
 
     public AdminRequestDto(String name, String socialLoginId,
-                           Long employeeIdentificationNumber, String password) {
+                           Long employeeIdentificationNumber, String password,
+                           String profileImage) {
         this.name = name;
         this.socialLoginId = socialLoginId;
         this.employeeIdentificationNumber = employeeIdentificationNumber;
         this.password = password;
+        this.profileImage = profileImage;
     }
 
     public String getName() {
@@ -34,5 +38,9 @@ public class AdminRequestDto {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getProfileImage() {
+        return profileImage;
     }
 }

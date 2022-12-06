@@ -24,13 +24,13 @@ public class AdminSessionController {
     }
 
     @GetMapping
-    public AdminLoginResultDto adminInformation(
+    public AdminInformationDto adminInformation(
         @RequestAttribute String socialLoginId
     ) {
         Admin foundAdmin = getAdminService.admin(socialLoginId);
 
-        return new AdminLoginResultDto(foundAdmin.socialLoginId(), null,
-            foundAdmin.employeeIdentificationNumber());
+        return new AdminInformationDto(socialLoginId, foundAdmin.name(),
+            foundAdmin.employeeIdentificationNumber(), foundAdmin.profileImage());
     }
 
     @PostMapping
@@ -46,7 +46,7 @@ public class AdminSessionController {
         String accessToken = jwtUtil.encode(socialLoginId);
 
         return new AdminLoginResultDto(socialLoginId, accessToken,
-            foundAdmin.employeeIdentificationNumber());
+            foundAdmin.employeeIdentificationNumber(), foundAdmin.profileImage());
     }
 
     @ExceptionHandler(AdminLoginFailedException.class)
