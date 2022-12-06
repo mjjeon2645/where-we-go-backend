@@ -24,23 +24,33 @@ public class AdminSignUpService {
         String socialLoginId = adminRequestDto.getSocialLoginId();
         Long employeeIdentificationNumber = adminRequestDto.getEmployeeIdentificationNumber();
         String password = adminRequestDto.getPassword();
+        String profileImage = adminRequestDto.getProfileImage();
+
+        System.out.println("**************");
+        System.out.println(profileImage);
+        System.out.println("**************");
 
         // 1. 기존에 가입한 이력이 있는 사원인지 확인
-        Admin admin = adminRepository.findByEmployeeIdentificationNumber(employeeIdentificationNumber).orElse(null);
+        Admin admin = adminRepository
+            .findByEmployeeIdentificationNumber(employeeIdentificationNumber)
+            .orElse(null);
 
         if (admin != null) {
             throw new ExistAdminMemberException();
         }
 
         // 2. 중복되는 아이디인지 확인
-        Admin adminFoundBySocialLoginId = adminRepository.findBySocialLoginId(socialLoginId).orElse(null);
+        Admin adminFoundBySocialLoginId = adminRepository.findBySocialLoginId(socialLoginId)
+            .orElse(null);
 
         if (adminFoundBySocialLoginId != null) {
             throw new DuplicateIdentifierException();
         }
 
         // 3. 문제 없는 경우 회원가입 진행
-        Admin createdAdmin = new Admin(null, socialLoginId, password, name, employeeIdentificationNumber, null);
+        Admin createdAdmin =
+            new Admin(null, socialLoginId, password, name,
+                employeeIdentificationNumber, profileImage, null);
 
         createdAdmin.changePassword(password, passwordEncoder);
 

@@ -23,6 +23,8 @@ public class Admin {
 
     private Long employeeIdentificationNumber;
 
+    private String profileImage;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 
@@ -30,26 +32,29 @@ public class Admin {
     }
 
     public Admin(String socialLoginId, String encodedPassword, String name,
-                 Long employeeIdentificationNumber) {
+                 Long employeeIdentificationNumber, String profileImage) {
         this.socialLoginId = socialLoginId;
         this.encodedPassword = encodedPassword;
         this.name = name;
         this.employeeIdentificationNumber = employeeIdentificationNumber;
+        this.profileImage = profileImage;
     }
 
     public Admin(Long id, String socialLoginId, String encodedPassword, String name,
-                 Long employeeIdentificationNumber, LocalDateTime createdAt) {
+                 Long employeeIdentificationNumber, String profileImage, LocalDateTime createdAt
+                 ) {
         this.id = id;
         this.socialLoginId = socialLoginId;
         this.encodedPassword = encodedPassword;
         this.name = name;
         this.employeeIdentificationNumber = employeeIdentificationNumber;
+        this.profileImage = profileImage;
         this.createdAt = createdAt;
     }
 
     public static Admin fake(String socialLoginId) {
         return new Admin(1L, socialLoginId, "encodedPassword", "전민지",
-            12345L, LocalDateTime.of(2022, 10, 8, 10, 43, 0, 0));
+            12345L, "url", LocalDateTime.of(2022, 10, 8, 10, 43, 0, 0));
     }
 
     public boolean authenticate(String password, PasswordEncoder passwordEncoder) {
@@ -82,6 +87,10 @@ public class Admin {
 
     public Long employeeIdentificationNumber() {
         return employeeIdentificationNumber;
+    }
+
+    public String profileImage() {
+        return profileImage;
     }
 
     public LocalDateTime createdAt() {
