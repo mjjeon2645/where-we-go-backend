@@ -71,7 +71,7 @@ public class GetTopThreePlacesService {
         String averageToString = String.format("%.2f", value);
 
         if (averageToString.substring(2).equals("00")) {
-            return averageToString.substring(0, 1);
+            return averageToString.substring(0, 3);
         }
 
         if (averageToString.substring(3).equals("0")) {

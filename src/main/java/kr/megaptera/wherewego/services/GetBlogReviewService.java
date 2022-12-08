@@ -34,7 +34,8 @@ public class GetBlogReviewService {
                     title,
                     author,
                     convertedDate,
-                    "https://user-images.githubusercontent.com/104840243/204121280-2e3dd883-76fa-4bba-983e-6b15d7f86c12.png",
+//                    "https://user-images.githubusercontent.com/104840243/204121280-2e3dd883-76fa-4bba-983e-6b15d7f86c12.png",
+                    "https://res.cloudinary.com/ds7ujh0mf/image/upload/v1670398470/top-3-image_g5mknk.png",
                     url);
 
             blogReviews.add(blogReviewDto);
