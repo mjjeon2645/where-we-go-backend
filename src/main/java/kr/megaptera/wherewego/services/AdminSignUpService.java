@@ -26,10 +26,6 @@ public class AdminSignUpService {
         String password = adminRequestDto.getPassword();
         String profileImage = adminRequestDto.getProfileImage();
 
-        System.out.println("**************");
-        System.out.println(profileImage);
-        System.out.println("**************");
-
         // 1. 기존에 가입한 이력이 있는 사원인지 확인
         Admin admin = adminRepository
             .findByEmployeeIdentificationNumber(employeeIdentificationNumber)
