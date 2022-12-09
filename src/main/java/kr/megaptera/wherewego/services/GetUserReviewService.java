@@ -26,9 +26,21 @@ public class GetUserReviewService {
     }
 
     public List<UserReviewDto> allReviews() {
-        return userReviewRepository.findAll()
-            .stream().map(UserReview::toDto)
-            .collect(Collectors.toList());
+        List<UserReview> foundUserReviews = userReviewRepository.findAll();
+
+        List<UserReviewDto> createdUserReviewsDto = new ArrayList<>();
+
+        for (UserReview picked : foundUserReviews) {
+            Place found = placeRepository.findById(picked.placeId())
+                .orElseThrow(PlaceNotFoundException::new);
+
+            UserReviewDto created = new UserReviewDto(picked.id(), picked.placeId(),
+                picked.userId(), picked.rate(), picked.nickname(), picked.body(),
+                picked.dateOfVisit(), picked.createdAt(), picked.isDeleted(), found.name());
+
+            createdUserReviewsDto.add(created);
+        }
+        return createdUserReviewsDto;
     }
 
     public List<UserReview> userReviews(Long placeId) {
