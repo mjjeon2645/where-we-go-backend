@@ -12,9 +12,12 @@ import java.util.*;
 @Transactional
 public class GetUserService {
     private final UserRepository userRepository;
+    private final AdminRepository adminRepository;
 
-    public GetUserService(UserRepository userRepository) {
+    public GetUserService(UserRepository userRepository,
+                          AdminRepository adminRepository) {
         this.userRepository = userRepository;
+        this.adminRepository = adminRepository;
     }
 
     public User information(String socialLoinId) {
@@ -22,11 +25,17 @@ public class GetUserService {
             .orElseThrow(UserNotFoundException::new);
     }
 
-    public List<User> users() {
+    public List<User> users(String socialLoginId) {
+        Admin found = adminRepository.findBySocialLoginId(socialLoginId)
+            .orElseThrow(AuthenticationError::new);
+
         return userRepository.findAll();
     }
 
-    public User user(Long id) {
+    public User user(Long id, String socialLoginId) {
+        adminRepository.findBySocialLoginId(socialLoginId)
+            .orElseThrow(AuthenticationError::new);
+
         return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
     }
 }

@@ -29,8 +29,10 @@ public class AdminUserController {
     }
 
     @GetMapping
-    public UsersDto users() {
-        List<User> all = getUserService.users();
+    public UsersDto users(
+        @RequestAttribute String socialLoginId
+    ) {
+        List<User> all = getUserService.users(socialLoginId);
 
         List<UserDto> users = all.stream().map(User::toDto).toList();
 
@@ -39,9 +41,10 @@ public class AdminUserController {
 
     @GetMapping("{id}")
     public UserWithBookmarkedPlacesDto users(
-        @PathVariable Long id
+        @PathVariable Long id,
+        @RequestAttribute String socialLoginId
     ) {
-        User found = getUserService.user(id);
+        User found = getUserService.user(id, socialLoginId);
         List<BookmarkedPlaceDto> bookmarkedPlacesLists = getBookmarkService.bookmarks(id);
         List<ChildDto> children = getChildService.children(id);
 
@@ -54,12 +57,17 @@ public class AdminUserController {
         @PathVariable Long id
     ) {
         deleteUserService.deleteUser(id);
-
     }
 
     @ExceptionHandler(UserNotFoundException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorDto userNotFoundError() {
         return new UserNotFoundErrorDto();
+    }
+
+    @ExceptionHandler(AuthenticationError.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorDto authenticationError() {
+        return new AuthenticationErrorDto();
     }
 }

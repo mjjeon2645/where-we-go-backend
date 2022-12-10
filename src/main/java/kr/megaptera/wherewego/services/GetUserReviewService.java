@@ -16,16 +16,22 @@ public class GetUserReviewService {
     private final UserReviewRepository userReviewRepository;
     private final UserRepository userRepository;
     private final PlaceRepository placeRepository;
+    private final AdminRepository adminRepository;
 
     public GetUserReviewService(UserReviewRepository userReviewRepository,
                                 UserRepository userRepository,
-                                PlaceRepository placeRepository) {
+                                PlaceRepository placeRepository,
+                                AdminRepository adminRepository) {
         this.userReviewRepository = userReviewRepository;
         this.userRepository = userRepository;
         this.placeRepository = placeRepository;
+        this.adminRepository = adminRepository;
     }
 
-    public List<UserReviewDto> allReviews() {
+    public List<UserReviewDto> allReviews(String socialLoginId) {
+        Admin foundAdmin = adminRepository.findBySocialLoginId(socialLoginId)
+            .orElseThrow(AuthenticationError::new);
+
         List<UserReview> foundUserReviews = userReviewRepository.findAll();
 
         List<UserReviewDto> createdUserReviewsDto = new ArrayList<>();
@@ -88,11 +94,15 @@ public class GetUserReviewService {
         return userReview.toDto();
     }
 
-    public UserReviewDto selectedReview(Long id) {
+    public UserReviewDto selectedReview(Long id, String socialLoginId) {
+        Admin foundAdmin = adminRepository.findBySocialLoginId(socialLoginId)
+            .orElseThrow(AuthenticationError::new);
+
         UserReview found = userReviewRepository.findById(id)
             .orElseThrow(UserReviewNotFoundException::new);
 
-        Place foundPlace = placeRepository.findById(found.placeId()).orElseThrow(PlaceNotFoundException::new);
+        Place foundPlace = placeRepository.findById(found.placeId())
+            .orElseThrow(PlaceNotFoundException::new);
 
         String placeName = foundPlace.name();
 
@@ -102,7 +112,8 @@ public class GetUserReviewService {
     public List<UserReviewDto> findAllReviewsByUserId(Long userId) {
         return userReviewRepository.findAllByUserId(userId).stream().map(
             userReview -> userReview.toDtoWithPlaceName(
-                placeRepository.findById(userReview.placeId()).orElseThrow(PlaceNotFoundException::new).name()
+                placeRepository.findById(userReview.placeId())
+                    .orElseThrow(PlaceNotFoundException::new).name()
             )
         ).collect(Collectors.toList());
     }
