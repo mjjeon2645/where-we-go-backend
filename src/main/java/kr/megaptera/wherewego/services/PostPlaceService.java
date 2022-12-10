@@ -11,12 +11,18 @@ import org.springframework.transaction.annotation.*;
 @Transactional
 public class PostPlaceService {
     private final PlaceRepository placeRepository;
+    private final AdminRepository adminRepository;
 
-    public PostPlaceService(PlaceRepository placeRepository) {
+    public PostPlaceService(PlaceRepository placeRepository,
+                            AdminRepository adminRepository) {
         this.placeRepository = placeRepository;
+        this.adminRepository = adminRepository;
     }
 
-    public Place create(PlaceRequestDto placeRequestDto) {
+    public Place create(PlaceRequestDto placeRequestDto, String socialLoginId) {
+        Admin found = adminRepository.findBySocialLoginId(socialLoginId)
+            .orElseThrow(AuthenticationError::new);
+
         String placeName = placeRequestDto.getPlaceName();
 
         String fullAddress = placeRequestDto.getFullAddress();

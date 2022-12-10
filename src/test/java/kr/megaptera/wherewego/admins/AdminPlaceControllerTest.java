@@ -23,7 +23,7 @@ class AdminPlaceControllerTest {
 
     @BeforeEach
     void setUp() {
-        given(getPlaceService.selectedPlace(5L)).willReturn(Place.fake1(5L, "자연"));
+        given(getPlaceService.selectedPlace(5L, socialLoginId)).willReturn(Place.fake1(5L, "자연"));
     }
 
     @Test

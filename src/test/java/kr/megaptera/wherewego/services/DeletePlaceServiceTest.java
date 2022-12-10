@@ -5,7 +5,6 @@ import org.junit.jupiter.api.*;
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
@@ -20,7 +19,7 @@ class DeletePlaceServiceTest {
         userRepository = mock(UserRepository.class);
         placeRepository = mock(PlaceRepository.class);
         userReviewRepository = mock(UserReviewRepository.class);
-        deletePlaceService = new DeletePlaceService(userRepository, placeRepository, userReviewRepository);
+        deletePlaceService = new DeletePlaceService(userRepository, placeRepository, userReviewRepository, adminRepository);
 
         given(placeRepository.findAll()).willReturn(List.of(
             //TODO. 테스트
@@ -29,6 +28,6 @@ class DeletePlaceServiceTest {
 
     @Test
     void delete() {
-        deletePlaceService.delete(3L);
+        deletePlaceService.delete(3L, socialLoginId);
     }
 }
