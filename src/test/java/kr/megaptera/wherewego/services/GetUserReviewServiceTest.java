@@ -20,7 +20,7 @@ class GetUserReviewServiceTest {
         userReviewRepository = mock(UserReviewRepository.class);
         userRepository = mock(UserRepository.class);
 
-        getUserReviewService = new GetUserReviewService(userReviewRepository, userRepository, placeRepository);
+        getUserReviewService = new GetUserReviewService(userReviewRepository, userRepository, placeRepository, adminRepository);
 
         given(userReviewRepository.findAllByPlaceIdOrderByCreatedAtDesc(4L))
             .willReturn(List.of(

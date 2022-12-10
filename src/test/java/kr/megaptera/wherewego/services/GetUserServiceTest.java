@@ -18,7 +18,7 @@ class GetUserServiceTest {
     @BeforeEach
     void setUp() {
         userRepository = mock(UserRepository.class);
-        getUserService = new GetUserService(userRepository);
+        getUserService = new GetUserService(userRepository, adminRepository);
 
         User user = new User(1L, "encodedPassword", "email", "또또누나", "id",
             "kakao", "unregistered", List.of());

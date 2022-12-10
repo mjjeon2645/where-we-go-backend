@@ -22,16 +22,19 @@ public class AdminUserReviewController {
     }
 
     @GetMapping
-    public UserReviewsDto allUserReviews() {
-        List<UserReviewDto> userReviews = getUserReviewService.allReviews();
+    public UserReviewsDto allUserReviews(
+        @RequestAttribute String socialLoginId
+    ) {
+        List<UserReviewDto> userReviews = getUserReviewService.allReviews(socialLoginId);
         return new UserReviewsDto(userReviews);
     }
 
     @GetMapping("{id}")
     public UserReviewDto selectedUserReview(
-        @PathVariable Long id
+        @PathVariable Long id,
+        @RequestAttribute String socialLoginId
     ) {
-        return getUserReviewService.selectedReview(id);
+        return getUserReviewService.selectedReview(id, socialLoginId);
     }
 
     @GetMapping("userId/{id}")
@@ -70,5 +73,11 @@ public class AdminUserReviewController {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorDto emptyReasonError() {
         return new EmptyReasonErrorDto();
+    }
+
+    @ExceptionHandler(AuthenticationError.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorDto authenticationError() {
+        return new AuthenticationErrorDto();
     }
 }

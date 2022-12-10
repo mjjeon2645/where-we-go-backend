@@ -5,12 +5,9 @@ import kr.megaptera.wherewego.errorDtos.*;
 import kr.megaptera.wherewego.exceptions.*;
 import kr.megaptera.wherewego.models.*;
 import kr.megaptera.wherewego.services.*;
-import kr.megaptera.wherewego.utils.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.*;
 
-import java.io.*;
 import java.util.*;
 
 @RestController
@@ -29,8 +26,10 @@ public class AdminPlaceController {
     }
 
     @GetMapping
-    public PlacesDto places() {
-        List<PlaceDto> places = getPlaceService.places()
+    public PlacesDto places(
+        @RequestAttribute String socialLoginId
+    ) {
+        List<PlaceDto> places = getPlaceService.places(socialLoginId)
             .stream().map(Place::toPlaceDto)
             .toList();
 
@@ -39,17 +38,19 @@ public class AdminPlaceController {
 
     @GetMapping("{id}")
     public PlaceDto selectedPlace(
-        @PathVariable Long id
+        @PathVariable Long id,
+        @RequestAttribute String socialLoginId
     ) {
-        return getPlaceService.selectedPlace(id).toPlaceDto();
+        return getPlaceService.selectedPlace(id, socialLoginId).toPlaceDto();
     }
 
     @PostMapping("new")
     @ResponseStatus(HttpStatus.CREATED)
     public PlaceDto addPlace(
-        @RequestBody PlaceRequestDto placeRequestDto
+        @RequestBody PlaceRequestDto placeRequestDto,
+        @RequestAttribute String socialLoginId
     ) {
-        return postPlaceService.create(placeRequestDto).toPlaceDto();
+        return postPlaceService.create(placeRequestDto, socialLoginId).toPlaceDto();
     }
 
     @DeleteMapping("{id}")
@@ -70,5 +71,11 @@ public class AdminPlaceController {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorDto categoryMissingError() {
         return new CategoryMissingErrorDto();
+    }
+
+    @ExceptionHandler(AuthenticationError.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorDto authenticationError() {
+        return new AuthenticationErrorDto();
     }
 }

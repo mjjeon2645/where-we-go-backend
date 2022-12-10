@@ -1,5 +1,6 @@
 package kr.megaptera.wherewego.services;
 
+import kr.megaptera.wherewego.exceptions.*;
 import kr.megaptera.wherewego.models.*;
 import kr.megaptera.wherewego.repositories.*;
 import org.springframework.stereotype.*;
