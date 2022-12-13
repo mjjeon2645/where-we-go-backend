@@ -23,7 +23,7 @@ public class NaverBlogUtil {
         }
 
         //URL 세팅
-        String apiUrl = "https://openapi.naver.com/v1/search/blog?display=3&query=" + keyword;
+        String apiUrl = "https://openapi.naver.com/v1/search/blog?display=10&query=" + keyword;
 
         Map<String, String> requestHeaders = new HashMap<>();
         requestHeaders.put("X-Naver-Client-Id", apiKey);

@@ -9,6 +9,11 @@ import org.springframework.boot.test.mock.mockito.*;
 import org.springframework.test.web.servlet.*;
 import org.springframework.test.web.servlet.request.*;
 
+import java.util.*;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(BlogReviewController.class)
@@ -24,11 +29,24 @@ class BlogReviewControllerTest {
 
     @BeforeEach
     void setUp() {
-        //TODO. 테스트 추가 필요
-//        given(getBlogReviewService.blogReviews(5L)).willReturn(List.of(
-//            ew BlogReview(5L, 5L, "아기랑 놀러다녀왔어요~", "tester", "2022.10.23.", "imageUrl", "url"),
-//            new BlogReview(6L, 5L, "아기랑 놀러다녀왔어요~22", "tester", "2022.10.23.", "imageUrl", "url")
-//        ));
+        String keyword = "롯데월드";
+
+        List<Map<String, String>> naverBlogs = new ArrayList<>();
+
+        Map<String, String> map = new HashMap<>();
+        map.put("title", "롯데월드 재미있어요!");
+        map.put("blogger", "봄이엄마");
+        map.put("postDate", "2022-08-14");
+        map.put("blogLink", "blog url link");
+
+        naverBlogs.add(map);
+
+        given(getBlogReviewService.keyword(5L)).willReturn(keyword);
+
+        given(naverBlogUtil.search(keyword)).willReturn(naverBlogs);
+
+        given(getBlogReviewService.blogReviews(naverBlogs, 5L))
+            .willReturn(new ArrayList<>());
     }
 
     @Test
