@@ -48,13 +48,13 @@ public class AdminUserReviewController {
 
     @PostMapping("{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public String deleteUserReviewAndCreateLog(
+    public SuccessMessageDto deleteUserReviewAndCreateLog(
         @PathVariable Long id,
         @RequestAttribute String socialLoginId,
         @RequestBody DeleteReviewRequestDto deleteReviewRequestDto
     ) {
         deleteUserReviewService.delete(id, socialLoginId, deleteReviewRequestDto);
-        return "Success to delete the review";
+        return new SuccessMessageDto("Success to delete the review");
     }
 
     @ExceptionHandler(UserReviewNotFoundException.class)

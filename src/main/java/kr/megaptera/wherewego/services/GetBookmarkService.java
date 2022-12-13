@@ -35,8 +35,8 @@ public class GetBookmarkService {
             .collect(Collectors.toList());
     }
 
-    public List<BookmarkedPlaceDto> bookmarks(Long id) {
-        User found = userRepository.findById(id)
+    public List<BookmarkedPlaceDto> bookmarks(Long userId) {
+        User found = userRepository.findById(userId)
             .orElseThrow(UserNotFoundException::new);
 
         List<Bookmark> bookmarks = found.bookmarks();

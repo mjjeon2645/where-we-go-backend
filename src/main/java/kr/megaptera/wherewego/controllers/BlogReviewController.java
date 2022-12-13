@@ -13,7 +13,7 @@ public class BlogReviewController {
     private final NaverBlogUtil naverBlogUtil;
     private final GetBlogReviewService getBlogReviewService;
 
-    public BlogReviewController(NaverBlogUtil naverBlogUtil, 
+    public BlogReviewController(NaverBlogUtil naverBlogUtil,
                                 GetBlogReviewService getBlogReviewService) {
         this.naverBlogUtil = naverBlogUtil;
         this.getBlogReviewService = getBlogReviewService;
