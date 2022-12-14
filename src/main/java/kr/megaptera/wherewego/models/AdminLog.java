@@ -1,5 +1,6 @@
 package kr.megaptera.wherewego.models;
 
+import kr.megaptera.wherewego.dtos.*;
 import org.hibernate.annotations.*;
 
 import javax.persistence.Entity;
@@ -58,5 +59,9 @@ public class AdminLog {
 
     public LocalDateTime createdAt() {
         return createdAt;
+    }
+
+    public CreatedAdminLogDto toDto() {
+        return new CreatedAdminLogDto(id, adminId, event.toDto(), reason, createdAt);
     }
 }
