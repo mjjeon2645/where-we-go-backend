@@ -53,12 +53,16 @@ public class AdminPlaceController {
         return postPlaceService.create(placeRequestDto, socialLoginId).toPlaceDto();
     }
 
-    @DeleteMapping("{id}")
+    @PostMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletePlace(
-        @PathVariable Long id
+    public CreatedAdminLogDto deletePlaceAndCreateLog(
+        @PathVariable Long id,
+        @RequestAttribute String socialLoginId,
+        @RequestBody DeletePlaceRequestDto deletePlaceRequestDto
     ) {
-        deletePlaceService.delete(id);
+        AdminLog createdAdminLog = deletePlaceService.delete(id, socialLoginId, deletePlaceRequestDto);
+
+        return createdAdminLog.toDto();
     }
 
     @ExceptionHandler(AddressMissingException.class)
@@ -71,6 +75,18 @@ public class AdminPlaceController {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorDto categoryMissingError() {
         return new CategoryMissingErrorDto();
+    }
+
+    @ExceptionHandler(AdminPasswordError.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorDto adminPasswordError() {
+        return new AdminPasswordErrorDto();
+    }
+
+    @ExceptionHandler(EmptyReasonException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorDto emptyReasonError() {
+        return new EmptyReasonErrorDto();
     }
 
     @ExceptionHandler(AuthenticationError.class)

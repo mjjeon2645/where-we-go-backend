@@ -51,18 +51,34 @@ public class AdminUserController {
         return new UserWithBookmarkedPlacesDto(found.toDto(), bookmarkedPlacesLists, children);
     }
 
-    @DeleteMapping("{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteSelectedUser(
-        @PathVariable Long id
+    @PostMapping("{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public CreatedAdminLogDto deleteSelectedUserAndCreateLog(
+        @RequestAttribute String socialLoginId,
+        @PathVariable Long id,
+        @RequestBody DeleteUserRequestDto deleteUserRequestDto
     ) {
-        deleteUserService.deleteUser(id);
+        AdminLog createdAdminLog = deleteUserService.deleteUser(id, socialLoginId, deleteUserRequestDto);
+
+        return createdAdminLog.toDto();
     }
 
     @ExceptionHandler(UserNotFoundException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorDto userNotFoundError() {
         return new UserNotFoundErrorDto();
+    }
+
+    @ExceptionHandler(AdminPasswordError.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorDto adminPasswordError() {
+        return new AdminPasswordErrorDto();
+    }
+
+    @ExceptionHandler(EmptyReasonException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorDto emptyReasonError() {
+        return new EmptyReasonErrorDto();
     }
 
     @ExceptionHandler(AuthenticationError.class)
