@@ -1,23 +1,24 @@
 package kr.megaptera.wherewego.dtos;
 
 public class DeleteReviewRequestDto {
+    private String reason;
+
     private String password;
 
-    private String reason;
 
     public DeleteReviewRequestDto() {
     }
 
-    public DeleteReviewRequestDto(String password, String reason) {
-        this.password = password;
+    public DeleteReviewRequestDto(String reason, String password) {
         this.reason = reason;
-    }
-
-    public String getPassword() {
-        return password;
+        this.password = password;
     }
 
     public String getReason() {
         return reason;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }
