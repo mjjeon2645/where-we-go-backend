@@ -54,7 +54,7 @@ public class AdminPlaceController {
     }
 
     @PostMapping("{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.CREATED)
     public CreatedAdminLogDto deletePlaceAndCreateLog(
         @PathVariable Long id,
         @RequestAttribute String socialLoginId,
@@ -93,5 +93,11 @@ public class AdminPlaceController {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorDto authenticationError() {
         return new AuthenticationErrorDto();
+    }
+
+    @ExceptionHandler(PlaceNotFoundException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorDto placeNotFoundError() {
+        return new PlaceNotFoundErrorDto();
     }
 }

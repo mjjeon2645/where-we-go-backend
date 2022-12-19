@@ -40,7 +40,7 @@ public class AdminUserController {
     }
 
     @GetMapping("{id}")
-    public UserWithBookmarkedPlacesDto users(
+    public UserWithBookmarkedPlacesDto user(
         @PathVariable Long id,
         @RequestAttribute String socialLoginId
     ) {

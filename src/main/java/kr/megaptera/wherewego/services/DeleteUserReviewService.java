@@ -30,7 +30,7 @@ public class DeleteUserReviewService {
         userReviewRepository.deleteById(reviewId);
     }
 
-    public void delete(Long reviewId, String adminSocialLoginId,
+    public AdminLog delete(Long reviewId, String adminSocialLoginId,
                        DeleteReviewRequestDto deleteReviewRequestDto) {
 
         String password = deleteReviewRequestDto.getPassword();
@@ -57,5 +57,7 @@ public class DeleteUserReviewService {
             Event.deleteUserReview(), reason);
 
         adminLogRepository.save(createdAdminLog);
+
+        return createdAdminLog;
     }
 }

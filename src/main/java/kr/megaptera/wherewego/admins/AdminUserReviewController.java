@@ -3,6 +3,7 @@ package kr.megaptera.wherewego.admins;
 import kr.megaptera.wherewego.dtos.*;
 import kr.megaptera.wherewego.errorDtos.*;
 import kr.megaptera.wherewego.exceptions.*;
+import kr.megaptera.wherewego.models.*;
 import kr.megaptera.wherewego.services.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
@@ -48,13 +49,13 @@ public class AdminUserReviewController {
 
     @PostMapping("{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public SuccessMessageDto deleteUserReviewAndCreateLog(
+    public CreatedAdminLogDto deleteUserReviewAndCreateLog(
         @PathVariable Long id,
         @RequestAttribute String socialLoginId,
         @RequestBody DeleteReviewRequestDto deleteReviewRequestDto
     ) {
-        deleteUserReviewService.delete(id, socialLoginId, deleteReviewRequestDto);
-        return new SuccessMessageDto("Success to delete the review");
+        AdminLog createdAdminLog = deleteUserReviewService.delete(id, socialLoginId, deleteReviewRequestDto);
+        return createdAdminLog.toDto();
     }
 
     @ExceptionHandler(UserReviewNotFoundException.class)

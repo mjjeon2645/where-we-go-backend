@@ -20,11 +20,6 @@ public class GetUserService {
         this.adminRepository = adminRepository;
     }
 
-    public User information(String socialLoinId) {
-        return userRepository.findBySocialLoginId(socialLoinId)
-            .orElseThrow(UserNotFoundException::new);
-    }
-
     public List<User> users(String socialLoginId) {
         Admin found = adminRepository.findBySocialLoginId(socialLoginId)
             .orElseThrow(AuthenticationError::new);
@@ -37,5 +32,10 @@ public class GetUserService {
             .orElseThrow(AuthenticationError::new);
 
         return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
+    }
+
+    public User information(String socialLoinId) {
+        return userRepository.findBySocialLoginId(socialLoinId)
+            .orElseThrow(UserNotFoundException::new);
     }
 }

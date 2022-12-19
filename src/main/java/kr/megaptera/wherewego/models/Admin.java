@@ -54,7 +54,7 @@ public class Admin {
 
     public static Admin fake(String socialLoginId) {
         return new Admin(1L, socialLoginId, "encodedPassword", "전민지",
-            12345L, "url", LocalDateTime.of(2022, 10, 8, 10, 43, 0, 0));
+            1234L, "url", LocalDateTime.of(2022, 10, 8, 10, 43, 0, 0));
     }
 
     public boolean authenticate(String password, PasswordEncoder passwordEncoder) {
