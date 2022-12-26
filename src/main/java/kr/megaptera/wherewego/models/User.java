@@ -40,9 +40,14 @@ public class User {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    public static User fake(String email) {
-        return new User(1L, "encodedPassword", email, "nickname", "socialLoginId",
-            "kakao", User.UNREGISTERED, List.of(), LocalDateTime.of(2022, 10, 8, 10, 43, 0, 0));
+    public static User fake1(String email) {
+        return new User(1L, "encodedPassword", email, "nickname1", "socialLoginId1",
+            "kakao", User.REGISTERED, List.of(), LocalDateTime.of(2022, 10, 8, 10, 43, 0, 0));
+    }
+
+    public static User fake2(String email) {
+        return new User(2L, "encodedPassword", email, "nickname2", "socialLoginId2",
+            "naver", User.REGISTERED, List.of(), LocalDateTime.of(2022, 10, 10, 10, 43, 0, 0));
     }
 
     public boolean authenticate(String password, PasswordEncoder passwordEncoder) {

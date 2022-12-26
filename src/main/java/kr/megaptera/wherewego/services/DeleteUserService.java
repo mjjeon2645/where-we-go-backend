@@ -34,13 +34,6 @@ public class DeleteUserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public void deleteTrialUser(String socialLoginId) {
-        User foundToDelete = userRepository.findBySocialLoginId(socialLoginId)
-            .orElseThrow(UserNotFoundException::new);
-
-        deleteProcess(foundToDelete);
-    }
-
     public AdminLog deleteUser(Long id, String socialLoginId, DeleteUserRequestDto deleteUserRequestDto) {
         String password = deleteUserRequestDto.getPassword();
         String reason = deleteUserRequestDto.getReason();

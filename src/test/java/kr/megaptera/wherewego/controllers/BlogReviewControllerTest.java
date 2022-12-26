@@ -11,9 +11,7 @@ import org.springframework.test.web.servlet.request.*;
 
 import java.util.*;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.verify;
+import static org.mockito.BDDMockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(BlogReviewController.class)
@@ -27,14 +25,16 @@ class BlogReviewControllerTest {
     @MockBean
     private NaverBlogUtil naverBlogUtil;
 
+    private List<Map<String, String>> naverBlogs;
+
     @BeforeEach
     void setUp() {
-        String keyword = "롯데월드";
+        String keyword = "롯데월드 아기랑";
 
-        List<Map<String, String>> naverBlogs = new ArrayList<>();
+        naverBlogs = new ArrayList<>();
 
         Map<String, String> map = new HashMap<>();
-        map.put("title", "롯데월드 재미있어요!");
+        map.put("title", "롯데월드 아기랑 재미있어요!");
         map.put("blogger", "봄이엄마");
         map.put("postDate", "2022-08-14");
         map.put("blogLink", "blog url link");
@@ -53,5 +53,7 @@ class BlogReviewControllerTest {
     void blogReviews() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/blog-reviews/5"))
             .andExpect(status().isOk());
+
+        verify(getBlogReviewService).blogReviews(naverBlogs, 5L);
     }
 }

@@ -1,7 +1,5 @@
 package kr.megaptera.wherewego.models;
 
-import kr.megaptera.wherewego.dtos.*;
-
 import javax.persistence.*;
 
 @Embeddable

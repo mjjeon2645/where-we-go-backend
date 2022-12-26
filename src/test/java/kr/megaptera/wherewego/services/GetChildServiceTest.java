@@ -23,7 +23,7 @@ class GetChildServiceTest {
         getChildService = new GetChildService(childRepository, userRepository);
 
         given(userRepository.findBySocialLoginId("socialLoginId"))
-            .willReturn(Optional.of(User.fake("angel2645@naver.com")));
+            .willReturn(Optional.of(User.fake1("angel2645@naver.com")));
 
         given(childRepository.findAllByUserId(1L))
             .willReturn(List.of(

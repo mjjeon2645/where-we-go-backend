@@ -8,6 +8,7 @@ import org.junit.jupiter.api.*;
 
 import java.util.*;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.*;
 
 class DeleteChildServiceTest {
@@ -22,7 +23,7 @@ class DeleteChildServiceTest {
         deleteChildService = new DeleteChildService(childRepository, userRepository);
 
         given(userRepository.findBySocialLoginId("socialLoginId"))
-            .willReturn(Optional.of(User.fake("angel2645@naver.com")));
+            .willReturn(Optional.of(User.fake1("angel2645@naver.com")));
 
         Child child = new Child(2L, 1L, "공주님", "2022-01-01");
 
@@ -35,5 +36,9 @@ class DeleteChildServiceTest {
         deleteChildService.delete("socialLoginId", new ChildDeleteDto(2L));
 
         verify(childRepository).deleteById(2L);
+
+        assertThrows(ChildNotFoundException.class, () -> {
+           deleteChildService.delete("socialLoginId", new ChildDeleteDto(3L));
+        });
     }
 }

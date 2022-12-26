@@ -24,12 +24,12 @@ public class GetMapService {
         // 0-1. 지역 항목이 제대로 선택되지 않은 경우
         if (sido.equals("선택") || sido.equals("") ||
             sigungu.equals("선택") || sigungu.equals("")) {
-            throw new RegionFilterNotSelected();
+            throw new RegionNotSelected();
         }
 
         // 0-2. 카테고리 항목이 제대로 선택되지 않은 경우
         if (category.equals("선택") || category.equals("")) {
-            throw new CategoryFilterNotSelected();
+            throw new CategoryNotSelected();
         }
 
         // 1. 모든 옵션을 전체로 선택했을 경우

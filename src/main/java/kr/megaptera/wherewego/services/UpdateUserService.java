@@ -19,8 +19,7 @@ public class UpdateUserService {
         this.jwtUtil = jwtUtil;
     }
 
-    public CreatedUserDto update(String socialLoginId, SetNicknameDto setNicknameDto) {
-        String nickname = setNicknameDto.getNickname();
+    public CreatedUserDto update(String socialLoginId, String nickname) {
 
         User userFoundByNickname = userRepository.findByNickname(nickname);
         User found = userRepository.findBySocialLoginId(socialLoginId)
