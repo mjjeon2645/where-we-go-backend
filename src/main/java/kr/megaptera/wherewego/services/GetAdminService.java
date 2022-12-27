@@ -16,7 +16,6 @@ public class GetAdminService {
     }
 
     public Admin admin(String socialLoginId) {
-
         return adminRepository.findBySocialLoginId(socialLoginId)
             .orElseThrow(AuthenticationError::new);
     }

@@ -146,4 +146,15 @@ public class User {
     public UserDto toDto() {
         return new UserDto(id, email, nickname, socialLoginId, authBy, state, createdAt);
     }
+
+    @Override
+    public boolean equals(Object other) {
+        User otherUser = (User) other;
+
+        return id.equals(otherUser.id()) && encodedPassword.equals(otherUser.encodedPassword()) &&
+            email.equals(otherUser.email()) && nickname.equals(otherUser.nickname()) &&
+            socialLoginId.equals(otherUser.socialLoginId()) && authBy.equals(otherUser.authBy()) &&
+            state.equals(otherUser.state()) && bookmarks.equals(otherUser.bookmarks()) &&
+            createdAt.equals(otherUser.createdAt());
+    }
 }

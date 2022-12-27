@@ -34,7 +34,7 @@ public class DeleteUserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public AdminLog deleteUser(Long id, String socialLoginId, DeleteUserRequestDto deleteUserRequestDto) {
+    public AdminLog deleteUser(Long userId, String socialLoginId, DeleteUserRequestDto deleteUserRequestDto) {
         String password = deleteUserRequestDto.getPassword();
         String reason = deleteUserRequestDto.getReason();
 
@@ -51,7 +51,7 @@ public class DeleteUserService {
             throw new EmptyReasonException();
         }
 
-        User foundToDelete = userRepository.findById(id)
+        User foundToDelete = userRepository.findById(userId)
             .orElseThrow(UserNotFoundException::new);
 
         deleteProcess(foundToDelete);
