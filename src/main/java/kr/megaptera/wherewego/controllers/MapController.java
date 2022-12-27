@@ -1,6 +1,7 @@
 package kr.megaptera.wherewego.controllers;
 
 import kr.megaptera.wherewego.dtos.*;
+import kr.megaptera.wherewego.errorDtos.*;
 import kr.megaptera.wherewego.exceptions.*;
 import kr.megaptera.wherewego.models.*;
 import kr.megaptera.wherewego.services.*;
@@ -31,21 +32,21 @@ public class MapController {
         return new PlacesDto(places);
     }
 
-    @ExceptionHandler(RegionFilterNotSelected.class)
+    @ExceptionHandler(RegionNotSelected.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String regionFilterNotSelected() {
-        return "가고싶은 지역을 선택해주세요!";
+    public ErrorDto regionNotSelected() {
+        return new RegionNotSelectedErrorDto();
     }
 
-    @ExceptionHandler(CategoryFilterNotSelected.class)
+    @ExceptionHandler(CategoryNotSelected.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String categoryFilterNotSelected() {
-        return "가고싶은 장소의 유형을 선택해주세요!";
+    public ErrorDto categoryNotSelected() {
+        return new CategoryNotSelectedErrorDto();
     }
 
     @ExceptionHandler(FilteredResultsNotFound.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String filteredResultsNotFound() {
-        return "검색 결과가 없습니다(알 수 없는 에러)";
+    public ErrorDto filteredResultsNotFound() {
+        return new FilteredResultsNotFoundErrorDto();
     }
 }

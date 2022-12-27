@@ -49,13 +49,13 @@ class AdminUserControllerTest {
         socialLoginId = "socialLoginId";
 
         given(getUserService.users(socialLoginId)).willReturn(List.of(
-            User.fake("angel2645@naver.com")
+            User.fake1("angel2645@naver.com")
         ));
 
         given(getUserService.users("xxx")).willThrow(AuthenticationError.class);
 
         given(getUserService.user(1L, socialLoginId))
-            .willReturn(User.fake("angel2645@naver.com"));
+            .willReturn(User.fake1("angel2645@naver.com"));
 
         given(getBookmarkService.bookmarks(1L))
             .willReturn(List.of(

@@ -27,7 +27,8 @@ public class PostUserReviewService {
         String nickname = found.nickname();
 
         UserReview userReview = new UserReview(myReviewDto.getPlaceId(),
-            found.id(), myReviewDto.getRate(), nickname, myReviewDto.getBody(), myReviewDto.getDateOfVisit());
+            found.id(), myReviewDto.getRate(), nickname, myReviewDto.getBody(),
+            myReviewDto.getDateOfVisit());
 
         return userReviewRepository.save(userReview);
     }

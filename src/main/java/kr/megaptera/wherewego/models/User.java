@@ -40,9 +40,14 @@ public class User {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    public static User fake(String email) {
-        return new User(1L, "encodedPassword", email, "nickname", "socialLoginId",
-            "kakao", User.UNREGISTERED, List.of(), LocalDateTime.of(2022, 10, 8, 10, 43, 0, 0));
+    public static User fake1(String email) {
+        return new User(1L, "encodedPassword", email, "nickname1", "socialLoginId1",
+            "kakao", User.REGISTERED, List.of(), LocalDateTime.of(2022, 10, 8, 10, 43, 0, 0));
+    }
+
+    public static User fake2(String email) {
+        return new User(2L, "encodedPassword", email, "nickname2", "socialLoginId2",
+            "naver", User.REGISTERED, List.of(), LocalDateTime.of(2022, 10, 10, 10, 43, 0, 0));
     }
 
     public boolean authenticate(String password, PasswordEncoder passwordEncoder) {
@@ -140,5 +145,16 @@ public class User {
 
     public UserDto toDto() {
         return new UserDto(id, email, nickname, socialLoginId, authBy, state, createdAt);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        User otherUser = (User) other;
+
+        return id.equals(otherUser.id()) && encodedPassword.equals(otherUser.encodedPassword()) &&
+            email.equals(otherUser.email()) && nickname.equals(otherUser.nickname()) &&
+            socialLoginId.equals(otherUser.socialLoginId()) && authBy.equals(otherUser.authBy()) &&
+            state.equals(otherUser.state()) && bookmarks.equals(otherUser.bookmarks()) &&
+            createdAt.equals(otherUser.createdAt());
     }
 }

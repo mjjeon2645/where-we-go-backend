@@ -1,5 +1,6 @@
 package kr.megaptera.wherewego.controllers;
 
+import kr.megaptera.wherewego.annotations.*;
 import kr.megaptera.wherewego.dtos.*;
 import kr.megaptera.wherewego.models.*;
 import kr.megaptera.wherewego.services.*;
@@ -17,6 +18,7 @@ import static org.mockito.BDDMockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(TopThreePlacesController.class)
+@MockMvcEncoding
 class TopThreePlacesControllerTest {
 
     @Autowired
@@ -41,7 +43,7 @@ class TopThreePlacesControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/top-three-places"))
             .andExpect(status().isOk())
             .andExpect(content().string(
-                containsString("\"name\":")
+                containsString("메가테라")
             ));
 
         verify(getTopThreePlacesService).topThreePlaces();

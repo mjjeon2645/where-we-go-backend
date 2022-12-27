@@ -13,18 +13,18 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("trial-session")
 public class TrialSessionController {
     private final GetTrialUserService getTrialUserService;
-    private final DeleteUserService deleteTrialUserService;
+    private final DeleteTrialUserService deleteTrialUserService;
     private final JwtUtil jwtUtil;
 
     public TrialSessionController(GetTrialUserService getTrialUserService,
-                                  DeleteUserService deleteTrialUserService, JwtUtil jwtUtil) {
+                                  DeleteTrialUserService deleteTrialUserService, JwtUtil jwtUtil) {
         this.getTrialUserService = getTrialUserService;
         this.deleteTrialUserService = deleteTrialUserService;
         this.jwtUtil = jwtUtil;
     }
 
     @GetMapping
-    public TrialLoginResultDto trialLoginResultDto() {
+    public TrialLoginResultDto trialLogin() {
         User trialUser = getTrialUserService.trialUser();
 
         String accessToken = jwtUtil.encode(trialUser.socialLoginId());
@@ -38,12 +38,6 @@ public class TrialSessionController {
         @RequestAttribute String socialLoginId
     ) {
         deleteTrialUserService.deleteTrialUser(socialLoginId);
-    }
-
-    @ExceptionHandler(LoginFailedException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String loginFailed() {
-        return "Login Failed!";
     }
 
     @ExceptionHandler(UserNotFoundException.class)

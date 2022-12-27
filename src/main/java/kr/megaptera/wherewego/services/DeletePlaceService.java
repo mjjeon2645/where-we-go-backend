@@ -34,7 +34,7 @@ public class DeletePlaceService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public AdminLog delete(Long id, String socialLoginId, DeletePlaceRequestDto deletePlaceRequestDto) {
+    public AdminLog delete(Long placeId, String socialLoginId, DeletePlaceRequestDto deletePlaceRequestDto) {
         String reason = deletePlaceRequestDto.getReason();
         String adminPassword = deletePlaceRequestDto.getPassword();
 
@@ -64,16 +64,16 @@ public class DeletePlaceService {
             for (int j = size - 1; j >= 0; j -= 1) {
                 Bookmark found = user.bookmarks().get(j);
 
-                if (Objects.equals(found.getPlaceId(), id)) {
+                if (Objects.equals(found.getPlaceId(), placeId)) {
                     user.bookmarks().remove(found);
                 }
             }
         }
 
         // 유저 리뷰의 placeId가 해당 아이디면 지워줘야 함
-        userReviewRepository.deleteAllByPlaceId(id);
+        userReviewRepository.deleteAllByPlaceId(placeId);
 
-        placeRepository.deleteById(id);
+        placeRepository.deleteById(placeId);
 
         AdminLog createdAdminLog = new AdminLog(foundAdmin.id(),
             Event.deletePlace(), reason);

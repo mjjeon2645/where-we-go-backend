@@ -1,6 +1,5 @@
 package kr.megaptera.wherewego.services;
 
-import kr.megaptera.wherewego.dtos.*;
 import kr.megaptera.wherewego.models.*;
 import kr.megaptera.wherewego.repositories.*;
 import org.springframework.security.crypto.password.*;
@@ -16,7 +15,8 @@ public class GetTrialUserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public GetTrialUserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public GetTrialUserService(UserRepository userRepository,
+                               PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
@@ -30,8 +30,8 @@ public class GetTrialUserService {
 
         List<Bookmark> bookmarks = new ArrayList<>();
 
-        User trialUser = new User(password, "tester@tester.com", trialUserNickname, socialLoginId,
-            "admin", User.REGISTERED, bookmarks);
+        User trialUser = new User(password, "tester@tester.com", trialUserNickname,
+            socialLoginId, "admin", User.REGISTERED, bookmarks);
 
         trialUser.changePassword(password, passwordEncoder);
 
